@@ -4062,12 +4062,27 @@
     function smoothScrollTo(selector) {
       const el = document.querySelector(selector);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
+        // Close mobile menu if it's open
+        const menu = document.getElementById("mobile-menu");
+        if (menu.classList.contains("open")) menu.classList.remove("open");
+
+        const offset = 70; // Header offset
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
       }
     }
     function toggleMobileMenu() {
       const menu = document.getElementById("mobile-menu");
+      const isOpening = !menu.classList.contains("open");
       menu.classList.toggle("open");
+      document.body.style.overflow = isOpening ? "hidden" : "";
     }
 
     // ============================================================
@@ -5300,11 +5315,12 @@
       });
 
       function spawnStream() {
-        if (streams.length > 15) return;
+        const maxStreams = w < 768 ? 8 : 15; // Resource optimization for mobile
+        if (streams.length > maxStreams) return;
         streams.push({
           x: Math.random() * w,
           y: -100,
-          chars: Array.from({ length: 12 }, () => Math.floor(Math.random() * 16).toString(16).toUpperCase()),
+          chars: Array.from({ length: w < 768 ? 8 : 12 }, () => Math.floor(Math.random() * 16).toString(16).toUpperCase()),
           speed: 1.5 + Math.random() * 2,
           opacity: 0.08 + Math.random() * 0.08
         });
@@ -5314,23 +5330,25 @@
         ctx.clearRect(0, 0, w, h);
         const scrollY = window.scrollY * 0.15;
 
-        // 1. Magnetic Blueprint Grid
+        // 1. Magnetic Blueprint Grid (Lightweight logic)
         ctx.beginPath();
         ctx.strokeStyle = 'rgba(59, 130, 246, 0.04)';
-        nodes.forEach((n, i) => {
+        const skip = w < 768 ? 2 : 1; // Simplify on mobile
+        for (let i = 0; i < nodes.length; i += skip) {
+          const n = nodes[i];
           const dx = mouse.x - n.x;
           const dy = mouse.y - n.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          const force = Math.max(0, (300 - dist) / 300);
+          const force = Math.max(0, (w < 768 ? 150 : 300) - dist) / (w < 768 ? 150 : 300);
 
           n.x += (n.bx + dx * force * 0.2 - n.x) * 0.1;
           n.y += (n.by + dy * force * 0.2 - (scrollY % 100) - n.y) * 0.1;
 
-          if (i % 22 === 0 && dist < 200) {
+          if (i % (w < 768 ? 44 : 22) === 0 && dist < (w < 768 ? 100 : 200)) {
             ctx.moveTo(n.x, n.y);
             ctx.lineTo(mouse.x, mouse.y);
           }
-        });
+        }
         ctx.stroke();
 
         // 2. Hex Streams (Memory Scan)
