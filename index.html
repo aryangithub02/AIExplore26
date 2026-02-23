@@ -1,0 +1,5384 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="aiexplore_logo_transparent_1771861055747.png" />
+  <title>AIXPLORE 2K26 — Mega Hackathon @ TGPCET</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&display=swap"
+    rel="stylesheet" />
+  <!-- GSAP for Animations -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <style>
+    /* ========== RESET & BASE ========== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0F172A;
+      --bg2: #1E293B;
+      --card: #1E293B;
+      --card2: #334155;
+      --border: #334155;
+      --blue: #3B82F6;
+      --blue-dark: #2563EB;
+      --purple: #8B5CF6;
+      --cyan: #06B6D4;
+      --green: #10B981;
+      --red: #EF4444;
+      --yellow: #F59E0B;
+      --text: rgba(255, 255, 255, 0.95);
+      --text2: #CBD5E1;
+      --text3: #94A3B8;
+      --mono: "IBM Plex Mono", monospace;
+      --display: "Sora", sans-serif;
+      --body: "Inter", sans-serif;
+      --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      display: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .glow-blob {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.04), transparent 80%);
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(120px);
+    }
+
+    .glow-blob-purple {
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.06), transparent 70%);
+    }
+
+    .glow-blob-cyan {
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.06), transparent 70%);
+    }
+
+    button {
+      font-family: var(--body);
+      cursor: pointer;
+      border: none;
+      outline: none;
+    }
+
+    input,
+    select,
+    textarea {
+      font-family: var(--body);
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    /* ========== SCROLLBAR ========== */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--blue);
+    }
+
+    /* ========== UTILITIES ========== */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 40px;
+      }
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ========== BUTTONS ========== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      transition: all 0.2s var(--ease-out);
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+      min-height: 48px;
+      /* High-precision tap target */
+      width: 100%;
+      /* Mobile first */
+    }
+
+    @media (min-width: 640px) {
+      .btn {
+        width: auto;
+      }
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .btn-primary:active {
+      background: var(--blue-dark);
+    }
+
+    @media (min-width: 1024px) {
+      .btn-primary:hover {
+        background: var(--blue-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+      }
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--blue);
+      border: 1px solid var(--blue);
+    }
+
+    @media (min-width: 1024px) {
+      .btn-secondary:hover {
+        background: rgba(59, 130, 246, 0.1);
+        transform: translateY(-2px);
+      }
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text2);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .btn-danger {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .btn-success {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .btn-success:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 13px;
+      min-height: 36px;
+    }
+
+    .btn:active,
+    .card:active {
+      transform: scale(0.98) !important;
+      transition: transform 0.12s var(--ease-out);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* ========== CARDS ========== */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    /* ========== BADGES ========== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-pending {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--yellow);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .badge-approved {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-rejected {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .badge-paid {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--green);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .badge-unpaid {
+      background: rgba(100, 116, 139, 0.15);
+      color: var(--text3);
+      border: 1px solid var(--border);
+    }
+
+    .badge-info {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--blue);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+
+    /* ========== FORMS ========== */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: var(--text2);
+      font-weight: 500;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 15px;
+      transition:
+        border-color 0.2s,
+        box-shadow 0.2s;
+    }
+
+    .form-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      outline: none;
+    }
+
+    .form-input.error {
+      border-color: var(--red);
+    }
+
+    .form-error {
+      font-size: 12px;
+      color: var(--red);
+      margin-top: 4px;
+    }
+
+    .form-input::placeholder {
+      color: var(--text3);
+    }
+
+    select.form-input {
+      cursor: pointer;
+    }
+
+    select.form-input option {
+      background: var(--card);
+    }
+
+    /* ========== NAVBAR ========== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 0 20px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.3s var(--ease-out);
+    }
+
+    @media (min-width: 768px) {
+      .navbar {
+        padding: 0 40px;
+        height: 72px;
+      }
+    }
+
+    .navbar.scrolled {
+      height: 60px;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom-color: rgba(59, 130, 246, 0.2);
+    }
+
+    .nav-brand {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-brand-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .nav-links {
+      display: none;
+      /* Mobile first */
+      align-items: center;
+      gap: 4px;
+    }
+
+    @media (min-width: 1024px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text2);
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    @media (min-width: 1024px) {
+      .nav-link:hover {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.05);
+      }
+    }
+
+    .nav-actions {
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+
+    @media (min-width: 640px) {
+      .nav-actions {
+        display: flex;
+      }
+    }
+
+    .hamburger {
+      display: flex;
+      /* Mobile first */
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 101;
+    }
+
+    @media (min-width: 1024px) {
+      .hamburger {
+        display: none;
+      }
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      z-index: 99;
+      padding: 24px;
+      flex-direction: column;
+      gap: 8px;
+      overflow-y: auto;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-nav-link {
+      padding: 14px 16px;
+      border-radius: 8px;
+      font-size: 16px;
+      color: var(--text2);
+      cursor: pointer;
+      transition:
+        background 0.2s,
+        color 0.2s;
+    }
+
+    .mobile-nav-link:hover {
+      background: var(--card);
+      color: var(--text);
+    }
+
+    /* ========== HERO ========== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 100px 0 60px;
+      /* Fluid padding */
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-container {
+      display: flex;
+      flex-direction: column;
+      /* Mobile first stack */
+      align-items: center;
+      text-align: center;
+      gap: 48px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-container {
+        flex-direction: row;
+        text-align: left;
+        gap: 60px;
+      }
+    }
+
+    .hero-content {
+      width: 100%;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-content {
+        flex: 1.2;
+      }
+    }
+
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      padding: 6px 14px;
+      background: rgba(59, 130, 246, 0.1);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--blue);
+      letter-spacing: 0.5px;
+    }
+
+    .hero-chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      animation: pulse 2s infinite;
+    }
+
+    .hero-title {
+      font-family: var(--display);
+      font-size: clamp(38px, 8vw, 68px);
+      /* Responsive Typography */
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: 0.02em;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+
+    .hero-title .accent {
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(16px, 2vw, 18px);
+      color: var(--text2);
+      line-height: 1.6;
+      margin-bottom: 40px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    @media (min-width: 1024px) {
+      .hero-subtitle {
+        margin-left: 0;
+      }
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      /* Mobile first buttons stack */
+      gap: 16px;
+      margin-bottom: 48px;
+      width: 100%;
+    }
+
+    @media (min-width: 640px) {
+      .hero-actions {
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-actions {
+        justify-content: flex-start;
+      }
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    @media (min-width: 1024px) {
+      .hero-stats {
+        justify-content: flex-start;
+        gap: 40px;
+      }
+    }
+
+    .hero-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .hero-stat-num {
+      font-family: var(--display);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 13px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 500;
+    }
+
+    .hero-image-wrap {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      order: -1;
+      /* Mobile: Image on top of text for focus */
+    }
+
+    @media (min-width: 1024px) {
+      .hero-image-wrap {
+        order: 0;
+      }
+    }
+
+    .hero-image-wrap img {
+      width: 100%;
+      max-width: 320px;
+      /* Mobile size */
+      height: auto;
+      border-radius: 32px;
+      box-shadow: 0 0 60px rgba(59, 130, 246, 0.25);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @media (min-width: 768px) {
+      .hero-image-wrap img {
+        max-width: 480px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-image-wrap img {
+        max-width: 520px;
+      }
+    }
+
+    .hero-image-glow {
+      position: absolute;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.15), transparent 70%);
+      z-index: -1;
+      animation: pulse-glow 4s ease-in-out infinite;
+    }
+
+    .btn-secondary {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    @media (min-width: 1024px) {
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: var(--blue);
+      }
+    }
+
+    /* ========== COUNTDOWN ========== */
+    .countdown {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      /* Mobile center */
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+
+    @media (min-width: 1024px) {
+      .countdown {
+        justify-content: flex-start;
+      }
+    }
+
+    .countdown-unit {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 14px;
+      text-align: center;
+      min-width: 68px;
+    }
+
+    @media (min-width: 640px) {
+      .countdown-unit {
+        padding: 14px 18px;
+        min-width: 74px;
+      }
+    }
+
+    .countdown-num {
+      font-family: var(--mono);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--blue);
+      display: block;
+      line-height: 1;
+    }
+
+    .countdown-label {
+      font-size: 11px;
+      color: var(--text3);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ========== SECTION COMMON ========== */
+    .section {
+      padding: 60px 0;
+      /* Mobile first padding */
+      background: transparent;
+      position: relative;
+    }
+
+    @media (min-width: 768px) {
+      .section {
+        padding: 96px 0;
+      }
+    }
+
+    .section-header {
+      margin-bottom: 40px;
+    }
+
+    @media (min-width: 768px) {
+      .section-header {
+        margin-bottom: 56px;
+      }
+    }
+
+    .section-tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--display);
+      font-size: clamp(28px, 6vw, 56px);
+      /* Fluid title */
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    @media (min-width: 768px) {
+      .section-title {
+        letter-spacing: 0.15em;
+        margin-bottom: 24px;
+      }
+    }
+
+    .section-desc {
+      font-size: clamp(15px, 2vw, 18px);
+      color: var(--text2);
+      line-height: 1.6;
+      max-width: 680px;
+    }
+
+    /* ========== PRIZES ========== */
+    #prizes {
+      background: transparent;
+      position: relative;
+    }
+
+    .prizes-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      /* Mobile first: 1 col */
+      gap: 16px;
+    }
+
+    @media (min-width: 640px) {
+      .prizes-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .prizes-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+    }
+
+    .prize-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s var(--ease-out);
+    }
+
+    @media (min-width: 1024px) {
+      .prize-card:hover {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        border-color: rgba(59, 130, 246, 0.2);
+      }
+    }
+
+    .prize-card.first {
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+
+    .prize-card.first::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top,
+          rgba(245, 158, 11, 0.08),
+          transparent 60%);
+    }
+
+    .prize-card.second {
+      border-color: rgba(148, 163, 184, 0.4);
+    }
+
+    .prize-card.third {
+      border-color: rgba(180, 120, 60, 0.4);
+    }
+
+    .prize-emoji {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .prize-place {
+      font-family: var(--body);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text3);
+      margin-bottom: 12px;
+    }
+
+    .prize-amount {
+      font-family: var(--body);
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      line-height: 1.1;
+    }
+
+    .prize-card.first .prize-amount {
+      color: #FFD700;
+      /* Bright Gold */
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .prize-card.second .prize-amount {
+      color: #E2E8F0;
+      /* Bright Silver/White */
+    }
+
+    .prize-card.third .prize-amount {
+      color: #FBD38D;
+      /* Bright Bronze */
+    }
+
+    .prize-desc {
+      font-size: 15px;
+      color: var(--text3);
+      line-height: 1.5;
+    }
+
+    .prize-extra {
+      margin-top: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+    }
+
+    .prize-tag {
+      font-size: 12px;
+      color: var(--text2);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 10px;
+    }
+
+    /* ========== SCHEDULE ========== */
+    .schedule-wrap {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 24px;
+      position: relative;
+    }
+
+    @media (min-width: 1024px) {
+      .schedule-wrap {
+        padding: 80px 40px;
+        border-radius: 32px;
+      }
+    }
+
+    .timeline {
+      position: relative;
+      padding: 40px 0;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 20px;
+      /* Mobile first: left align */
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom,
+          transparent,
+          var(--blue) 10%,
+          var(--purple) 50%,
+          var(--blue) 90%,
+          transparent);
+      border-radius: 4px;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+    }
+
+    @media (min-width: 1024px) {
+      .timeline::before {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+        animation: spine-pulse 4s ease-in-out infinite;
+      }
+    }
+
+    @keyframes spine-pulse {
+
+      0%,
+      100% {
+        opacity: 0.4;
+        filter: blur(1px);
+      }
+
+      50% {
+        opacity: 0.8;
+        filter: blur(0px);
+      }
+    }
+
+    .timeline-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding-left: 50px;
+      margin-bottom: 40px;
+      width: 100%;
+    }
+
+    @media (min-width: 1024px) {
+      .timeline-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        padding-left: 0;
+        margin-bottom: 80px;
+      }
+
+      .timeline-item:nth-child(even) {
+        direction: rtl;
+      }
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 20px;
+      top: 0;
+      transform: translateX(-50%);
+      width: 16px;
+      height: 16px;
+      background: var(--bg);
+      border: 3px solid var(--blue);
+      border-radius: 50%;
+      z-index: 10;
+    }
+
+    @media (min-width: 1024px) {
+      .timeline-dot {
+        left: 50%;
+        top: 40px;
+        width: 24px;
+        height: 24px;
+        border-width: 4px;
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+      }
+    }
+
+    .timeline-content {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s var(--ease-out);
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (min-width: 1024px) {
+      .timeline-content {
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content {
+        grid-column: 1;
+      }
+
+      .timeline-item:nth-child(even) .timeline-content {
+        grid-column: 2;
+        direction: ltr;
+        text-align: left;
+      }
+    }
+
+    .timeline-time {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--blue);
+      opacity: 0.8;
+      margin-bottom: 12px;
+      display: block;
+      letter-spacing: 1px;
+    }
+
+    .timeline-title {
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--text);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .timeline-desc {
+      font-size: 16px;
+      color: var(--text2);
+      line-height: 1.7;
+      opacity: 0.8;
+    }
+
+    .exec-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--purple);
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      padding: 6px 14px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 24px;
+      text-transform: lowercase;
+    }
+
+    @media (max-width: 992px) {
+      .timeline::before {
+        left: 40px;
+        transform: none;
+      }
+
+      .timeline-item {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding-left: 80px;
+        direction: ltr !important;
+        margin-bottom: 48px;
+      }
+
+      .timeline-item .timeline-content {
+        text-align: left !important;
+      }
+
+      .timeline-dot {
+        left: 40px;
+        top: 40px;
+      }
+    }
+
+    /* ========== FAQ ========== */
+    #faq {
+      background: transparent;
+      position: relative;
+    }
+
+    .faq-list {
+      width: 100%;
+      /* Mobile first */
+      margin: 0 auto;
+      padding: 24px 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+    }
+
+    @media (min-width: 1024px) {
+      .faq-list {
+        max-width: 860px;
+        padding: 40px;
+        border-radius: 24px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+      }
+    }
+
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+
+    .faq-q {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      background: var(--card);
+      cursor: pointer;
+      text-align: left;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      transition: background 0.2s;
+    }
+
+    .faq-q:hover {
+      background: var(--card2);
+    }
+
+    .faq-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text3);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition:
+        max-height 0.35s ease,
+        padding 0.3s;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 300px;
+    }
+
+    .faq-a-inner {
+      padding: 0 20px 18px;
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.7;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 48px 0 32px;
+    }
+
+    .footer-grid {
+      display: flex;
+      flex-direction: column;
+      /* Mobile first stack */
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 48px;
+      }
+    }
+
+    .footer-brand {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .footer-tagline {
+      font-size: 14px;
+      color: var(--text3);
+      line-height: 1.6;
+    }
+
+    .footer-col-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text3);
+      margin-bottom: 16px;
+    }
+
+    .footer-link {
+      display: block;
+      font-size: 14px;
+      color: var(--text2);
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover {
+      color: var(--blue);
+    }
+
+    .footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    .contact-item svg {
+      color: var(--blue);
+      flex-shrink: 0;
+    }
+
+    .footer-link-inline {
+      color: var(--text2);
+      transition: color 0.2s;
+    }
+
+    .footer-link-inline:hover {
+      color: var(--blue);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      display: flex;
+      flex-direction: column;
+      /* Mobile first */
+      align-items: center;
+      text-align: center;
+      gap: 16px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+
+    .footer-copy {
+      font-size: 14px;
+      color: #94A3B8;
+      /* Brightened from text3 */
+    }
+
+    /* ========== MODALS ========== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 460px;
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: scale(0.95) translateY(16px);
+      transition: transform 0.25s;
+    }
+
+    .modal-overlay.open .modal {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-wide {
+      max-width: 560px;
+    }
+
+    .modal-header {
+      padding: 24px 24px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .modal-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text2);
+      font-size: 18px;
+      transition:
+        background 0.2s,
+        color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .modal-close:hover {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .modal-body {
+      padding: 20px 24px 24px;
+    }
+
+    .modal-footer {
+      padding: 0 24px 24px;
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    /* ========== TOAST ========== */
+    #toast-container {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 340px;
+    }
+
+    @media (max-width: 480px) {
+      #toast-container {
+        top: auto;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        max-width: 100%;
+      }
+    }
+
+    .toast {
+      padding: 14px 18px;
+      border-radius: 10px;
+      border-left: 4px solid;
+      background: var(--card2);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      animation: slideIn 0.3s ease;
+      font-size: 14px;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .toast.success {
+      border-color: var(--green);
+    }
+
+    .toast.error {
+      border-color: var(--red);
+    }
+
+    .toast.info {
+      border-color: var(--blue);
+    }
+
+    .toast-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .toast-content {
+      flex: 1;
+    }
+
+    .toast-title {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .toast-msg {
+      color: var(--text2);
+      font-size: 13px;
+    }
+
+    .toast-close {
+      font-size: 16px;
+      color: var(--text3);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: color 0.2s;
+      margin-top: 1px;
+    }
+
+    .toast-close:hover {
+      color: var(--text);
+    }
+
+    /* ========== DASHBOARD ========== */
+    #dashboard-view {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: var(--bg);
+      flex-direction: row;
+    }
+
+    #dashboard-view.active {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .sidebar-nav {
+      padding: 12px 8px;
+      flex: 1;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text2);
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-link:hover {
+      background: var(--card);
+      color: var(--text);
+    }
+
+    .sidebar-link.active {
+      background: rgba(59, 130, 246, 0.12);
+      color: var(--blue);
+    }
+
+    .sidebar-link-icon {
+      font-size: 18px;
+      width: 22px;
+      text-align: center;
+    }
+
+    .sidebar-footer {
+      padding: 12px 8px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .dash-main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 32px;
+    }
+
+    .dash-page {
+      display: none;
+    }
+
+    .dash-page.active {
+      display: block;
+    }
+
+    .dash-header {
+      margin-bottom: 28px;
+    }
+
+    .dash-title {
+      font-family: var(--display);
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .dash-subtitle {
+      font-size: 14px;
+      color: var(--text2);
+      margin-top: 4px;
+    }
+
+    .dash-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .dash-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .dash-card-label {
+      font-size: 12px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .dash-card-val {
+      font-family: var(--display);
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .dash-card-sub {
+      font-size: 13px;
+      color: var(--text2);
+      margin-top: 4px;
+    }
+
+    /* ========== MULTI STEP FORM ========== */
+    .progress-bar {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 28px;
+    }
+
+    .progress-step {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      transition: background 0.3s;
+    }
+
+    .progress-step.done {
+      background: var(--blue);
+    }
+
+    .progress-step.active {
+      background: var(--purple);
+    }
+
+    .step-title {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--text3);
+      margin-bottom: 24px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 480px) {
+      .form-grid-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .checkbox-group {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .checkbox-input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--blue);
+      flex-shrink: 0;
+      margin-top: 2px;
+      cursor: pointer;
+    }
+
+    /* ========== TEAM MEMBER LIST ========== */
+    .member-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .member-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+
+    .member-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .member-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .member-email {
+      font-size: 12px;
+      color: var(--text3);
+    }
+
+    .member-badge {
+      margin-left: auto;
+    }
+
+    /* ========== SUCCESS SCREEN ========== */
+    .success-screen {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    .success-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      margin: 0 auto 20px;
+      animation: scaleIn 0.4s ease;
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0);
+      }
+
+      to {
+        transform: scale(1);
+      }
+    }
+
+    .success-title {
+      font-family: var(--display);
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .success-msg {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    .reg-id-box {
+      margin: 20px auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      display: inline-block;
+    }
+
+    .reg-id-label {
+      font-size: 11px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .reg-id-val {
+      font-family: var(--mono);
+      font-size: 18px;
+      color: var(--blue);
+    }
+
+    /* ========== ADMIN TABLE ========== */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-table th {
+      text-align: left;
+      padding: 12px 14px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text3);
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .data-table td {
+      padding: 14px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(30, 45, 74, 0.5);
+      vertical-align: middle;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--card);
+    }
+
+    /* ========== ADMIN SEARCH/FILTER ========== */
+    .admin-toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text3);
+      pointer-events: none;
+    }
+
+    .search-input {
+      padding-left: 38px !important;
+    }
+
+    /* ========== ANNOUNCEMENTS ========== */
+    .announcement {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      border-left: 3px solid var(--blue);
+    }
+
+    .announcement-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .announcement-meta {
+      font-size: 12px;
+      color: var(--text3);
+      margin-bottom: 6px;
+    }
+
+    .announcement-body {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* ========== LOADING SPINNER ========== */
+    .spinner {
+      width: 18px;
+      height: 18px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* ========== DEADLINE CLOSED ========== */
+    .closed-banner {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .closed-banner-title {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--red);
+      margin-bottom: 4px;
+    }
+
+    .closed-banner-msg {
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    /* ========== TABS ========== */
+    .tabs {
+      display: flex;
+      gap: 4px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .tab {
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text2);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.2s;
+    }
+
+    .tab:hover {
+      color: var(--text);
+    }
+
+    .tab.active {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* ========== PAYMENT ========== */
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .payment-option:hover,
+    .payment-option.selected {
+      border-color: var(--blue);
+    }
+
+    .payment-option-icon {
+      font-size: 28px;
+    }
+
+    .payment-option-name {
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    .payment-option-desc {
+      font-size: 13px;
+      color: var(--text3);
+    }
+
+    .payment-option-radio {
+      margin-left: auto;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--blue);
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px) {
+
+      .nav-links,
+      .nav-actions {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .sidebar {
+        width: 200px;
+      }
+
+      .dash-main {
+        padding: 20px 16px;
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 10;
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      #dashboard-view {
+        flex-direction: column;
+      }
+
+      .dash-main {
+        padding: 16px;
+      }
+
+      .hero-stats {
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .admin-toolbar {
+        flex-direction: column;
+      }
+    }
+
+    .divider {
+      text-align: center;
+      color: var(--text3);
+      font-size: 13px;
+      margin: 16px 0;
+      position: relative;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 40%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .divider::before {
+      left: 0;
+    }
+
+    .divider::after {
+      right: 0;
+    }
+
+    .team-code-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+    }
+
+    .team-code {
+      font-family: var(--mono);
+      font-size: 20px;
+      letter-spacing: 4px;
+      color: var(--blue);
+    }
+
+    .copy-btn {
+      font-size: 12px;
+      color: var(--text3);
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--border);
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .copy-btn:hover {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .problem-option {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .problem-option:hover,
+    .problem-option.selected {
+      border-color: var(--blue);
+      background: rgba(59, 130, 246, 0.04);
+    }
+
+    .problem-option-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .problem-option-desc {
+      font-size: 13px;
+      color: var(--text3);
+      line-height: 1.5;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+
+    .dot-green {
+      background: var(--green);
+    }
+
+    .dot-yellow {
+      background: var(--yellow);
+    }
+
+    .dot-red {
+      background: var(--red);
+    }
+
+    .user-menu {
+      position: relative;
+    }
+
+    .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      border: 2px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .user-avatar:hover {
+      border-color: var(--blue);
+    }
+
+    .sidebar-user {
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar-user-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .sidebar-user-name {
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sidebar-user-email {
+      font-size: 11px;
+      color: var(--text3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ========== ANIMATION ELEMENTS ========== */
+    .hologram-panel {
+      position: absolute;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      border-radius: 12px;
+      padding: 16px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--blue);
+      box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        inset 0 0 20px rgba(59, 130, 246, 0.1);
+      pointer-events: none;
+      z-index: 5;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+    }
+
+    .hologram-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg,
+          transparent 40%,
+          rgba(255, 255, 255, 0.05) 50%,
+          transparent 60%);
+      background-size: 200% 200%;
+      animation: scan-reflection 4s linear infinite;
+    }
+
+    @keyframes scan-reflection {
+      0% {
+        background-position: 200% 200%;
+      }
+
+      100% {
+        background-position: -200% -200%;
+      }
+    }
+
+    .hologram-header {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .hologram-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      opacity: 0.5;
+    }
+
+    .code-line {
+      white-space: nowrap;
+      opacity: 0.8;
+      display: flex;
+      gap: 8px;
+    }
+
+    .code-num {
+      color: var(--text3);
+      opacity: 0.5;
+      width: 14px;
+      text-align: right;
+    }
+
+    .code-keyword {
+      color: var(--purple);
+    }
+
+    .code-func {
+      color: var(--cyan);
+    }
+
+    .code-string {
+      color: var(--green);
+    }
+
+    .floating-code {
+      position: absolute;
+      color: var(--blue);
+      font-family: var(--mono);
+      font-size: 14px;
+      white-space: nowrap;
+      opacity: 0.2;
+      pointer-events: none;
+      z-index: 1;
+      filter: blur(1px);
+    }
+
+    @media (max-width: 768px) {
+      .hologram-panel {
+        display: none;
+      }
+    }
+
+    /* ========== PRIZE & SCHEDULE ENHANCEMENTS ========== */
+    .prizes-grid {
+      perspective: 1500px;
+    }
+
+    .prize-micro-code {
+      position: absolute;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--blue);
+      opacity: 0.1;
+      pointer-events: none;
+      z-index: 0;
+      white-space: nowrap;
+    }
+
+    .timeline-container {
+      position: relative;
+    }
+
+    .timeline-glow-line {
+      position: absolute;
+      left: 17px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--blue), transparent);
+      background-size: 100% 200px;
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .schedule-wrap:hover .timeline-glow-line {
+      opacity: 1;
+    }
+
+    .exec-label {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--blue);
+      text-transform: lowercase;
+      opacity: 0.3;
+      background: rgba(59, 130, 246, 0.05);
+      border: 1px solid rgba(59, 130, 246, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: block;
+    }
+
+    .procedural-grid {
+      display: none;
+    }
+
+    #bg-canvas,
+    #symbols-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    #bg-canvas {
+      z-index: -5;
+    }
+
+    #symbols-canvas {
+      z-index: -4;
+    }
+
+    .debug-tag {
+      position: fixed;
+      pointer-events: none;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--blue);
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    /* ========== RUNTIME LOG BAR ========== */
+    .runtime-log {
+      position: fixed;
+      bottom: 20px;
+      /* Adjusted for mobile */
+      right: 20px;
+      left: 20px;
+      /* Mobile first: near full width */
+      z-index: 10000;
+      font-family: var(--mono);
+      font-size: 9px;
+      /* Smaller for mobile */
+      color: var(--blue);
+      pointer-events: none;
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 4px;
+      overflow: hidden;
+      transition: all 0.3s var(--ease-out);
+    }
+
+    @media (min-width: 640px) {
+      .runtime-log {
+        bottom: 30px;
+        right: 30px;
+        left: auto;
+        width: 280px;
+        font-size: 10px;
+        gap: 6px;
+      }
+    }
+
+    .log-entry {
+      background: rgba(15, 23, 42, 0.9);
+      border-left: 2px solid var(--blue);
+      padding: 6px 10px;
+      border-radius: 0 4px 4px 0;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      animation: log-slide-in 0.4s var(--ease-out) forwards;
+    }
+
+    @media (min-width: 640px) {
+      .log-entry {
+        padding: 8px 12px;
+      }
+    }
+
+    @keyframes log-slide-in {
+      from {
+        transform: translateX(30px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 0.85;
+      }
+    }
+
+    .log-entry:nth-last-child(n+10) {
+      opacity: 0.4 !important;
+    }
+
+    .log-meta {
+      display: flex;
+      gap: 8px;
+      opacity: 0.9;
+    }
+
+    .log-hash {
+      color: var(--purple);
+    }
+
+    .log-type {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    .log-msg {
+      color: #fff;
+      opacity: 0.7;
+    }
+
+    /* Scanline Effect */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+          rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg,
+          rgba(255, 0, 0, 0.02),
+          rgba(0, 255, 0, 0.01),
+          rgba(0, 0, 255, 0.02));
+      z-index: 9999;
+      background-size: 100% 4px, 3px 100%;
+      pointer-events: none;
+      opacity: 0.3;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="runtime-log-container" class="runtime-log"></div>
+  <canvas id="bg-canvas"></canvas>
+  <canvas id="symbols-canvas"></canvas>
+  <div id="cursor-debug" class="debug-tag"></div>
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container"></div>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <div class="nav-brand-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
+      </div>
+      <span>AIXPLORE <span style="color: var(--blue)">2K26</span></span>
+    </div>
+    <div class="nav-links">
+      <span class="nav-link" onclick="smoothScrollTo('#prizes')">Prizes</span>
+      <span class="nav-link" onclick="smoothScrollTo('#schedule')">Schedule</span>
+      <span class="nav-link" onclick="smoothScrollTo('#faq')">FAQ</span>
+    </div>
+    <div class="nav-actions" id="nav-actions">
+      <button class="btn btn-ghost btn-sm" onclick="openModal('login-modal')">
+        Log In
+      </button>
+      <button class="btn btn-primary btn-sm" onclick="openModal('signup-modal')">
+        Register Now
+      </button>
+    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobile-menu">
+    <span class="mobile-nav-link" onclick="
+          smoothScrollTo('#prizes');
+          toggleMobileMenu();
+        ">🏆 Prizes</span>
+    <span class="mobile-nav-link" onclick="
+          smoothScrollTo('#schedule');
+          toggleMobileMenu();
+        ">📅 Schedule</span>
+    <span class="mobile-nav-link" onclick="
+          smoothScrollTo('#faq');
+          toggleMobileMenu();
+        ">❓ FAQ</span>
+    <div style="
+          margin-top: 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        ">
+      <button class="btn btn-secondary" style="width: 100%" onclick="
+            openModal('login-modal');
+            toggleMobileMenu();
+          ">
+        Log In
+      </button>
+      <button class="btn btn-primary" style="width: 100%" onclick="
+            openModal('signup-modal');
+            toggleMobileMenu();
+          ">
+        Register Now
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================== LANDING PAGE ===================== -->
+  <div id="landing-view">
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-bg"></div>
+      <div class="glow-blob" style="top: 10%; right: -100px;"></div>
+      <div class="glow-blob glow-blob-purple" style="bottom: 20%; left: -200px;"></div>
+      <div class="hero-grid"></div>
+      <div class="container">
+        <div class="hero-container">
+          <div class="hero-content">
+            <div class="hero-chip">
+              <span class="hero-chip-dot"></span>Applications Open
+            </div>
+            <h1 class="hero-title">
+              AIXPLORE <span class="accent">2K26</span><br />Mega Hackathon
+            </h1>
+            <p class="hero-subtitle">
+              Organized by Department of Computer Science and Engineering, TGPCET.
+              13th & 14th March 2026 — 24 Hours of Pure Innovation.
+            </p>
+            <div class="countdown" id="countdown">
+              <div class="countdown-unit">
+                <span class="countdown-num" id="cd-days">00</span>
+                <div class="countdown-label">Days</div>
+              </div>
+              <div class="countdown-unit">
+                <span class="countdown-num" id="cd-hours">00</span>
+                <div class="countdown-label">Hours</div>
+              </div>
+              <div class="countdown-unit">
+                <span class="countdown-num" id="cd-mins">00</span>
+                <div class="countdown-label">Mins</div>
+              </div>
+              <div class="countdown-unit">
+                <span class="countdown-num" id="cd-secs">00</span>
+                <div class="countdown-label">Secs</div>
+              </div>
+            </div>
+            <div class="hero-actions" id="hero-actions">
+              <button class="btn btn-primary" style="padding: 14px 28px; font-size: 16px"
+                onclick="openModal('signup-modal')">
+                Register Your Team →
+              </button>
+              <button class="btn btn-secondary" style="padding: 14px 28px; font-size: 16px"
+                onclick="smoothScrollTo('#schedule')">
+                View Schedule
+              </button>
+            </div>
+            <div class="hero-stats">
+              <div class="hero-stat-item">
+                <div class="hero-stat-num">500+</div>
+                <div class="hero-stat-label">Participants</div>
+              </div>
+              <div class="hero-stat-item">
+                <div class="hero-stat-num">₹50,000</div>
+                <div class="hero-stat-label">Prize Pool</div>
+              </div>
+              <div class="hero-stat-item">
+                <div class="hero-stat-num">24 Hours</div>
+                <div class="hero-stat-label">Non-stop</div>
+              </div>
+              <div class="hero-stat-item">
+                <div class="hero-stat-num">₹600</div>
+                <div class="hero-stat-label">Reg. Fee</div>
+              </div>
+            </div>
+          </div>
+          <div class="hero-image-wrap">
+            <div class="hero-image-glow"></div>
+            <!-- Interactive Hologram Panel -->
+            <div class="hologram-panel" id="hero-hologram" style="top: -20px; right: -40px; width: 200px;">
+              <div class="hologram-header">
+                <div class="hologram-dot"></div>
+                <div class="hologram-dot"></div>
+                <div class="hologram-dot"></div>
+              </div>
+              <div class="code-line"><span class="code-num">01</span><span><span class="code-keyword">async</span> <span
+                    class="code-keyword">function</span> <span class="code-func">innovate</span>() {</span></div>
+              <div class="code-line"><span class="code-num">02</span><span> <span class="code-keyword">await</span>
+                  <span class="code-func">build</span>({</span></div>
+              <div class="code-line"><span class="code-num">03</span><span> idea: <span
+                    class="code-string">"2K26"</span>,</span></div>
+              <div class="code-line"><span class="code-num">04</span><span> mode: <span
+                    class="code-string">"hack"</span></span></div>
+              <div class="code-line"><span class="code-num">05</span><span> });</span></div>
+              <div class="code-line"><span class="code-num">06</span><span>}</span></div>
+            </div>
+            <!-- Floating Code Fragments -->
+            <div class="floating-code" style="top: 20%; left: -100px;">&lt;AI /&gt;</div>
+            <div class="floating-code" style="top: 60%; right: -80px;">model.train()</div>
+            <div class="floating-code" style="bottom: 10%; left: -50px;">const innovate = true;</div>
+            <div class="floating-code" style="top: -40px; left: 40px;">while(alive) { hack() }</div>
+
+            <img src="hackathon_hero_artwork_1771860641549.png" alt="AIExplore 2K26 Hero Illustration" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIZES -->
+    <section class="section" id="prizes">
+      <div class="glow-blob glow-blob-cyan" style="top: 20%; right: -200px;"></div>
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">// Rewards</div>
+          <h2 class="section-title">Prizes & Perks</h2>
+          <p class="section-desc">
+            Compete for the grand prize and exciting certificates from IEEE & TGPCET.
+          </p>
+        </div>
+        <div class="prizes-grid">
+          <div class="prize-card first">
+            <div class="prize-micro-code" style="top: 10%; right: 5%;">reward.execute();</div>
+            <div class="prize-micro-code" style="bottom: 20%; left: 5%;">winner.celebrate();</div>
+            <span class="prize-emoji">🥇</span>
+            <div class="prize-place">Winner</div>
+            <div class="prize-amount">Upto ₹50,000</div>
+            <div class="prize-desc">Grand Prize — Best Innovation Award</div>
+            <div class="prize-extra">
+              <span class="prize-tag">Winner Trophy</span>
+              <span class="prize-tag">IEEE Certificate</span>
+              <span class="prize-tag">Cash Prize</span>
+            </div>
+          </div>
+          <div class="prize-card second">
+            <div class="prize-micro-code" style="top: 15%; right: 10%;">if(runnerUp) reward();</div>
+            <span class="prize-emoji">🥈</span>
+            <div class="prize-place">Runner Up</div>
+            <div class="prize-amount">Big Rewards</div>
+            <div class="prize-desc">Excellence Award — For Out-of-box Thinking</div>
+            <div class="prize-extra">
+              <span class="prize-tag">Appreciation Shield</span>
+              <span class="prize-tag">Certificates</span>
+            </div>
+          </div>
+          <div class="prize-card info">
+            <div class="prize-micro-code" style="bottom: 15%; left: 10%;">participants.map(p => p.reward());</div>
+            <span class="prize-emoji">📜</span>
+            <div class="prize-place">All Participants</div>
+            <div class="prize-amount">Perks</div>
+            <div class="prize-desc">Every hacker gets rewarded for their efforts.</div>
+            <div class="prize-extra">
+              <span class="prize-tag">Participation Certificate</span>
+              <span class="prize-tag">Hackathon Kit</span>
+              <span class="prize-tag">Mentorship</span>
+            </div>
+          </div>
+          <div class="prize-card info">
+            <div class="prize-micro-code" style="top: 50%; opacity: 0.05;">while(innovating) { build(); }</div>
+            <span class="prize-emoji">🛡️</span>
+            <div class="prize-place">Affiliations</div>
+            <div class="prize-amount">IEEE & MHRD</div>
+            <div class="prize-desc">Recognized by global and national innovation bodies.</div>
+            <div class="prize-extra">
+              <span class="prize-tag">IEEE Student Branch</span>
+              <span class="prize-tag">MHRD Innovation Cell</span>
+              <span class="prize-tag">CIS Society</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section class="section" id="schedule">
+      <div class="glow-blob glow-blob-purple" style="top: 30%; left: -200px;"></div>
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">// Timeline</div>
+          <h2 class="section-title">Event Schedule</h2>
+          <p class="section-desc">
+            24 hours of non-stop building at TGPCET 3rd Building, 1st Floor.
+          </p>
+        </div>
+        <div class="schedule-wrap">
+          <div class="timeline">
+            <!-- ITEM 1 -->
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="exec-label">commit a1f93c — init</span>
+                <div class="timeline-title">Reporting & Kit Distribution</div>
+                <div class="timeline-time">MAR 13 — 10:00 AM</div>
+                <div class="timeline-desc">
+                  Official reporting at TGPCET 3rd Building. Receive your hacker ID and physical kit.
+                </div>
+              </div>
+            </div>
+
+            <!-- ITEM 2 -->
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="exec-label">commit b9e41d — start_hacking</span>
+                <div class="timeline-title">24-Hour Sprint Begins</div>
+                <div class="timeline-time">MAR 13 — 11:30 AM</div>
+                <div class="timeline-desc">
+                  The countdown starts. All teams connected to internal network. Development phase active.
+                </div>
+              </div>
+            </div>
+
+            <!-- ITEM 3 -->
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="exec-label">commit c3d8a2 — review_prototype</span>
+                <div class="timeline-title">Technical Mentorship Round</div>
+                <div class="timeline-time">MAR 13 — 09:00 PM</div>
+                <div class="timeline-desc">
+                  Mid-hack analysis. Mentors inspect architecture and logic blocks for optimization.
+                </div>
+              </div>
+            </div>
+
+            <!-- ITEM 4 -->
+            <div class="timeline-item">
+              <div class="timeline-dot" style="border-color: var(--purple);"></div>
+              <div class="timeline-content">
+                <span class="exec-label">commit d7e1f4 — stop_build</span>
+                <div class="timeline-title">All Hacking Ends</div>
+                <div class="timeline-time">MAR 14 — 11:30 AM</div>
+                <div class="timeline-desc">
+                  Execution stopped. All code base frozen. Final project submission window closes.
+                </div>
+              </div>
+            </div>
+
+            <!-- ITEM 5 -->
+            <div class="timeline-item">
+              <div class="timeline-dot" style="border-color: var(--purple);"></div>
+              <div class="timeline-content">
+                <span class="exec-label">commit e2f8a9 — prod_demo</span>
+                <div class="timeline-title">Final Demo & Evaluation</div>
+                <div class="timeline-time">MAR 14 — 01:00 PM</div>
+                <div class="timeline-desc">
+                  Live production demo before the jury panel. Showcase your core innovation blocks.
+                </div>
+              </div>
+            </div>
+
+            <!-- ITEM 6 -->
+            <div class="timeline-item">
+              <div class="timeline-dot" style="border-color: var(--purple);"></div>
+              <div class="timeline-content">
+                <span class="exec-label">commit f6a3c7 — release_merge</span>
+                <div class="timeline-title">Awards & Master Merge</div>
+                <div class="timeline-time">MAR 14 — 04:00 PM</div>
+                <div class="timeline-desc">
+                  Winner announcements. Official certification and closing of the AIExplore 2K26 repo.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq" style="background: rgba(15, 23, 42, 0.2);">
+      <div class="glow-blob" style="bottom: 10%; right: -100px;"></div>
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">// Questions</div>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-desc">
+            Everything you need to know before registering.
+          </p>
+        </div>
+        <div class="faq-list" id="faq-list"></div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">⚡ AIExplore 2K26</div>
+            <p class="footer-tagline">
+              India's premier student hackathon, empowering the next
+              generation of tech innovators to build what's next.
+            </p>
+          </div>
+          <div>
+            <div class="footer-col-title">Event</div>
+            <span class="footer-link" onclick="scrollTo('#prizes')">Prizes</span>
+            <span class="footer-link" onclick="scrollTo('#schedule')">Schedule</span>
+            <span class="footer-link" onclick="scrollTo('#faq')">FAQ</span>
+          </div>
+          <div>
+            <div class="footer-col-title">Participate</div>
+            <span class="footer-link" onclick="openModal('signup-modal')">Register</span>
+            <span class="footer-link" onclick="openModal('login-modal')">Login</span>
+          </div>
+          <div class="footer-contact">
+            <div class="footer-col-title">Contact Us</div>
+            <div class="contact-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.19-1.33a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                </path>
+              </svg>
+              <span>Aditya: 7058045278</span>
+            </div>
+            <div class="contact-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l2.19-1.33a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                </path>
+              </svg>
+              <span>Shubham: 9359910468</span>
+            </div>
+            <div class="contact-item">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+              </svg>
+              <a href="https://instagram.com/aixplore_cse" target="_blank" class="footer-link-inline">@aixplore_cse</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div class="footer-copy">
+            © 2026 AIXPLORE 2K26. TGPCET Department of CSE.
+          </div>
+          <div class="footer-copy">Made with ❤️ for hackers</div>
+        </div>
+      </div>
+    </footer>
+  </div>
+  <!-- /landing-view -->
+
+  <!-- ===================== DASHBOARD VIEW ===================== -->
+  <div id="dashboard-view">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">⚡ AIExplore 2K26</div>
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <!-- Participant Links -->
+        <div class="sidebar-link active" onclick="showDashPage('overview')" data-page="overview">
+          <span class="sidebar-link-icon">🏠</span> Overview
+        </div>
+        <div class="sidebar-link participant-only" onclick="showDashPage('team')" data-page="team">
+          <span class="sidebar-link-icon">👥</span> My Team
+        </div>
+        <div class="sidebar-link participant-only" onclick="showDashPage('registration')" data-page="registration">
+          <span class="sidebar-link-icon">📋</span> Registration
+        </div>
+        <div class="sidebar-link participant-only" onclick="showDashPage('payment')" data-page="payment">
+          <span class="sidebar-link-icon">💳</span> Payment
+        </div>
+
+        <!-- Shared Links -->
+        <div class="sidebar-link" onclick="showDashPage('announcements')" data-page="announcements">
+          <span class="sidebar-link-icon">📢</span> Announcements
+        </div>
+
+        <!-- Admin Links -->
+        <div class="sidebar-link admin-only hidden" onclick="showDashPage('admin')" data-page="admin">
+          <span class="sidebar-link-icon">🛡️</span> Admin Console
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="member-avatar" id="sidebar-avatar">?</div>
+          <div class="sidebar-user-info">
+            <div class="sidebar-user-name" id="sidebar-name">Loading...</div>
+            <div class="sidebar-user-email" id="sidebar-email">...</div>
+          </div>
+        </div>
+        <button class="btn btn-ghost btn-sm" style="width: 100%; margin-top: 8px" onclick="logout()">
+          Sign Out
+        </button>
+      </div>
+    </div>
+    <!-- Main Content -->
+    <div class="dash-main">
+      <!-- OVERVIEW -->
+      <div class="dash-page active" id="page-overview">
+        <div class="dash-header">
+          <div class="dash-title">
+            Welcome back, <span id="dash-first-name">User</span>! <span id="admin-badge" class="badge badge-info hidden"
+              style="vertical-align: middle; margin-left: 8px;">Master Admin</span> 👋
+          </div>
+          <div class="dash-subtitle" id="dash-subtitle">Here's your hackathon dashboard.</div>
+        </div>
+        <div id="closed-banner-dash" class="closed-banner hidden">
+          <div class="closed-banner-title">⛔ Registration Closed</div>
+          <div class="closed-banner-msg">
+            The registration deadline has passed. You can still view your
+            submission.
+          </div>
+        </div>
+        <div class="dash-cards">
+          <!-- Participant Cards -->
+          <div class="dash-card participant-only">
+            <div class="dash-card-label">Registration Status</div>
+            <div class="dash-card-val" id="dash-reg-status">—</div>
+            <div class="dash-card-sub" id="dash-reg-id">No registration yet</div>
+          </div>
+          <div class="dash-card participant-only">
+            <div class="dash-card-label">Team Name</div>
+            <div class="dash-card-val" id="dash-team-name">—</div>
+            <div class="dash-card-sub" id="dash-team-members">Not in a team</div>
+          </div>
+
+          <!-- Admin Cards -->
+          <div class="dash-card admin-only hidden">
+            <div class="dash-card-label">Total Teams</div>
+            <div class="dash-card-val" id="adm-count-teams">0</div>
+            <div class="dash-card-sub">Registered for project</div>
+          </div>
+          <div class="dash-card admin-only hidden">
+            <div class="dash-card-label">Total Participants</div>
+            <div class="dash-card-val" id="adm-count-users">0</div>
+            <div class="dash-card-sub">Verified accounts</div>
+          </div>
+          <div class="dash-card admin-only hidden">
+            <div class="dash-card-label">Pending Approvals</div>
+            <div class="dash-card-val" id="adm-count-pending">0</div>
+            <div class="dash-card-sub">Awaiting admin review</div>
+          </div>
+
+          <!-- Shared Date Card (Adjusted for Admin) -->
+          <div class="dash-card">
+            <div class="dash-card-label" id="date-card-label">Hackathon Date</div>
+            <div class="dash-card-val">March 13–14</div>
+            <div class="dash-card-sub" id="date-card-sub">24-hour sprint</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap" id="dash-quick-actions">
+          <div class="participant-only">
+            <button class="btn btn-primary" onclick="showDashPage('team')" id="btn-create-team">Manage Team →</button>
+            <button class="btn btn-secondary" onclick="showDashPage('registration')">Register Project →</button>
+          </div>
+          <div class="admin-only hidden">
+            <button class="btn btn-primary" onclick="showDashPage('admin')">Review Applications →</button>
+            <button class="btn btn-secondary" onclick="exportCSV()">Export Data (CSV) →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEAM PAGE -->
+      <div class="dash-page" id="page-team">
+        <div class="dash-header">
+          <div class="dash-title">Team Management</div>
+          <div class="dash-subtitle">
+            Create a team or join an existing one.
+          </div>
+        </div>
+        <div id="team-section-no-team">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px" class="team-options-grid">
+            <div class="card" style="cursor: default">
+              <h3 style="
+                    font-family: var(--display);
+                    font-size: 17px;
+                    font-weight: 700;
+                    margin-bottom: 8px;
+                  ">
+                🚀 Create a Team
+              </h3>
+              <p style="
+                    font-size: 14px;
+                    color: var(--text2);
+                    margin-bottom: 16px;
+                    line-height: 1.6;
+                  ">
+                Start a new team and invite others using your unique team
+                code.
+              </p>
+              <button class="btn btn-primary btn-sm" onclick="openModal('create-team-modal')">
+                Create Team
+              </button>
+            </div>
+            <div class="card" style="cursor: default">
+              <h3 style="
+                    font-family: var(--display);
+                    font-size: 17px;
+                    font-weight: 700;
+                    margin-bottom: 8px;
+                  ">
+                🤝 Join a Team
+              </h3>
+              <p style="
+                    font-size: 14px;
+                    color: var(--text2);
+                    margin-bottom: 16px;
+                    line-height: 1.6;
+                  ">
+                Have a team code? Join your friends' team instantly.
+              </p>
+              <button class="btn btn-secondary btn-sm" onclick="openModal('join-team-modal')">
+                Join Team
+              </button>
+            </div>
+          </div>
+        </div>
+        <div id="team-section-has-team" class="hidden">
+          <div class="card" style="margin-bottom: 20px">
+            <div style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  flex-wrap: wrap;
+                  gap: 12px;
+                  margin-bottom: 16px;
+                ">
+              <div>
+                <div style="
+                      font-family: var(--display);
+                      font-size: 20px;
+                      font-weight: 800;
+                    " id="team-display-name">
+                  —
+                </div>
+                <div style="
+                      font-size: 13px;
+                      color: var(--text3);
+                      margin-top: 2px;
+                    " id="team-display-count">
+                  — members
+                </div>
+              </div>
+              <div id="team-leader-actions"></div>
+            </div>
+            <div class="team-code-box">
+              <div>
+                <div style="
+                      font-size: 12px;
+                      color: var(--text3);
+                      margin-bottom: 4px;
+                    ">
+                  TEAM CODE
+                </div>
+                <div class="team-code" id="team-display-code">——</div>
+              </div>
+              <button class="copy-btn" onclick="copyTeamCode()">Copy</button>
+            </div>
+          </div>
+          <div>
+            <div style="
+                  font-family: var(--display);
+                  font-size: 16px;
+                  font-weight: 700;
+                  margin-bottom: 12px;
+                ">
+              Team Members
+            </div>
+            <div class="member-list" id="team-members-list"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- REGISTRATION PAGE -->
+      <div class="dash-page" id="page-registration">
+        <div class="dash-header">
+          <div class="dash-title">Project Registration</div>
+          <div class="dash-subtitle">
+            Complete all steps to register your team's project.
+          </div>
+        </div>
+        <div id="reg-deadline-closed" class="closed-banner hidden">
+          <div class="closed-banner-title">⛔ Registration Closed</div>
+          <div class="closed-banner-msg">
+            The deadline has passed. Your submission is locked.
+          </div>
+        </div>
+        <div id="reg-no-team" class="card" style="text-align: center; padding: 40px">
+          <div style="font-size: 40px; margin-bottom: 12px">👥</div>
+          <div style="
+                font-family: var(--display);
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 8px;
+              ">
+            You need a team first!
+          </div>
+          <p style="font-size: 14px; color: var(--text2); margin-bottom: 20px">
+            Create or join a team before registering your project.
+          </p>
+          <button class="btn btn-primary" onclick="showDashPage('team')">
+            Go to Team →
+          </button>
+        </div>
+        <div id="reg-already-done" class="hidden">
+          <div class="card" style="text-align: center; padding: 40px">
+            <div class="success-icon" style="margin: 0 auto 16px">✅</div>
+            <div style="
+                  font-family: var(--display);
+                  font-size: 20px;
+                  font-weight: 800;
+                  margin-bottom: 8px;
+                ">
+              Registration Submitted!
+            </div>
+            <p style="
+                  font-size: 14px;
+                  color: var(--text2);
+                  margin-bottom: 16px;
+                ">
+              Your team's registration is under review.
+            </p>
+            <div class="reg-id-box">
+              <div class="reg-id-label">Registration ID</div>
+              <div class="reg-id-val" id="dash-reg-id-display">—</div>
+            </div>
+          </div>
+        </div>
+        <div id="reg-form-container" class="hidden">
+          <div class="card">
+            <!-- Progress Bar -->
+            <div class="progress-bar" id="reg-progress-bar">
+              <div class="progress-step active" id="pstep-1"></div>
+              <div class="progress-step" id="pstep-2"></div>
+              <div class="progress-step" id="pstep-3"></div>
+            </div>
+            <!-- Step 1 -->
+            <div id="reg-step-1">
+              <div class="step-title">Problem Statement</div>
+              <div class="step-desc">
+                Choose the problem statement your team will be working on.
+              </div>
+              <div id="problem-options">
+                <div class="problem-option" onclick="selectProblem(this, 'ps1')" data-id="ps1">
+                  <div class="problem-option-title">
+                    🤖 AI-Powered Healthcare Assistant
+                  </div>
+                  <div class="problem-option-desc">
+                    Build an intelligent assistant to help rural healthcare
+                    workers diagnose patients using ML models and minimal
+                    connectivity.
+                  </div>
+                </div>
+                <div class="problem-option" onclick="selectProblem(this, 'ps2')" data-id="ps2">
+                  <div class="problem-option-title">
+                    💰 FinTech for the Unbanked
+                  </div>
+                  <div class="problem-option-desc">
+                    Design a mobile-first financial solution for people
+                    without traditional banking access, leveraging UPI and Jan
+                    Dhan infrastructure.
+                  </div>
+                </div>
+                <div class="problem-option" onclick="selectProblem(this, 'ps3')" data-id="ps3">
+                  <div class="problem-option-title">
+                    🌱 Climate Action Platform
+                  </div>
+                  <div class="problem-option-desc">
+                    Create a platform that helps communities track, report,
+                    and take action against local climate and environmental
+                    issues.
+                  </div>
+                </div>
+                <div class="problem-option" onclick="selectProblem(this, 'ps4')" data-id="ps4">
+                  <div class="problem-option-title">
+                    🎓 EdTech for Vernacular Learners
+                  </div>
+                  <div class="problem-option-desc">
+                    Build a personalized learning solution for students who
+                    learn best in regional languages, with offline
+                    capabilities.
+                  </div>
+                </div>
+              </div>
+              <div id="ps-error" class="form-error hidden">
+                Please select a problem statement to continue.
+              </div>
+              <div style="
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: flex-end;
+                  ">
+                <button class="btn btn-primary" onclick="regNext(1)">
+                  Next →
+                </button>
+              </div>
+            </div>
+            <!-- Step 2 -->
+            <div id="reg-step-2" class="hidden">
+              <div class="step-title">Project Details</div>
+              <div class="step-desc">
+                Tell us about your project idea and tech stack.
+              </div>
+              <div class="form-group">
+                <label class="form-label">Project Name *</label>
+                <input type="text" id="reg-proj-name" class="form-input" placeholder="e.g., MedBot Pro" />
+                <div class="form-error hidden" id="reg-proj-name-err">
+                  Project name is required.
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Project Description *</label>
+                <textarea id="reg-proj-desc" class="form-input" rows="4"
+                  placeholder="Describe what your project does and the problem it solves..."></textarea>
+                <div class="form-error hidden" id="reg-proj-desc-err">
+                  Description is required (min 20 chars).
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Tech Stack</label>
+                <input type="text" id="reg-tech-stack" class="form-input"
+                  placeholder="e.g., React, Node.js, Python, TensorFlow" />
+              </div>
+              <div style="
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: space-between;
+                  ">
+                <button class="btn btn-ghost" onclick="regBack(2)">
+                  ← Back
+                </button>
+                <button class="btn btn-primary" onclick="regNext(2)">
+                  Next →
+                </button>
+              </div>
+            </div>
+            <!-- Step 3 -->
+            <div id="reg-step-3" class="hidden">
+              <div class="step-title">Confirmation & Declaration</div>
+              <div class="step-desc">
+                Review and confirm your registration.
+              </div>
+              <div class="card" style="margin-bottom: 16px; background: var(--bg)">
+                <div style="
+                      font-size: 13px;
+                      color: var(--text3);
+                      margin-bottom: 4px;
+                    ">
+                  Problem Statement
+                </div>
+                <div style="font-weight: 600" id="confirm-ps">—</div>
+              </div>
+              <div class="card" style="margin-bottom: 16px; background: var(--bg)">
+                <div style="
+                      font-size: 13px;
+                      color: var(--text3);
+                      margin-bottom: 4px;
+                    ">
+                  Project
+                </div>
+                <div style="font-weight: 600" id="confirm-proj">—</div>
+                <div style="
+                      font-size: 13px;
+                      color: var(--text2);
+                      margin-top: 4px;
+                    " id="confirm-desc">
+                  —
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="checkbox-group">
+                  <input type="checkbox" id="reg-declaration" class="checkbox-input" />
+                  <label for="reg-declaration" style="
+                        font-size: 14px;
+                        color: var(--text2);
+                        cursor: pointer;
+                      ">I declare that the information provided is accurate, the
+                    project is original work, and I agree to the hackathon
+                    rules and code of conduct.</label>
+                </div>
+                <div class="form-error hidden" id="reg-decl-err">
+                  You must accept the declaration.
+                </div>
+              </div>
+              <div style="
+                    margin-top: 20px;
+                    display: flex;
+                    justify-content: space-between;
+                  ">
+                <button class="btn btn-ghost" onclick="regBack(3)">
+                  ← Back
+                </button>
+                <button class="btn btn-primary" id="reg-submit-btn" onclick="submitRegistration()">
+                  Submit Registration
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAYMENT PAGE -->
+      <div class="dash-page" id="page-payment">
+        <div class="dash-header">
+          <div class="dash-title">Payment</div>
+          <div class="dash-subtitle">
+            Complete your registration fee payment.
+          </div>
+        </div>
+        <div id="payment-not-registered" class="card" style="text-align: center; padding: 40px">
+          <div style="font-size: 40px; margin-bottom: 12px">📋</div>
+          <div style="
+                font-family: var(--display);
+                font-size: 18px;
+                font-weight: 700;
+                margin-bottom: 8px;
+              ">
+            Register First!
+          </div>
+          <p style="font-size: 14px; color: var(--text2); margin-bottom: 20px">
+            Complete your project registration before making payment.
+          </p>
+          <button class="btn btn-primary" onclick="showDashPage('registration')">
+            Go to Registration →
+          </button>
+        </div>
+        <div id="payment-already-paid" class="hidden card" style="text-align: center; padding: 40px">
+          <div class="success-icon" style="margin: 0 auto 16px">✅</div>
+          <div style="
+                font-family: var(--display);
+                font-size: 20px;
+                font-weight: 800;
+                margin-bottom: 8px;
+              ">
+            Payment Confirmed!
+          </div>
+          <p style="font-size: 14px; color: var(--text2)">
+            Your registration fee has been paid successfully. Check your email
+            for the receipt.
+          </p>
+        </div>
+        <div id="payment-form-container" class="hidden">
+          <div class="card" style="max-width: 520px">
+            <h3 style="
+                  font-family: var(--display);
+                  font-size: 18px;
+                  font-weight: 700;
+                  margin-bottom: 4px;
+                ">
+              Registration Fee
+            </h3>
+            <p style="
+                  font-size: 14px;
+                  color: var(--text2);
+                  margin-bottom: 20px;
+                ">
+              One-time payment per team
+            </p>
+            <div style="
+                  background: var(--bg);
+                  border: 1px solid var(--border);
+                  border-radius: 10px;
+                  padding: 16px;
+                  margin-bottom: 20px;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                ">
+              <div>
+                <div style="font-weight: 600">
+                  AIExplore 2K26 2025 Registration
+                </div>
+                <div style="font-size: 13px; color: var(--text3)">
+                  Includes: Hackathon entry, meals, swag
+                </div>
+              </div>
+              <div style="
+                    font-family: var(--display);
+                    font-size: 24px;
+                    font-weight: 800;
+                    color: var(--blue);
+                  ">
+                ₹500
+              </div>
+            </div>
+            <div style="margin-bottom: 16px">
+              <div style="font-size: 14px; font-weight: 500; margin-bottom: 12px">
+                Select Payment Method
+              </div>
+              <div class="payment-option" onclick="selectPayment(this, 'upi')">
+                <div class="payment-option-icon">📱</div>
+                <div>
+                  <div class="payment-option-name">UPI</div>
+                  <div class="payment-option-desc">
+                    Google Pay, PhonePe, Paytm
+                  </div>
+                </div>
+                <input type="radio" name="payment-method" class="payment-option-radio" />
+              </div>
+              <div class="payment-option" onclick="selectPayment(this, 'card')">
+                <div class="payment-option-icon">💳</div>
+                <div>
+                  <div class="payment-option-name">Debit/Credit Card</div>
+                  <div class="payment-option-desc">
+                    Visa, Mastercard, RuPay
+                  </div>
+                </div>
+                <input type="radio" name="payment-method" class="payment-option-radio" />
+              </div>
+              <div class="payment-option" onclick="selectPayment(this, 'netbanking')">
+                <div class="payment-option-icon">🏦</div>
+                <div>
+                  <div class="payment-option-name">Net Banking</div>
+                  <div class="payment-option-desc">
+                    All major banks supported
+                  </div>
+                </div>
+                <input type="radio" name="payment-method" class="payment-option-radio" />
+              </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%" id="pay-btn" onclick="simulatePayment()">
+              Pay ₹500 →
+            </button>
+            <p style="
+                  font-size: 12px;
+                  color: var(--text3);
+                  margin-top: 12px;
+                  text-align: center;
+                ">
+              🔒 This is a simulated payment. No real money will be charged.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANNOUNCEMENTS PAGE -->
+      <div class="dash-page" id="page-announcements">
+        <div class="dash-header">
+          <div class="dash-title">Announcements</div>
+          <div class="dash-subtitle">Stay updated with the latest news.</div>
+        </div>
+        <div id="announcements-list"></div>
+      </div>
+
+      <!-- ADMIN PAGE -->
+      <div class="dash-page" id="page-admin">
+        <div class="dash-header">
+          <div class="dash-title">Admin Panel 🛡️</div>
+          <div class="dash-subtitle">
+            Manage registrations and participants.
+          </div>
+        </div>
+        <div class="tabs">
+          <div class="tab active" onclick="showAdminTab('teams')">Teams</div>
+          <div class="tab" onclick="showAdminTab('participants')">
+            Participants
+          </div>
+        </div>
+        <div class="tab-content active" id="admin-tab-teams">
+          <div class="admin-toolbar">
+            <div class="search-box">
+              <span class="search-icon">🔍</span>
+              <input type="text" class="form-input search-input" id="admin-search" placeholder="Search teams..."
+                oninput="adminFilter()" />
+            </div>
+            <select class="form-input" id="admin-filter-status" onchange="adminFilter()"
+              style="width: auto; min-width: 160px">
+              <option value="">All Statuses</option>
+              <option value="Pending">Pending</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+            <button class="btn btn-ghost btn-sm" onclick="exportCSV()">
+              📥 Export CSV
+            </button>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Reg ID</th>
+                  <th>Team Name</th>
+                  <th>Members</th>
+                  <th>Problem</th>
+                  <th>Status</th>
+                  <th>Payment</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admin-teams-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-content" id="admin-tab-participants">
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>College</th>
+                  <th>Department</th>
+                  <th>Team</th>
+                </tr>
+              </thead>
+              <tbody id="admin-participants-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /dash-main -->
+  </div>
+  <!-- /dashboard-view -->
+
+  <!-- ===================== MODALS ===================== -->
+
+  <!-- ADMIN LOGIN MODAL -->
+  <div class="modal-overlay" id="admin-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Admin Access 🛡️</div>
+        <div class="modal-close" onclick="closeModal('admin-modal')">✕</div>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Admin Username</label>
+          <input type="text" id="admin-user" class="form-input" placeholder="Enter username" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="admin-pass" class="form-input" placeholder="••••••••" />
+          <div class="form-error hidden" id="admin-err">
+            Invalid admin credentials.
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width: 100%" onclick="adminLogin()">
+          Admin Log In
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOGIN MODAL -->
+  <div class="modal-overlay" id="login-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Welcome back 👋</div>
+        <div class="modal-close" onclick="closeModal('login-modal')">✕</div>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input type="email" id="login-email" class="form-input" placeholder="you@college.edu" />
+          <div class="form-error hidden" id="login-email-err">
+            Enter a valid email.
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password *</label>
+          <input type="password" id="login-password" class="form-input" placeholder="••••••••" />
+          <div class="form-error hidden" id="login-pass-err">
+            Incorrect email or password.
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width: 100%" id="login-btn" onclick="loginUser()">
+          <span id="login-btn-text">Log In</span>
+        </button>
+        <div class="divider">or</div>
+        <p style="text-align: center; font-size: 14px; color: var(--text2)">
+          Don't have an account?
+          <span style="color: var(--blue); cursor: pointer" onclick="
+                closeModal('login-modal');
+                openModal('signup-modal');
+              ">Register now</span>
+        </p>
+        <div style="
+              margin-top: 12px;
+              padding: 10px 14px;
+              background: var(--bg);
+              border: 1px solid var(--border);
+              border-radius: 8px;
+              font-size: 12px;
+              color: var(--text3);
+            ">
+          <strong style="color: var(--text2)">Admin Login:</strong> Use <span style="color:var(--blue);cursor:pointer;"
+            onclick="openModal('admin-modal');closeModal('login-modal');">Admin Portal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGNUP MODAL -->
+  <div class="modal-overlay" id="signup-modal">
+    <div class="modal modal-wide">
+      <div class="modal-header">
+        <div class="modal-title">Create Account ✨</div>
+        <div class="modal-close" onclick="closeModal('signup-modal')">✕</div>
+      </div>
+      <div class="modal-body">
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">Full Name *</label>
+            <input type="text" id="su-name" class="form-input" placeholder="Your full name" />
+            <div class="form-error hidden" id="su-name-err">
+              Name is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email *</label>
+            <input type="email" id="su-email" class="form-input" placeholder="you@college.edu" />
+            <div class="form-error hidden" id="su-email-err">
+              Enter a valid email.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password *</label>
+          <input type="password" id="su-password" class="form-input" placeholder="Min 6 characters" />
+          <div class="form-error hidden" id="su-pass-err">
+            Password must be at least 6 characters.
+          </div>
+        </div>
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label class="form-label">College *</label>
+            <input type="text" id="su-college" class="form-input" placeholder="Your college name" />
+            <div class="form-error hidden" id="su-college-err">
+              College is required.
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Department *</label>
+            <select id="su-dept" class="form-input">
+              <option value="">Select department</option>
+              <option>Computer Science</option>
+              <option>Information Technology</option>
+              <option>Electronics & Communication</option>
+              <option>Electrical Engineering</option>
+              <option>Mechanical Engineering</option>
+              <option>Civil Engineering</option>
+              <option>MBA / Management</option>
+              <option>Other</option>
+            </select>
+            <div class="form-error hidden" id="su-dept-err">
+              Department is required.
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Contact Number *</label>
+          <input type="tel" id="su-phone" class="form-input" placeholder="+91 XXXXX XXXXX" />
+          <div class="form-error hidden" id="su-phone-err">
+            Enter a valid 10-digit number.
+          </div>
+        </div>
+        <div class="form-error hidden" id="su-dup-err">
+          An account with this email already exists.
+        </div>
+        <button class="btn btn-primary" style="width: 100%; margin-top: 4px" id="signup-btn" onclick="signupUser()">
+          <span id="signup-btn-text">Create Account</span>
+        </button>
+        <div class="divider">or</div>
+        <p style="text-align: center; font-size: 14px; color: var(--text2)">
+          Already have an account?
+          <span style="color: var(--blue); cursor: pointer" onclick="
+                closeModal('signup-modal');
+                openModal('login-modal');
+              ">Log in</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREATE TEAM MODAL -->
+  <div class="modal-overlay" id="create-team-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Create a Team 🚀</div>
+        <div class="modal-close" onclick="closeModal('create-team-modal')">
+          ✕
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Team Name *</label>
+          <input type="text" id="team-name-input" class="form-input" placeholder="e.g., ByteBuilders" />
+          <div class="form-error hidden" id="team-name-err">
+            Team name is required.
+          </div>
+          <div class="form-error hidden" id="team-name-dup-err">
+            This team name is already taken.
+          </div>
+        </div>
+        <p style="font-size: 13px; color: var(--text3); margin-bottom: 16px">
+          Max team size: 5 members. You'll be the team leader.
+        </p>
+        <button class="btn btn-primary" style="width: 100%" onclick="createTeam()">
+          Create Team
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOIN TEAM MODAL -->
+  <div class="modal-overlay" id="join-team-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title">Join a Team 🤝</div>
+        <div class="modal-close" onclick="closeModal('join-team-modal')">
+          ✕
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Team Code *</label>
+          <input type="text" id="join-code-input" class="form-input" placeholder="e.g., HF-A1B2C3" maxlength="12" style="
+                text-transform: uppercase;
+                font-family: var(--mono);
+                letter-spacing: 2px;
+              " />
+          <div class="form-error hidden" id="join-code-err">
+            Invalid team code. Please check and try again.
+          </div>
+          <div class="form-error hidden" id="join-full-err">
+            This team is full (max 5 members).
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width: 100%" onclick="joinTeam()">
+          Join Team
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Import Map -->
+  <script type="importmap">
+    {
+      "imports": {
+        "firebase/app": "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js",
+        "firebase/auth": "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js",
+        "firebase/firestore": "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js",
+        "firebase/analytics": "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js"
+      }
+    }
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "firebase/app";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+    import { getFirestore, doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove, collection, query, where, getDocs, onSnapshot, addDoc, serverTimestamp, limit } from "firebase/firestore";
+    import { getAnalytics } from "firebase/analytics";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyA-N0OpwhCHgnr8QLWhLiT3mTH6hElnGkk",
+      authDomain: "aiexplore-c18a5.firebaseapp.com",
+      projectId: "aiexplore-c18a5",
+      storageBucket: "aiexplore-c18a5.firebasestorage.app",
+      messagingSenderId: "497668347303",
+      appId: "1:497668347303:web:0c56713b1f926bfed85282",
+      measurementId: "G-BF2414CJ5H"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const analytics = getAnalytics(app);
+
+    let teamsData = [];
+    let registrationsData = [];
+    let announcementsData = [];
+    let usersData = [];
+    let currentUser = null;
+
+    // Real-time Listeners
+    onSnapshot(collection(db, "teams"), (s) => {
+      teamsData = s.docs.map(d => ({ ...d.data(), id: d.id }));
+      if (currentUser) renderDashboard();
+    });
+    onSnapshot(collection(db, "registrations"), (s) => {
+      registrationsData = s.docs.map(d => ({ ...d.data(), id: d.id }));
+      if (currentUser) renderDashboard();
+    });
+    onSnapshot(collection(db, "announcements"), (s) => {
+      announcementsData = s.docs.map(d => ({ ...d.data(), id: d.id }));
+      if (currentUser) renderDashboard();
+    });
+    onSnapshot(collection(db, "users"), (s) => {
+      usersData = s.docs.map(d => ({ ...d.data(), id: d.id }));
+      if (currentUser?.isAdmin) renderDashboard();
+    });
+
+    // ============================================================
+    // DATA STORE (Bridge to Firestore)
+    // ============================================================
+    const DB = {
+      get: (k) => {
+        if (k === "teams") return teamsData;
+        if (k === "registrations") return registrationsData;
+        if (k === "announcements") return announcementsData;
+        if (k === "users") return usersData;
+        try {
+          return JSON.parse(localStorage.getItem("hf_" + k));
+        } catch {
+          return null;
+        }
+      },
+      set: (k, v) => {
+        if (["teams", "registrations", "announcements", "users"].includes(k)) {
+          // These are handled by specific Firestore functions now
+          return;
+        }
+        localStorage.setItem("hf_" + k, JSON.stringify(v));
+      },
+      del: (k) => localStorage.removeItem("hf_" + k),
+    };
+
+    // Initial Announcements Seeding
+    const seedAnnouncements = async () => {
+      try {
+        const q = query(collection(db, "announcements"));
+        const snapshot = await getDocs(q);
+        if (snapshot.empty) {
+          const initialAnns = [
+            {
+              title: "🎉 Registration is Now Open!",
+              date: "February 23, 2026",
+              body: "We are thrilled to announce that AIXPLORE 2K26 registrations are officially open. Register before March 13 to secure your spot!",
+              createdAt: serverTimestamp()
+            },
+            {
+              title: "📢 Event Dates Confirmed",
+              date: "February 20, 2026",
+              body: "Mark your calendars! The Mega Hackathon will take place on March 13 & 14, 2026 at TGPCET 3rd Building.",
+              createdAt: serverTimestamp()
+            },
+            {
+              title: "💡 Team Size Update",
+              date: "February 15, 2026",
+              body: "Good news! We have increased the maximum team size to 5 members. Gather your team and build something amazing!",
+              createdAt: serverTimestamp()
+            }
+          ];
+          for (const ann of initialAnns) {
+            await addDoc(collection(db, "announcements"), ann);
+          }
+        }
+      } catch (error) {
+        console.warn("Seeding skipped: Database permissions might be restricted.", error.message);
+      }
+    };
+    seedAnnouncements();
+
+    const DEADLINE = new Date("2026-03-13T23:59:59");
+    const MAX_TEAM_SIZE = 5;
+    let selectedProblem = null;
+    let selectedPaymentMethod = null;
+    let regStep = 1;
+
+    // ============================================================
+    // NAVBAR SCROLL
+    // ============================================================
+    window.addEventListener("scroll", () => {
+      document
+        .getElementById("navbar")
+        .classList.toggle("scrolled", window.scrollY > 20);
+    });
+
+    // ============================================================
+    // NAV & MOBILE MENU
+    // ============================================================
+    function smoothScrollTo(selector) {
+      const el = document.querySelector(selector);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobile-menu");
+      menu.classList.toggle("open");
+    }
+
+    // ============================================================
+    // MODALS
+    // ============================================================
+    function openModal(id) {
+      document.getElementById(id).classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) closeModal(overlay.id);
+      });
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape")
+        document
+          .querySelectorAll(".modal-overlay.open")
+          .forEach((m) => closeModal(m.id));
+    });
+
+    // ============================================================
+    // TOASTS
+    // ============================================================
+    function toast(type, title, msg, duration = 4000) {
+      const icons = { success: "✅", error: "❌", info: "ℹ️" };
+      const t = document.createElement("div");
+      t.className = `toast ${type}`;
+      t.innerHTML = `<span class="toast-icon">${icons[type] || "ℹ️"}</span><div class="toast-content"><div class="toast-title">${title}</div>${msg ? `<div class="toast-msg">${msg}</div>` : ""}</div><span class="toast-close" onclick="this.parentElement.remove()">✕</span>`;
+      document.getElementById("toast-container").prepend(t);
+      setTimeout(() => t.remove(), duration);
+    }
+
+    // ============================================================
+    // COUNTDOWN
+    // ============================================================
+    function updateCountdown() {
+      const now = new Date();
+      const diff = DEADLINE - now;
+      if (diff <= 0) {
+        document.getElementById("cd-days").textContent = "00";
+        document.getElementById("cd-hours").textContent = "00";
+        document.getElementById("cd-mins").textContent = "00";
+        document.getElementById("cd-secs").textContent = "00";
+        showDeadlineClosed();
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById("cd-days").textContent = String(d).padStart(
+        2,
+        "0",
+      );
+      document.getElementById("cd-hours").textContent = String(h).padStart(
+        2,
+        "0",
+      );
+      document.getElementById("cd-mins").textContent = String(m).padStart(
+        2,
+        "0",
+      );
+      document.getElementById("cd-secs").textContent = String(s).padStart(
+        2,
+        "0",
+      );
+    }
+    function isDeadlinePassed() {
+      return new Date() > DEADLINE;
+    }
+    function showDeadlineClosed() {
+      document.getElementById("hero-actions").innerHTML =
+        '<div class="closed-banner" style="text-align:left;margin-bottom:0;"><div class="closed-banner-title">⛔ Registrations Closed</div><div class="closed-banner-msg">The deadline has passed. Stay tuned for AIExplore 2K26 2026!</div></div>';
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // ============================================================
+    // FAQ
+    // ============================================================
+    const faqs = [
+      {
+        q: "Who can participate?",
+        a: "Any student currently enrolled in a college or university in India. Students from all disciplines are welcome — not just CS/IT students!",
+      },
+      {
+        q: "How many members can be in a team?",
+        a: "Teams can have 3 to 5 members. We encourage diverse teams for a better experience.",
+      },
+      {
+        q: "Is there a registration fee?",
+        a: "Yes, there is a nominal registration fee of ₹600 per team to confirm your participation. This covers event maintenance and kits.",
+      },
+      {
+        q: "What should I bring?",
+        a: "Your laptop, chargers, any hardware you plan to use, and your enthusiasm! Meals will be provided during the event.",
+      },
+      {
+        q: "Can I change my problem statement after registration?",
+        a: "No. Problem statement selection is final once submitted. Choose carefully!",
+      },
+      {
+        q: "Will there be mentors available?",
+        a: "Yes! We have mentors from top tech companies who will be available throughout the hackathon for guidance.",
+      },
+      {
+        q: "Is accommodation available?",
+        a: "We have limited accommodation on a first-come-first-served basis. Teams that register early and are from outstation will be prioritized.",
+      },
+      {
+        q: "What technologies can I use?",
+        a: "You are free to use any technology, language, or framework. However, all code must be written during the hackathon.",
+      },
+    ];
+
+    const faqList = document.getElementById("faq-list");
+    faqs.forEach((f, i) => {
+      const item = document.createElement("div");
+      item.className = "faq-item";
+      item.innerHTML = `<button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false"><span>${f.q}</span><span class="faq-icon">+</span></button><div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>`;
+      faqList.appendChild(item);
+    });
+
+    function toggleFaq(btn) {
+      const item = btn.closest(".faq-item");
+      const isOpen = item.classList.contains("open");
+      document
+        .querySelectorAll(".faq-item.open")
+        .forEach((el) => el.classList.remove("open"));
+      if (!isOpen) item.classList.add("open");
+      btn.setAttribute("aria-expanded", !isOpen);
+    }
+
+    // ============================================================
+    // AUTH
+    // ============================================================
+    function validateEmail(e) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+    }
+    function validatePhone(p) {
+      return /^\+?[\d\s-]{10,}$/.test(p.replace(/\s/g, ""));
+    }
+    function showErr(id, show = true) {
+      const el = document.getElementById(id);
+      if (el) {
+        if (show) el.classList.remove("hidden");
+        else el.classList.add("hidden");
+      }
+    }
+    function clearErrors(...ids) {
+      ids.forEach((id) => showErr(id, false));
+    }
+
+    async function loginUser() {
+      const email = document.getElementById("login-email").value.trim();
+      const pass = document.getElementById("login-password").value;
+      clearErrors("login-email-err", "login-pass-err");
+      let valid = true;
+      if (!validateEmail(email)) {
+        showErr("login-email-err");
+        valid = false;
+      }
+      if (!pass) {
+        showErr("login-pass-err");
+        valid = false;
+      }
+      if (!valid) return;
+
+      const btn = document.getElementById("login-btn");
+      btn.innerHTML = '<span class="spinner"></span>';
+      btn.disabled = true;
+
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+        const user = userCredential.user;
+
+        // Fetch user profile from Firestore
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        const userData = userDoc.data();
+
+        currentUser = { ...userData, id: user.uid };
+        DB.set("session", currentUser);
+
+        closeModal("login-modal");
+        toast("success", "Welcome back!", `Logged in as ${currentUser.name}`);
+        openDashboard();
+      } catch (error) {
+        console.error("Login Error:", error);
+        showErr("login-pass-err");
+      } finally {
+        btn.innerHTML = '<span id="login-btn-text">Log In</span>';
+        btn.disabled = false;
+      }
+    }
+    window.loginUser = loginUser;
+
+    async function signupUser() {
+      const name = document.getElementById("su-name").value.trim();
+      const email = document.getElementById("su-email").value.trim();
+      const pass = document.getElementById("su-password").value;
+      const college = document.getElementById("su-college").value.trim();
+      const dept = document.getElementById("su-dept").value;
+      const phone = document.getElementById("su-phone").value.trim();
+      clearErrors(
+        "su-name-err",
+        "su-email-err",
+        "su-pass-err",
+        "su-college-err",
+        "su-dept-err",
+        "su-phone-err",
+        "su-dup-err",
+      );
+      let valid = true;
+      if (!name) {
+        showErr("su-name-err");
+        valid = false;
+      }
+      if (!validateEmail(email)) {
+        showErr("su-email-err");
+        valid = false;
+      }
+      if (pass.length < 6) {
+        showErr("su-pass-err");
+        valid = false;
+      }
+      if (!college) {
+        showErr("su-college-err");
+        valid = false;
+      }
+      if (!dept) {
+        showErr("su-dept-err");
+        valid = false;
+      }
+      if (!validatePhone(phone)) {
+        showErr("su-phone-err");
+        valid = false;
+      }
+      if (!valid) return;
+
+      const btn = document.getElementById("signup-btn");
+      btn.innerHTML = '<span class="spinner"></span>';
+      btn.disabled = true;
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+        const user = userCredential.user;
+
+        const userData = {
+          id: user.uid,
+          name,
+          email,
+          college,
+          department: dept,
+          phone,
+          isAdmin: false,
+          createdAt: serverTimestamp()
+        };
+
+        // Save to Firestore
+        await setDoc(doc(db, "users", user.uid), userData);
+
+        currentUser = userData;
+        DB.set("session", currentUser);
+
+        closeModal("signup-modal");
+        toast("success", "Account created!", `Welcome to AIExplore 2K26, ${name}!`);
+        openDashboard();
+      } catch (error) {
+        console.error("Signup Error:", error);
+        if (error.code === "auth/email-already-in-use") {
+          showErr("su-dup-err");
+        } else {
+          toast("error", "Signup failed", error.message);
+        }
+      } finally {
+        btn.innerHTML = '<span id="signup-btn-text">Create Account</span>';
+        btn.disabled = false;
+      }
+    }
+    window.signupUser = signupUser;
+
+    async function logout() {
+      await signOut(auth);
+      DB.del("session");
+      currentUser = null;
+      document.getElementById("dashboard-view").classList.remove("active");
+      document.getElementById("landing-view").style.display = "";
+      document.getElementById("navbar").style.display = "";
+      // Reset nav
+      const navActions = document.getElementById("nav-actions");
+      navActions.innerHTML = `<button class="btn btn-ghost btn-sm" onclick="openModal('login-modal')">Log In</button><button class="btn btn-primary btn-sm" onclick="openModal('signup-modal')">Register Now</button>`;
+      toast("info", "Signed out", "See you soon!");
+    }
+    window.logout = logout;
+
+    // ============================================================
+    // DASHBOARD
+    // ============================================================
+    function openDashboard() {
+      document.getElementById("landing-view").style.display = "none";
+      document.getElementById("navbar").style.display = "none";
+      const dv = document.getElementById("dashboard-view");
+      dv.classList.add("active");
+      renderDashboard();
+    }
+
+    function renderDashboard() {
+      if (!currentUser) return;
+      // Sidebar user info
+      document.getElementById("sidebar-avatar").textContent =
+        currentUser.name[0].toUpperCase();
+      document.getElementById("sidebar-name").textContent = currentUser.name;
+      document.getElementById("sidebar-email").textContent =
+        currentUser.email;
+      document.getElementById("dash-first-name").textContent =
+        currentUser.name.split(" ")[0];
+      // Role-based visibility
+      document.querySelectorAll(".admin-only").forEach((el) => {
+        el.classList.toggle("hidden", !currentUser.isAdmin);
+      });
+      document.querySelectorAll(".participant-only").forEach((el) => {
+        el.classList.toggle("hidden", currentUser.isAdmin);
+      });
+
+      // Admin Badge & Subtitle
+      const badge = document.getElementById("admin-badge");
+      const subtitle = document.getElementById("dash-subtitle");
+      if (currentUser.isAdmin) {
+        badge?.classList.remove("hidden");
+        if (subtitle) subtitle.textContent = "System-wide overview and management.";
+      } else {
+        badge?.classList.add("hidden");
+        if (subtitle) subtitle.textContent = "Here's your hackathon dashboard.";
+      }
+
+      renderOverview();
+      renderTeamPage();
+      renderRegistrationPage();
+      renderPaymentPage();
+      renderAnnouncements();
+      if (currentUser.isAdmin) renderAdminPage();
+      if (isDeadlinePassed()) {
+        document
+          .getElementById("closed-banner-dash")
+          .classList.remove("hidden");
+      }
+    }
+
+    function showDashPage(page) {
+      document
+        .querySelectorAll(".dash-page")
+        .forEach((p) => p.classList.remove("active"));
+      document
+        .querySelectorAll(".sidebar-link")
+        .forEach((l) => l.classList.remove("active"));
+      document.getElementById("page-" + page)?.classList.add("active");
+      document
+        .querySelector(`.sidebar-link[data-page="${page}"]`)
+        ?.classList.add("active");
+      renderDashboard();
+    }
+
+    function renderOverview() {
+      if (currentUser.isAdmin) {
+        // Admin Overview Stats
+        const regs = DB.get("registrations") || [];
+        const users = DB.get("users") || [];
+        const teams = DB.get("teams") || [];
+
+        document.getElementById("adm-count-teams").textContent = teams.length;
+        document.getElementById("adm-count-users").textContent = users.length - 1; // Exclude current admin
+        document.getElementById("adm-count-pending").textContent = regs.filter(r => r.status === "Pending").length;
+
+        document.getElementById("date-card-label").textContent = "System Status";
+        document.getElementById("date-card-sub").textContent = "All systems operational";
+        return;
+      }
+
+      const team = getUserTeam();
+      const reg = getUserRegistration();
+      // ... existing participant logic ...
+      const statusEl = document.getElementById("dash-reg-status");
+      if (reg) {
+        const colors = {
+          Pending: "var(--yellow)",
+          Approved: "var(--green)",
+          Rejected: "var(--red)",
+        };
+        statusEl.innerHTML = `<span class="status-dot" style="background:${colors[reg.status] || "var(--text3)"}"></span>${reg.status}`;
+        document.getElementById("dash-reg-id").textContent = "ID: " + reg.id;
+      } else {
+        statusEl.textContent = "Not Registered";
+        document.getElementById("dash-reg-id").textContent =
+          "No registration yet";
+      }
+      // Team
+      document.getElementById("dash-team-name").textContent = team
+        ? team.name
+        : "—";
+      document.getElementById("dash-team-members").textContent = team
+        ? `${team.members.length} member(s)`
+        : "Not in a team";
+
+      document.getElementById("date-card-label").textContent = "Hackathon Date";
+      document.getElementById("date-card-sub").textContent = "24-hour sprint";
+    }
+
+    // ============================================================
+    // TEAMS
+    // ============================================================
+    function generateCode() {
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let code = "HF-";
+      for (let i = 0; i < 6; i++)
+        code += chars[Math.floor(Math.random() * chars.length)];
+      return code;
+    }
+    function getUserTeam() {
+      const teams = DB.get("teams") || [];
+      return teams.find((t) => t.members.includes(currentUser?.id)) || null;
+    }
+    function renderTeamPage() {
+      const team = getUserTeam();
+      document
+        .getElementById("team-section-no-team")
+        .classList.toggle("hidden", !!team);
+      document
+        .getElementById("team-section-has-team")
+        .classList.toggle("hidden", !team);
+      if (!team) return;
+      document.getElementById("team-display-name").textContent = team.name;
+      document.getElementById("team-display-count").textContent =
+        `${team.members.length} / ${MAX_TEAM_SIZE} members`;
+      document.getElementById("team-display-code").textContent = team.code;
+      // Leader actions
+      const la = document.getElementById("team-leader-actions");
+      if (team.leader === currentUser.id) {
+        la.innerHTML = `<span class="badge badge-info">Team Leader</span>`;
+      } else {
+        la.innerHTML = `<button class="btn btn-danger btn-sm" onclick="leaveTeam()">Leave Team</button>`;
+      }
+      // Members
+      const users = DB.get("users") || [];
+      const ml = document.getElementById("team-members-list");
+      ml.innerHTML = "";
+      team.members.forEach((uid) => {
+        const u = users.find((x) => x.id === uid);
+        if (!u) return;
+        const div = document.createElement("div");
+        div.className = "member-item";
+        div.innerHTML = `<div class="member-avatar">${u.name[0]}</div><div><div class="member-name">${u.name}</div><div class="member-email">${u.email}</div></div><div class="member-badge">${team.leader === uid ? '<span class="badge badge-info">Leader</span>' : '<span class="badge badge-unpaid">Member</span>'}</div>`;
+        ml.appendChild(div);
+      });
+    }
+
+    async function createTeam() {
+      const name = document.getElementById("team-name-input").value.trim();
+      clearErrors("team-name-err", "team-name-dup-err");
+      if (!name) {
+        showErr("team-name-err");
+        return;
+      }
+      const teams = DB.get("teams") || [];
+      if (teams.find((t) => t.name.toLowerCase() === name.toLowerCase())) {
+        showErr("team-name-dup-err");
+        return;
+      }
+      if (getUserTeam()) {
+        toast("error", "Already in a team", "Leave your current team first.");
+        return;
+      }
+
+      try {
+        const teamData = {
+          name,
+          code: generateCode(),
+          leader: currentUser.id,
+          members: [currentUser.id],
+          createdAt: serverTimestamp(),
+        };
+        await addDoc(collection(db, "teams"), teamData);
+
+        closeModal("create-team-modal");
+        document.getElementById("team-name-input").value = "";
+        toast("success", "Team created!", `Welcome to Team ${name}!`);
+        showDashPage("team");
+      } catch (error) {
+        console.error("Create Team Error:", error);
+        toast("error", "Failed to create team", error.message);
+      }
+    }
+
+    async function joinTeam() {
+      const code = document
+        .getElementById("join-code-input")
+        .value.trim()
+        .toUpperCase();
+      clearErrors("join-code-err", "join-full-err");
+      if (!code) {
+        showErr("join-code-err");
+        return;
+      }
+      const teams = DB.get("teams") || [];
+      const team = teams.find((t) => t.code === code);
+      if (!team) {
+        showErr("join-code-err");
+        return;
+      }
+      if (team.members.length >= MAX_TEAM_SIZE) {
+        showErr("join-full-err");
+        return;
+      }
+      if (team.members.includes(currentUser.id)) {
+        toast("info", "Already a member", "You are already in this team.");
+        return;
+      }
+      if (getUserTeam()) {
+        toast("error", "Already in a team", "Leave your current team first.");
+        return;
+      }
+
+      try {
+        await updateDoc(doc(db, "teams", team.id), {
+          members: arrayUnion(currentUser.id)
+        });
+
+        closeModal("join-team-modal");
+        document.getElementById("join-code-input").value = "";
+        toast("success", "Joined team!", `You are now in Team ${team.name}!`);
+        showDashPage("team");
+      } catch (error) {
+        console.error("Join Team Error:", error);
+        toast("error", "Failed to join team", error.message);
+      }
+    }
+
+    async function leaveTeam() {
+      const team = getUserTeam();
+      if (!team || !confirm("Are you sure you want to leave your team?"))
+        return;
+
+      try {
+        // If leader leaves, and there are others, they should ideally pass leadership
+        // For simplicity, we just remove the member
+        await updateDoc(doc(db, "teams", team.id), {
+          members: arrayRemove(currentUser.id)
+        });
+
+        // If team becomes empty, optionally delete it (frontend sees empty members anyway)
+
+        toast("info", "Left team", `You have left Team ${team.name}.`);
+        renderTeamPage();
+        renderOverview();
+      } catch (error) {
+        console.error("Leave Team Error:", error);
+        toast("error", "Error leaving team", error.message);
+      }
+    }
+
+    function copyTeamCode() {
+      const team = getUserTeam();
+      if (!team) return;
+      navigator.clipboard
+        .writeText(team.code)
+        .then(() =>
+          toast("success", "Copied!", "Team code copied to clipboard."),
+        );
+    }
+
+    // ============================================================
+    // REGISTRATION
+    // ============================================================
+    function getUserRegistration() {
+      const regs = DB.get("registrations") || [];
+      const team = getUserTeam();
+      if (!team) return null;
+      return regs.find((r) => r.teamId === team.id) || null;
+    }
+
+    function renderRegistrationPage() {
+      const team = getUserTeam();
+      const reg = getUserRegistration();
+      const closed = isDeadlinePassed();
+      document
+        .getElementById("reg-deadline-closed")
+        .classList.toggle("hidden", !closed);
+      document
+        .getElementById("reg-no-team")
+        .classList.toggle("hidden", !!team);
+      document
+        .getElementById("reg-already-done")
+        .classList.toggle("hidden", !reg);
+      document
+        .getElementById("reg-form-container")
+        .classList.toggle("hidden", !team || !!reg);
+      if (reg) {
+        document.getElementById("dash-reg-id-display").textContent = reg.id;
+      }
+    }
+
+    function selectProblem(el, id) {
+      document
+        .querySelectorAll(".problem-option")
+        .forEach((o) => o.classList.remove("selected"));
+      el.classList.add("selected");
+      selectedProblem = id;
+      showErr("ps-error", false);
+    }
+
+    const psTitles = {
+      ps1: "🤖 AI-Powered Healthcare Assistant",
+      ps2: "💰 FinTech for the Unbanked",
+      ps3: "🌱 Climate Action Platform",
+      ps4: "🎓 EdTech for Vernacular Learners",
+    };
+
+    function updateProgressBar(step) {
+      regStep = step;
+      for (let i = 1; i <= 3; i++) {
+        const el = document.getElementById("pstep-" + i);
+        el.classList.remove("active", "done");
+        if (i < step) el.classList.add("done");
+        else if (i === step) el.classList.add("active");
+      }
+    }
+
+    function regNext(step) {
+      if (step === 1) {
+        if (!selectedProblem) {
+          showErr("ps-error");
+          return;
+        }
+        document.getElementById("reg-step-1").classList.add("hidden");
+        document.getElementById("reg-step-2").classList.remove("hidden");
+        updateProgressBar(2);
+      } else if (step === 2) {
+        const pname = document.getElementById("reg-proj-name").value.trim();
+        const pdesc = document.getElementById("reg-proj-desc").value.trim();
+        clearErrors("reg-proj-name-err", "reg-proj-desc-err");
+        let ok = true;
+        if (!pname) {
+          showErr("reg-proj-name-err");
+          ok = false;
+        }
+        if (pdesc.length < 20) {
+          showErr("reg-proj-desc-err");
+          ok = false;
+        }
+        if (!ok) return;
+        document.getElementById("confirm-ps").textContent =
+          psTitles[selectedProblem];
+        document.getElementById("confirm-proj").textContent = pname;
+        document.getElementById("confirm-desc").textContent = pdesc;
+        document.getElementById("reg-step-2").classList.add("hidden");
+        document.getElementById("reg-step-3").classList.remove("hidden");
+        updateProgressBar(3);
+      }
+    }
+
+    function regBack(step) {
+      if (step === 2) {
+        document.getElementById("reg-step-2").classList.add("hidden");
+        document.getElementById("reg-step-1").classList.remove("hidden");
+        updateProgressBar(1);
+      } else if (step === 3) {
+        document.getElementById("reg-step-3").classList.add("hidden");
+        document.getElementById("reg-step-2").classList.remove("hidden");
+        updateProgressBar(2);
+      }
+    }
+
+    async function submitRegistration() {
+      const decl = document.getElementById("reg-declaration").checked;
+      clearErrors("reg-decl-err");
+      if (!decl) {
+        showErr("reg-decl-err");
+        return;
+      }
+      const btn = document.getElementById("reg-submit-btn");
+      btn.innerHTML = '<span class="spinner"></span> Submitting...';
+      btn.disabled = true;
+
+      try {
+        const team = getUserTeam();
+        const regId = "REG-" + Math.random().toString(36).substr(2, 6).toUpperCase();
+        const regData = {
+          id: regId,
+          teamId: team.id,
+          teamName: team.name,
+          problem: selectedProblem,
+          problemTitle: psTitles[selectedProblem],
+          projectName: document.getElementById("reg-proj-name").value.trim(),
+          description: document.getElementById("reg-proj-desc").value.trim(),
+          techStack: document.getElementById("reg-tech-stack").value.trim(),
+          status: "Pending",
+          paid: false,
+          submittedAt: serverTimestamp(),
+        };
+
+        await setDoc(doc(db, "registrations", regId), regData);
+
+        toast("success", "Registration submitted!", `Your Reg ID: ${regId}`);
+        showDashPage("registration");
+      } catch (error) {
+        console.error("Registration Error:", error);
+        toast("error", "Submission failed", error.message);
+      } finally {
+        btn.innerHTML = "Submit Registration";
+        btn.disabled = false;
+      }
+    }
+
+    // ============================================================
+    // PAYMENT
+    // ============================================================
+    function renderPaymentPage() {
+      const reg = getUserRegistration();
+      document
+        .getElementById("payment-not-registered")
+        .classList.toggle("hidden", !!reg);
+      document
+        .getElementById("payment-already-paid")
+        .classList.toggle("hidden", !(reg && reg.paid));
+      document
+        .getElementById("payment-form-container")
+        .classList.toggle("hidden", !reg || reg.paid);
+    }
+
+    function selectPayment(el, method) {
+      document.querySelectorAll(".payment-option").forEach((o) => {
+        o.classList.remove("selected");
+        o.querySelector("input").checked = false;
+      });
+      el.classList.add("selected");
+      el.querySelector("input").checked = true;
+      selectedPaymentMethod = method;
+    }
+
+    async function simulatePayment() {
+      if (!selectedPaymentMethod) {
+        toast(
+          "error",
+          "Select payment method",
+          "Please choose a payment method.",
+        );
+        return;
+      }
+      const btn = document.getElementById("pay-btn");
+      btn.innerHTML = '<span class="spinner"></span> Processing...';
+      btn.disabled = true;
+
+      try {
+        const team = getUserTeam();
+        const reg = registrationsData.find((r) => r.teamId === team.id);
+        if (reg) {
+          await updateDoc(doc(db, "registrations", reg.id), {
+            paid: true,
+            status: "Pending" // Still needs admin approval
+          });
+          toast(
+            "success",
+            "Payment successful!",
+            "Your registration is confirmed. Await admin approval.",
+          );
+          showDashPage("payment");
+        }
+      } catch (error) {
+        console.error("Payment Error:", error);
+        toast("error", "Payment failed", error.message);
+      } finally {
+        btn.innerHTML = "Pay ₹500 →";
+        btn.disabled = false;
+      }
+    }
+
+    // ============================================================
+    // ANNOUNCEMENTS
+    // ============================================================
+    function renderAnnouncements() {
+      const anns = DB.get("announcements") || [];
+      const container = document.getElementById("announcements-list");
+      container.innerHTML = "";
+      if (!anns.length) {
+        container.innerHTML =
+          '<p style="color:var(--text3);">No announcements yet.</p>';
+        return;
+      }
+      anns.forEach((ann) => {
+        const div = document.createElement("div");
+        div.className = "announcement";
+        div.innerHTML = `<div class="announcement-title">${ann.title}</div><div class="announcement-meta">${ann.date}</div><div class="announcement-body">${ann.body}</div>`;
+        container.appendChild(div);
+      });
+    }
+
+    // ============================================================
+    // ADMIN PANEL
+    // ============================================================
+    function showAdminTab(tab) {
+      document
+        .querySelectorAll(".tab")
+        .forEach((t, i) =>
+          t.classList.toggle(
+            "active",
+            (tab === "teams" && i === 0) ||
+            (tab === "participants" && i === 1),
+          ),
+        );
+      document
+        .getElementById("admin-tab-teams")
+        .classList.toggle("active", tab === "teams");
+      document
+        .getElementById("admin-tab-participants")
+        .classList.toggle("active", tab === "participants");
+    }
+
+    function renderAdminPage() {
+      adminFilter();
+      renderParticipants();
+    }
+
+    function adminFilter() {
+      const search = (
+        document.getElementById("admin-search")?.value || ""
+      ).toLowerCase();
+      const status =
+        document.getElementById("admin-filter-status")?.value || "";
+      const regs = DB.get("registrations") || [];
+      const teams = DB.get("teams") || [];
+      const tbody = document.getElementById("admin-teams-tbody");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+      const filtered = regs.filter((r) => {
+        const matchSearch =
+          r.teamName.toLowerCase().includes(search) ||
+          r.id.toLowerCase().includes(search);
+        const matchStatus = !status || r.status === status;
+        return matchSearch && matchStatus;
+      });
+      if (!filtered.length) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--text3);padding:32px;">No teams found.</td></tr>`;
+        return;
+      }
+      filtered.forEach((r) => {
+        const team = teams.find((t) => t.id === r.teamId);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+        <td><span style="font-family:var(--mono);font-size:12px;">${r.id}</span></td>
+        <td><strong>${r.teamName}</strong></td>
+        <td>${team ? team.members.length : "—"}</td>
+        <td style="max-width:160px;"><span title="${r.problemTitle}" style="font-size:12px;">${r.problemTitle?.slice(0, 30)}...</span></td>
+        <td>${getBadge(r.status)}</td>
+        <td>${r.paid ? '<span class="badge badge-paid">Paid</span>' : '<span class="badge badge-unpaid">Unpaid</span>'}</td>
+        <td>
+          <div style="display:flex;gap:6px;">
+            ${r.status !== "Approved" ? `<button class="btn btn-success btn-sm" onclick="adminAction('${r.id}','Approved')">✓</button>` : ""}
+            ${r.status !== "Rejected" ? `<button class="btn btn-danger btn-sm" onclick="adminAction('${r.id}','Rejected')">✗</button>` : ""}
+          </div>
+        </td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function getBadge(status) {
+      if (status === "Approved")
+        return '<span class="badge badge-approved">Approved</span>';
+      if (status === "Rejected")
+        return '<span class="badge badge-rejected">Rejected</span>';
+      return '<span class="badge badge-pending">Pending</span>';
+    }
+
+    async function adminAction(regId, newStatus) {
+      try {
+        await updateDoc(doc(db, "registrations", regId), {
+          status: newStatus
+        });
+        toast(
+          "success",
+          `Team ${newStatus}`,
+          `Registration ${regId} is now ${newStatus}.`,
+        );
+      } catch (error) {
+        console.error("Admin Action Error:", error);
+        toast("error", "Action failed", error.message);
+      }
+    }
+
+    function renderParticipants() {
+      const users = (DB.get("users") || []).filter((u) => !u.isAdmin);
+      const teams = DB.get("teams") || [];
+      const tbody = document.getElementById("admin-participants-tbody");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+      if (!users.length) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:32px;">No participants yet.</td></tr>`;
+        return;
+      }
+      users.forEach((u) => {
+        const team = teams.find((t) => t.members.includes(u.id));
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td><strong>${u.name}</strong></td><td style="font-size:13px;">${u.email}</td><td style="font-size:13px;">${u.college}</td><td style="font-size:13px;">${u.department}</td><td>${team ? `<span class="badge badge-info">${team.name}</span>` : "—"}</td>`;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function exportCSV() {
+      const regs = DB.get("registrations") || [];
+      const teams = DB.get("teams") || [];
+      let csv =
+        "Registration ID,Team Name,Members,Problem Statement,Project Name,Status,Payment\n";
+      regs.forEach((r) => {
+        const team = teams.find((t) => t.id === r.teamId);
+        csv += `${r.id},"${r.teamName}",${team ? team.members.length : 0},"${r.problemTitle}","${r.projectName}",${r.status},${r.paid ? "Paid" : "Unpaid"}\n`;
+      });
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "AIExplore 2K26_registrations.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+      toast("success", "CSV Exported", "Data downloaded successfully.");
+    }
+
+    // ============================================================
+    // AUTO-LOGIN ON LOAD
+    // ============================================================
+    // Auth State Observer
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        const userDoc = await getDoc(doc(db, "users", user.uid));
+        if (userDoc.exists()) {
+          currentUser = { ...userDoc.data(), id: user.uid };
+          DB.set("session", currentUser);
+          if (document.getElementById("dashboard-view")) {
+            renderDashboard();
+          }
+        }
+      } else {
+        currentUser = null;
+        DB.del("session");
+      }
+    });
+
+    // ============================================================
+    // DB CONNECTION TEST
+    // ============================================================
+    async function testDBConnection() {
+      console.log("🔍 Checking Firebase connectivity...");
+      try {
+        const testCol = collection(db, "announcements");
+        const snapshot = await getDocs(query(testCol, limit(1)));
+        console.log("✅ Firebase DB connected successfully!");
+      } catch (error) {
+        console.error("❌ Firebase DB connection failed:", error);
+      }
+    }
+    testDBConnection();
+
+    // ============================================================
+    // ADMIN CUSTOM LOGIN
+    // ============================================================
+    function adminLogin() {
+      const u = document.getElementById('admin-user').value;
+      const p = document.getElementById('admin-pass').value;
+      if (u === 'admin' && p === 'admin@123') {
+        currentUser = { id: 'admin_root', name: 'Master Admin', email: 'admin@aiexplore.com', isAdmin: true };
+        DB.set("session", currentUser);
+        closeModal('admin-modal');
+        toast("success", "Admin Access Granted", "Welcome, Master Admin");
+        openDashboard();
+        showDashPage('admin');
+      } else {
+        showErr('admin-err');
+      }
+    }
+
+    // Handle Hash Routing for /admin (simulated)
+    window.addEventListener('load', () => {
+      if (window.location.hash === '#admin') openModal('admin-modal');
+    });
+
+    // ============================================================
+    // GSAP ANIMATIONS
+    // ============================================================
+    window.addEventListener('load', () => {
+      // 1. Entrance Animation
+      const tl = gsap.timeline({ defaults: { ease: "power3.out", duration: 1 } });
+
+      tl.from(".hero-chip", { y: -20, opacity: 0, duration: 0.8 })
+        .from(".hero-title", { y: 30, opacity: 0 }, "-=0.4")
+        .from(".hero-subtitle", { y: 20, opacity: 0 }, "-=0.6")
+        .from(".countdown", { scale: 0.9, opacity: 0 }, "-=0.6")
+        .from(".hero-actions", { y: 20, opacity: 0 }, "-=0.6")
+        .from(".hero-stats", { opacity: 0 }, "-=0.4")
+        .from(".hero-image-wrap", { x: 50, opacity: 0, scale: 0.95 }, "-=1")
+        .from(".hologram-panel", { scale: 0.8, opacity: 0 }, "-=0.4")
+        .from(".floating-code", { opacity: 0, stagger: 0.1 }, "-=0.4");
+
+      // 2. Continuous Floating Motion
+      gsap.to(".hero-image-wrap img", {
+        y: 15,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+
+      gsap.to(".hologram-panel", {
+        y: 8,
+        duration: 4,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut"
+      });
+
+      // 3. Mouse-Reactive Interactions
+      const heroSection = document.getElementById('hero');
+      const hologram = document.getElementById('hero-hologram');
+      const floatingCode = document.querySelectorAll('.floating-code');
+
+      heroSection.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        const moveX = (clientX - centerX) / centerX;
+        const moveY = (clientY - centerY) / centerY;
+
+        // Tilt Hologram
+        gsap.to(hologram, {
+          rotateX: -moveY * 15,
+          rotateY: moveX * 15,
+          x: moveX * 20,
+          y: moveY * 20,
+          duration: 0.6,
+          ease: "power2.out"
+        });
+
+        // Parallax Floating Code
+        floatingCode.forEach((el, i) => {
+          const depth = (i + 1) * 20;
+          gsap.to(el, {
+            x: moveX * depth,
+            y: moveY * depth,
+            duration: 0.8,
+            ease: "power2.out"
+          });
+        });
+      });
+
+      // Reset on Mouse Leave
+      heroSection.addEventListener('mouseleave', () => {
+        gsap.to(hologram, { rotateX: 0, rotateY: 0, x: 0, y: 0, duration: 1 });
+        floatingCode.forEach(el => {
+          gsap.to(el, { x: 0, y: 0, duration: 1 });
+        });
+      });
+
+      // 4. Prizes 3D Tilt
+      const prizeCards = document.querySelectorAll('.prize-card');
+      prizeCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const { left, top, width, height } = card.getBoundingClientRect();
+          const x = (e.clientX - left) / width - 0.5;
+          const y = (e.clientY - top) / height - 0.5;
+
+          // Motion intensity scale: Prizes (60%)
+          const intensity = 0.6;
+
+          gsap.to(card, {
+            translateY: -5,
+            borderColor: "var(--blue)",
+            duration: 0.3,
+            ease: "power2.out"
+          });
+
+          // Move micro-code slightly differently for depth
+          const microCode = card.querySelectorAll('.prize-micro-code');
+          microCode.forEach((mc, i) => {
+            gsap.to(mc, {
+              x: x * 15 * (i + 1) * intensity,
+              y: y * 15 * (i + 1) * intensity,
+              duration: 0.6,
+              ease: "power2.out"
+            });
+          });
+        });
+
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.8 });
+          gsap.to(card.querySelectorAll('.prize-micro-code'), { x: 0, y: 0, duration: 0.8 });
+        });
+      });
+
+      // 5. Schedule Timeline Glow
+      const scheduleWrap = document.querySelector('.schedule-wrap');
+      const timelineGlow = document.getElementById('timeline-glow');
+
+      scheduleWrap.addEventListener('mousemove', (e) => {
+        const { top, height } = scheduleWrap.getBoundingClientRect();
+        const relativeY = e.clientY - top;
+
+        // Motion intensity scale: Schedule (40%)
+        const intensity = 0.4;
+
+        gsap.to(timelineGlow, {
+          backgroundPosition: `0 ${relativeY - 100}px`,
+          opacity: intensity,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      });
+
+      // 6. Micro Code Drifting (Ambient)
+      gsap.to(".prize-micro-code", {
+        y: -5,
+        x: 3,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        stagger: {
+          each: 0.5,
+          from: "random"
+        },
+        ease: "sine.inOut"
+      });
+
+      // 7. Initialize Interactive Background layers
+      initDevEnvironment();
+    });
+    // --- WEBGL BACKGROUND FIELD (Atmospheric Only) ---
+    // --- AUTHENTIC DEV ENVIRONMENT (Narrative Metaphor) ---
+    function initDevEnvironment() {
+      const canvas = document.getElementById('symbols-canvas');
+      const ctx = canvas.getContext('2d');
+      const debugTag = document.getElementById('cursor-debug');
+      const logContainer = document.getElementById('runtime-log-container');
+      let w, h, ripples = [], nodes = [], streams = [];
+
+      function addRuntimeLog(type, msg) {
+        const hash = Math.random().toString(16).substring(2, 8);
+        const entry = document.createElement('div');
+        entry.className = 'log-entry';
+        entry.innerHTML = `
+          <div class="log-meta">
+            <span class="log-hash">#${hash}</span>
+            <span class="log-type">[${type}]</span>
+          </div>
+          <div class="log-msg">${msg}</div>
+        `;
+        logContainer.prepend(entry);
+        if (logContainer.children.length > 10) {
+          logContainer.removeChild(logContainer.lastChild);
+        }
+      }
+
+      // 1. Action-Based Commits
+      document.querySelectorAll('button, .card, .nav-link, .prize-card').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          if (Math.random() < 0.15) addRuntimeLog('SCAN', `inspecting ${el.tagName.toLowerCase()}#ref`);
+        });
+      });
+
+      // 2. Scroll-Based Commits (Progression)
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            const msgs = {
+              'prizes': 'reward_engine.initialized',
+              'schedule': 'hack_phase.deploy()',
+              'faq': 'resolving_queries...',
+              'hero': 'system.boot_complete'
+            };
+            if (msgs[id]) addRuntimeLog('EXEC', msgs[id]);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
+
+      function resize() {
+        w = canvas.width = window.innerWidth;
+        h = canvas.height = window.innerHeight;
+        initNodes();
+      }
+
+      function initNodes() {
+        nodes = [];
+        const spacing = 100;
+        for (let x = 0; x <= w + spacing; x += spacing) {
+          for (let y = 0; y <= h + spacing; y += spacing) {
+            nodes.push({ bx: x, by: y, x: x, y: y });
+          }
+        }
+      }
+
+      window.addEventListener('resize', resize);
+      resize();
+
+      const mouse = { x: -1000, y: -1000 };
+      window.addEventListener('mousemove', e => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+
+        const target = document.elementFromPoint(e.clientX, e.clientY);
+        if (target && target.tagName !== 'CANVAS' && target.tagName !== 'BODY') {
+          debugTag.style.opacity = '0.8';
+        } else {
+          debugTag.style.opacity = '0.2';
+        }
+        debugTag.style.left = (e.clientX + 15) + 'px';
+        debugTag.style.bottom = (h - e.clientY + 15) + 'px';
+      });
+
+      window.addEventListener('mousedown', (e) => {
+        ripples.push({ x: mouse.x, y: mouse.y, r: 0, opacity: 0.15 });
+        const target = e.target.closest('button, .card, .nav-link, .sidebar-link, .faq-q');
+        if (target) {
+          let label = target.innerText.split('\n')[0].trim();
+          if (label.length > 25) label = label.substring(0, 25) + '...';
+          addRuntimeLog('EXEC', `requesting ${label.toLowerCase()}`);
+        }
+      });
+
+      function spawnStream() {
+        if (streams.length > 15) return;
+        streams.push({
+          x: Math.random() * w,
+          y: -100,
+          chars: Array.from({ length: 12 }, () => Math.floor(Math.random() * 16).toString(16).toUpperCase()),
+          speed: 1.5 + Math.random() * 2,
+          opacity: 0.08 + Math.random() * 0.08
+        });
+      }
+
+      function loop() {
+        ctx.clearRect(0, 0, w, h);
+        const scrollY = window.scrollY * 0.15;
+
+        // 1. Magnetic Blueprint Grid
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(59, 130, 246, 0.04)';
+        nodes.forEach((n, i) => {
+          const dx = mouse.x - n.x;
+          const dy = mouse.y - n.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const force = Math.max(0, (300 - dist) / 300);
+
+          n.x += (n.bx + dx * force * 0.2 - n.x) * 0.1;
+          n.y += (n.by + dy * force * 0.2 - (scrollY % 100) - n.y) * 0.1;
+
+          if (i % 22 === 0 && dist < 200) {
+            ctx.moveTo(n.x, n.y);
+            ctx.lineTo(mouse.x, mouse.y);
+          }
+        });
+        ctx.stroke();
+
+        // 2. Hex Streams (Memory Scan)
+        if (Math.random() < 0.02) spawnStream();
+        ctx.font = '9px "IBM Plex Mono"';
+        streams.forEach((s, i) => {
+          s.y += s.speed;
+          if (s.y > h + 150) streams.splice(i, 1);
+          ctx.fillStyle = `rgba(59, 130, 246, ${s.opacity})`;
+          s.chars.forEach((c, ci) => {
+            ctx.fillText(c, s.x, s.y + ci * 12);
+          });
+        });
+
+        // 3. Debugger Overlay (Persistent Crosshairs)
+        const scanOpacity = parseFloat(debugTag.style.opacity) || 0;
+        ctx.strokeStyle = `rgba(59, 130, 246, ${scanOpacity * 0.15})`;
+        ctx.setLineDash([10, 10]);
+        ctx.beginPath();
+        ctx.moveTo(0, mouse.y); ctx.lineTo(w, mouse.y);
+        ctx.moveTo(mouse.x, 0); ctx.lineTo(mouse.x, h);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // 4. Digital Bursts
+        ripples.forEach((r, i) => {
+          r.r += 8;
+          r.opacity -= 0.015;
+          if (r.opacity <= 0) ripples.splice(i, 1);
+          ctx.strokeStyle = `rgba(59, 130, 246, ${r.opacity})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, Math.PI * 2); ctx.stroke();
+        });
+
+        requestAnimationFrame(loop);
+      }
+      loop();
+    }
+
+    // Handle UI functions globally
+    Object.assign(window, {
+      openModal, closeModal, toggleMobileMenu, smoothScrollTo,
+      selectProblem, regNext, regBack, submitRegistration,
+      selectPayment, simulatePayment, toggleFaq, copyTeamCode,
+      createTeam, joinTeam, leaveTeam, showDashPage, adminAction,
+      showAdminTab, adminFilter, exportCSV, adminLogin
+    });
+  </script>
+</body>
+
+</html>
