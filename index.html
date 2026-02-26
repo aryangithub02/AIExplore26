@@ -998,209 +998,115 @@
     }
 
     /* ========== SCHEDULE ========== */
-    .schedule-wrap {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 40px 20px;
-      background: rgba(15, 23, 42, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.03);
-      border-radius: 24px;
-      position: relative;
-    }
-
-    @media (min-width: 1024px) {
-      .schedule-wrap {
-        padding: 80px 40px;
-        border-radius: 32px;
-      }
-    }
-
-    .timeline {
-      position: relative;
-      padding: 40px 0;
-    }
-
-    .timeline::before {
-      content: "";
-      position: absolute;
-      left: 20px;
-      /* Mobile first: left align */
-      top: 0;
-      bottom: 0;
-      width: 3px;
-      background: linear-gradient(to bottom,
-          transparent,
-          var(--blue) 10%,
-          var(--purple) 50%,
-          var(--blue) 90%,
-          transparent);
-      border-radius: 4px;
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
-    }
-
-    @media (min-width: 1024px) {
-      .timeline::before {
-        left: 50%;
-        transform: translateX(-50%);
-        width: 4px;
-        box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
-        animation: spine-pulse 4s ease-in-out infinite;
-      }
-    }
-
-    @keyframes spine-pulse {
-
-      0%,
-      100% {
-        opacity: 0.4;
-        filter: blur(1px);
-      }
-
-      50% {
-        opacity: 0.8;
-        filter: blur(0px);
-      }
-    }
-
-    .timeline-item {
-      position: relative;
+    /* ========== SCHEDULE CARD STACK ========== */
+    .schedule-cards {
       display: flex;
       flex-direction: column;
-      padding-left: 50px;
-      margin-bottom: 40px;
-      width: 100%;
-    }
-
-    @media (min-width: 1024px) {
-      .timeline-item {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 80px;
-        padding-left: 0;
-        margin-bottom: 80px;
-      }
-
-      .timeline-item:nth-child(even) {
-        direction: rtl;
-      }
-    }
-
-    .timeline-dot {
-      position: absolute;
-      left: 20px;
-      top: 0;
-      transform: translateX(-50%);
-      width: 16px;
-      height: 16px;
-      background: var(--bg);
-      border: 3px solid var(--blue);
-      border-radius: 50%;
-      z-index: 10;
-    }
-
-    @media (min-width: 1024px) {
-      .timeline-dot {
-        left: 50%;
-        top: 40px;
-        width: 24px;
-        height: 24px;
-        border-width: 4px;
-        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
-      }
-    }
-
-    .timeline-content {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 24px;
-      transition: all 0.3s var(--ease-out);
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
       position: relative;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      z-index: 2;
     }
 
-    @media (min-width: 1024px) {
-      .timeline-content {
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-      }
-
-      .timeline-item:nth-child(odd) .timeline-content {
-        grid-column: 1;
-      }
-
-      .timeline-item:nth-child(even) .timeline-content {
-        grid-column: 2;
-        direction: ltr;
-        text-align: left;
-      }
+    .event-card {
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 28px;
+      transition: all 0.4s var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
     }
 
-    .timeline-time {
-      font-family: var(--mono);
+    .event-card:hover {
+      transform: translateY(-8px);
+      background: rgba(30, 41, 59, 0.7);
+      border-color: rgba(59, 130, 246, 0.4);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .event-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--blue), var(--purple));
+      opacity: 0.6;
+    }
+
+    .event-badge-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .event-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
       font-size: 13px;
-      color: var(--blue);
-      opacity: 0.8;
-      margin-bottom: 12px;
-      display: block;
-      letter-spacing: 1px;
-    }
-
-    .timeline-title {
-      font-family: var(--display);
-      font-size: 26px;
-      font-weight: 800;
-      margin-bottom: 16px;
-      color: var(--text);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .timeline-desc {
-      font-size: 16px;
+      font-weight: 700;
       color: var(--text2);
-      line-height: 1.7;
-      opacity: 0.8;
+      font-family: var(--mono);
+    }
+
+    .event-badge.date {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--blue);
+      border-color: rgba(59, 130, 246, 0.2);
+    }
+
+    .event-card-title {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .event-card-desc {
+      font-size: 15px;
+      color: var(--text3);
+      line-height: 1.6;
+      max-width: 600px;
     }
 
     .exec-label {
       font-family: var(--mono);
       font-size: 11px;
-      color: var(--purple);
-      background: rgba(139, 92, 246, 0.1);
-      border: 1px solid rgba(139, 92, 246, 0.2);
-      padding: 6px 14px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 24px;
+      color: var(--text3);
+      opacity: 0.6;
+      display: block;
+      letter-spacing: 0.05em;
       text-transform: lowercase;
+      margin-bottom: 8px;
     }
 
-    @media (max-width: 992px) {
-      .timeline::before {
-        left: 40px;
-        transform: none;
-      }
-
-      .timeline-item {
-        grid-template-columns: 1fr;
-        gap: 32px;
-        padding-left: 80px;
-        direction: ltr !important;
-        margin-bottom: 48px;
-      }
-
-      .timeline-item .timeline-content {
-        text-align: left !important;
-      }
-
-      .timeline-dot {
-        left: 40px;
-        top: 40px;
+    @media (max-width: 768px) {
+      .exec-label {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        font-size: 9px;
+        opacity: 0.3;
+        margin-bottom: 0;
       }
     }
+
+
 
     /* ========== FAQ ========== */
     #faq {
@@ -2962,7 +2868,7 @@
     <div class="nav-actions" id="nav-actions">
       <a href="https://unstop.com/p/aiexplore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648480?utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
         target="_blank" class="btn btn-primary btn-sm" style="text-decoration: none;">
-        Register on Unstop
+        Register Your Team →
       </a>
     </div>
     <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
@@ -3000,7 +2906,7 @@
         ">
       <a href="https://unstop.com/p/aiexplore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648480?utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
         target="_blank" class="btn btn-primary" style="width: 100%; text-decoration: none;">
-        Register on Unstop
+        Register Your Team →
       </a>
     </div>
   </div>
@@ -3045,10 +2951,11 @@
               </div>
             </div>
             <div class="hero-actions" id="hero-actions">
-              <button class="btn btn-primary" style="padding: 14px 28px; font-size: 16px"
-                onclick="openModal('signup-modal')">
+              <a href="https://unstop.com/p/aiexplore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648480?utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
+                target="_blank" class="btn btn-primary"
+                style="padding: 14px 28px; font-size: 16px; text-decoration: none;">
                 Register Your Team →
-              </button>
+              </a>
               <button class="btn btn-secondary" style="padding: 14px 28px; font-size: 16px"
                 onclick="smoothScrollTo('#schedule')">
                 View Schedule
@@ -3218,100 +3125,86 @@
             24 hours of non-stop building at TGPCET 3rd Building, 1st Floor.
           </p>
         </div>
-        <div class="schedule-wrap">
-          <div class="timeline">
-            <!-- ITEM 1 -->
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit a1f93c — init</span>
-                <div class="timeline-title">Reporting & Kit Distribution</div>
-                <div class="timeline-time">MAR 13 — 10:00 AM</div>
-                <div class="timeline-desc">
-                  Official reporting at TGPCET 3rd Building. Receive your hacker ID and physical kit.
-                </div>
-              </div>
+        <div class="schedule-cards">
+          <!-- EVENT 1 -->
+          <div class="event-card">
+            <span class="exec-label">[ commit a1f93c ]</span>
+            <div class="event-badge-stack">
+              <span class="event-badge date">📅 13 March</span>
+              <span class="event-badge">🕙 10:00 AM</span>
             </div>
+            <h3 class="event-card-title">Reporting & Kit Distribution</h3>
+            <p class="event-card-desc">
+              Official reporting at TGPCET 3rd Building. Receive your hacker ID and physical kit.
+            </p>
+          </div>
 
-            <!-- ITEM 2 -->
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit b9e41d — start_hacking</span>
-                <div class="timeline-title">24-Hour Sprint Begins</div>
-                <div class="timeline-time">MAR 13 — 11:30 AM</div>
-                <div class="timeline-desc">
-                  The countdown starts. All teams connected to internal network. Development phase active.
-                </div>
-              </div>
+          <!-- EVENT 2 -->
+          <div class="event-card">
+            <span class="exec-label">[ commit b9e41d ]</span>
+            <div class="event-badge-stack">
+              <span class="event-badge date">📅 13 March</span>
+              <span class="event-badge">🕙 11:30 AM</span>
             </div>
+            <h3 class="event-card-title">24-Hour Sprint Begins</h3>
+            <p class="event-card-desc">
+              The countdown starts. All teams connected to internal network. Development phase active.
+            </p>
+          </div>
 
-            <!-- ITEM 3 -->
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit c3d8a2 — review_prototype</span>
-                <div class="timeline-title">Technical Mentorship Round</div>
-                <div class="timeline-time">MAR 13 — 09:00 PM</div>
-                <div class="timeline-desc">
-                  Mid-hack analysis. Mentors inspect architecture and logic blocks for optimization.
-                </div>
-              </div>
+          <!-- EVENT 3 -->
+          <div class="event-card">
+            <span class="exec-label">[ commit c3d8a2 ]</span>
+            <div class="event-badge-stack">
+              <span class="event-badge date">📅 13 March</span>
+              <span class="event-badge">🕙 09:00 PM</span>
             </div>
+            <h3 class="event-card-title">Technical Mentorship Round</h3>
+            <p class="event-card-desc">
+              Mid-hack analysis. Mentors inspect architecture and logic blocks for optimization.
+            </p>
+          </div>
 
-            <!-- ITEM 4 -->
-            <div class="timeline-item">
-              <div class="timeline-dot" style="border-color: var(--purple);"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit d7e1f4 — stop_build</span>
-                <div class="timeline-title">All Hacking Ends</div>
-                <div class="timeline-time">MAR 14 — 11:30 AM</div>
-                <div class="timeline-desc">
-                  Execution stopped. All code base frozen. Final project submission window closes.
-                </div>
-              </div>
+          <!-- EVENT 4 -->
+          <div class="event-card">
+            <span class="exec-label">[ parallel_track ]</span>
+            <div class="event-badge-stack">
+              <span class="event-badge date">📅 14 March</span>
+              <span class="event-badge">🕙 10:00 AM</span>
             </div>
+            <h3 class="event-card-title">Side Events Showcase</h3>
+            <p class="event-card-desc">
+              Concurrent events: Poster Competition & Startup pitch beginning at corridors and seminar hall.
+            </p>
+          </div>
 
-            <div class="timeline-item">
-              <div class="timeline-dot" style="border-color: var(--cyan); box-shadow: 0 0 15px var(--cyan);"></div>
-              <div class="timeline-content">
-                <span class="exec-label" style="color: var(--cyan); border-color: var(--cyan);">parallel_track —
-                  side_events</span>
-                <div class="timeline-title">Poster Competition & Startup Pitch</div>
-                <div class="timeline-time">MAR 14 — 10:00 AM onwards</div>
-                <div class="timeline-desc">
-                  Concurrent events beginning at TGPCET 3rd Building corridors and seminar hall.
-                </div>
-              </div>
+          <!-- EVENT 5 -->
+          <div class="event-card">
+            <span class="exec-label">[ commit d7e1f4 ]</span>
+            <div class="event-badge-stack">
+              <span class="event-badge date">📅 14 March</span>
+              <span class="event-badge">🕙 11:30 AM</span>
             </div>
+            <h3 class="event-card-title">All Hacking Ends</h3>
+            <p class="event-card-desc">
+              Execution stopped. All code base frozen. Final project submission window closes.
+            </p>
+          </div>
 
-            <!-- ITEM 5 -->
-            <div class="timeline-item">
-              <div class="timeline-dot" style="border-color: var(--purple);"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit e2f8a9 — prod_demo</span>
-                <div class="timeline-title">Final Demo & Evaluation</div>
-                <div class="timeline-time">MAR 14 — 01:00 PM</div>
-                <div class="timeline-desc">
-                  Live production demo before the jury panel. Showcase your core innovation blocks.
-                </div>
-              </div>
+          <!-- EVENT 6 -->
+          <div class="event-card">
+            <span class="exec-label">[ commit e2f8a9 ]</span>
+            <div class="event-badge-stack">
+              <span class="event-badge date">📅 14 March</span>
+              <span class="event-badge">🕙 01:00 PM</span>
             </div>
-
-            <!-- ITEM 6 -->
-            <div class="timeline-item">
-              <div class="timeline-dot" style="border-color: var(--purple);"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit f6a3c7 — release_merge</span>
-                <div class="timeline-title">Awards & Master Merge</div>
-                <div class="timeline-time">MAR 14 — 04:00 PM</div>
-                <div class="timeline-desc">
-                  Winner announcements. Official certification and closing of the AIExplore 2K26 repo.
-                </div>
-              </div>
-            </div>
+            <h3 class="event-card-title">Final Demo & Evaluation</h3>
+            <p class="event-card-desc">
+              Live production demo before the jury panel. Showcase your core innovation blocks.
+            </p>
           </div>
         </div>
+
       </div>
     </section>
 
@@ -6163,24 +6056,6 @@
           });
         });
 
-        // 6. Schedule Timeline Glow
-        const scheduleWrap = document.querySelector('.schedule-wrap');
-        const timelineGlow = document.getElementById('timeline-glow');
-
-        scheduleWrap.addEventListener('mousemove', (e) => {
-          const { top, height } = scheduleWrap.getBoundingClientRect();
-          const relativeY = e.clientY - top;
-
-          // Motion intensity scale: Schedule (40%)
-          const intensity = 0.4;
-
-          gsap.to(timelineGlow, {
-            backgroundPosition: `0 ${relativeY - 100}px`,
-            opacity: intensity,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        });
 
         // 6. Micro Code Drifting (Ambient)
         gsap.to(".prize-micro-code", {
