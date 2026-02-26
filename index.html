@@ -455,6 +455,8 @@
       color: var(--text2);
       transition: all 0.2s;
       cursor: pointer;
+      display: flex;
+      align-items: center;
     }
 
     @media (min-width: 1024px) {
@@ -462,6 +464,56 @@
         color: var(--text);
         background: rgba(255, 255, 255, 0.05);
       }
+    }
+
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 220px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(10px);
+      transition: all 0.3s var(--ease-out);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .nav-dropdown:hover .dropdown-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text2);
+      transition: all 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dropdown-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
     }
 
     .nav-actions {
@@ -1308,17 +1360,24 @@
     .exec-label {
       font-family: var(--mono);
       font-size: 11px;
-      color: var(--purple);
-      background: rgba(139, 92, 246, 0.12);
-      border: 1px solid rgba(139, 92, 246, 0.2);
-      padding: 6px 14px;
-      border-radius: 4px;
+      color: var(--text3);
+      opacity: 0.6;
       display: inline-flex;
       align-items: center;
       width: fit-content;
       text-transform: lowercase;
+      letter-spacing: 0.5px;
       margin: 0;
-      /* Managed by container gap */
+    }
+
+    .date-badge {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
     }
 
     @media (max-width: 992px) {
@@ -2944,160 +3003,6 @@
       }
     }
 
-    /* ========== STUDENTS / ORGANIZERS ========== */
-    .student-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      margin-top: 40px;
-    }
-
-    .student-card {
-      background: rgba(30, 41, 59, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 16px;
-      padding: 24px;
-      transition: all 0.3s var(--ease-out);
-      display: flex;
-      flex-direction: column;
-      height: fit-content;
-    }
-
-    .student-card:hover {
-      border-color: rgba(6, 182, 212, 0.3);
-      background: rgba(30, 41, 59, 0.5);
-    }
-
-    .student-team-name {
-      font-family: var(--display);
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--cyan);
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .student-team-name::before {
-      content: "";
-      width: 4px;
-      height: 18px;
-      background: var(--cyan);
-      border-radius: 2px;
-    }
-
-    .leads-group {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
-
-    .lead-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .lead-photo {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      overflow: hidden;
-    }
-
-    .lead-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .lead-info {
-      flex: 1;
-    }
-
-    .lead-name {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
-    }
-
-    .lead-role {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--text3);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .members-toggle {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      color: var(--text2);
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 500;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .members-toggle:hover {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text);
-      border-color: var(--text3);
-    }
-
-    .members-list {
-      display: none;
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px dashed var(--border);
-      animation: slideDown 0.3s var(--ease-out);
-    }
-
-    .members-list.open {
-      display: block;
-    }
-
-    .member-name {
-      font-size: 13px;
-      color: var(--text3);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .member-name::before {
-      content: "•";
-      color: var(--cyan);
-    }
-
-    @keyframes slideDown {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
     /* ========== STICKY MOBILE CTA ========== */
     .mobile-sticky-cta {
       position: fixed;
@@ -3162,8 +3067,22 @@
       <span class="nav-link" onclick="smoothScrollTo('#prizes')">Prizes</span>
       <span class="nav-link" onclick="smoothScrollTo('#schedule')">Schedule</span>
       <span class="nav-link" onclick="smoothScrollTo('#parallel-events')">Side Events</span>
-      <span class="nav-link" onclick="smoothScrollTo('#management')">Management</span>
-      <span class="nav-link" onclick="smoothScrollTo('#student-team')">Team</span>
+
+      <!-- ABOUT DROPDOWN -->
+      <div class="nav-dropdown">
+        <span class="nav-link dropdown-trigger">
+          About
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+            style="margin-left: 4px; vertical-align: middle;">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </span>
+        <div class="dropdown-menu">
+          <span class="dropdown-item" onclick="smoothScrollTo('#management')">🏛️ GPG Management</span>
+          <a href="student-ema.html" class="dropdown-item">🎓 Student EMA</a>
+        </div>
+      </div>
+
       <span class="nav-link" onclick="smoothScrollTo('#faq')">FAQ</span>
     </div>
     <div class="nav-actions" id="nav-actions">
@@ -3187,14 +3106,18 @@
           smoothScrollTo('#schedule');
           toggleMobileMenu();
         ">📅 Schedule</span>
+    <div
+      style="padding: 10px 16px; font-family: var(--mono); font-size: 11px; color: var(--blue); text-transform: uppercase; letter-spacing: 2px;">
+      // Info</div>
     <span class="mobile-nav-link" onclick="
           smoothScrollTo('#management');
           toggleMobileMenu();
-        ">👥 Management</span>
-    <span class="mobile-nav-link" onclick="
-          smoothScrollTo('#student-team');
-          toggleMobileMenu();
-        ">🎓 Student Team</span>
+        ">🏛️ Management</span>
+    <a href="student-ema.html" class="mobile-nav-link"
+      style="text-decoration: none; display: flex; align-items: center; justify-content: space-between;">
+      <span>🎓 Student EMA</span>
+      <span class="badge badge-info" style="font-size: 10px; border-radius: 4px;">NEW</span>
+    </a>
     <span class="mobile-nav-link" onclick="
           smoothScrollTo('#faq');
           toggleMobileMenu();
@@ -3440,7 +3363,8 @@
               <div class="timeline-item">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                  <div class="exec-label">📅 13 March</div>
+                  <div class="exec-label">commit a1f93c — init_reporting</div>
+                  <div class="date-badge">📅 13 March</div>
                   <div class="timeline-time">🕙 10:00 AM</div>
                   <div class="timeline-title">Reporting & Kit Distribution</div>
                   <div class="timeline-desc">
@@ -3454,7 +3378,8 @@
               <div class="timeline-item">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                  <div class="exec-label">📅 13 March</div>
+                  <div class="exec-label">commit b9e41d — start_hacking</div>
+                  <div class="date-badge">📅 13 March</div>
                   <div class="timeline-time">🕙 11:30 AM</div>
                   <div class="timeline-title">24-Hour Sprint Begins</div>
                   <div class="timeline-desc">
@@ -3467,7 +3392,8 @@
               <div class="timeline-item">
                 <div class="timeline-dot"></div>
                 <div class="timeline-content">
-                  <div class="exec-label">📅 13 March</div>
+                  <div class="exec-label">commit c3d8a2 — review_prototype</div>
+                  <div class="date-badge">📅 13 March</div>
                   <div class="timeline-time">🕙 09:00 PM</div>
                   <div class="timeline-title">Technical Mentorship Round</div>
                   <div class="timeline-desc">
@@ -3485,7 +3411,8 @@
               <div class="timeline-item">
                 <div class="timeline-dot" style="background: var(--purple); box-shadow: 0 0 10px var(--purple);"></div>
                 <div class="timeline-content" style="border-color: rgba(139, 92, 246, 0.3);">
-                  <div class="exec-label" style="color: var(--purple); border-color: var(--purple);">📅 14 March</div>
+                  <div class="exec-label">commit d7e1f4 — stop_build</div>
+                  <div class="date-badge">📅 14 March</div>
                   <div class="timeline-time">🕙 11:30 AM</div>
                   <div class="timeline-title">All Hacking Ends</div>
                   <div class="timeline-desc">
@@ -3498,9 +3425,8 @@
               <div class="timeline-item">
                 <div class="timeline-dot" style="background: var(--cyan); box-shadow: 0 0 10px var(--cyan);"></div>
                 <div class="timeline-content" style="border-color: rgba(6, 182, 212, 0.3);">
-                  <div class="exec-label"
-                    style="color: var(--cyan); border-color: var(--cyan); background: rgba(6, 182, 212, 0.1);">📅 14
-                    March</div>
+                  <div class="exec-label">commit stack — side_events</div>
+                  <div class="date-badge">📅 14 March</div>
                   <div class="timeline-time">🕙 10:00 AM onwards</div>
                   <div class="timeline-title">Poster & Startup Showcase</div>
                   <div class="timeline-desc">
@@ -3513,7 +3439,8 @@
               <div class="timeline-item">
                 <div class="timeline-dot" style="background: var(--purple); box-shadow: 0 0 10px var(--purple);"></div>
                 <div class="timeline-content" style="border-color: rgba(139, 92, 246, 0.3);">
-                  <div class="exec-label" style="color: var(--purple); border-color: var(--purple);">📅 14 March</div>
+                  <div class="exec-label">commit e2f8a9 — prod_demo</div>
+                  <div class="date-badge">📅 14 March</div>
                   <div class="timeline-time">🕙 01:00 PM</div>
                   <div class="timeline-title">Final Demo & Evaluation</div>
                   <div class="timeline-desc">
@@ -3526,7 +3453,8 @@
               <div class="timeline-item">
                 <div class="timeline-dot" style="background: var(--purple); box-shadow: 0 0 10px var(--purple);"></div>
                 <div class="timeline-content" style="border-color: rgba(139, 92, 246, 0.3);">
-                  <div class="exec-label" style="color: var(--purple); border-color: var(--purple);">📅 14 March</div>
+                  <div class="exec-label">commit f6a3c7 — release_merge</div>
+                  <div class="date-badge">📅 14 March</div>
                   <div class="timeline-time">🕙 04:00 PM</div>
                   <div class="timeline-title">Awards & Master Merge</div>
                   <div class="timeline-desc">
@@ -3657,505 +3585,6 @@
       </div>
     </section>
 
-    <!-- ORGANIZERS / STUDENT TEAM -->
-    <section class="section" id="student-team">
-      <div class="glow-blob glow-blob-purple" style="top: 20%; left: -150px;"></div>
-      <div class="container">
-        <div class="section-header">
-          <div class="section-tag">// Organizers</div>
-          <h2 class="section-title">Student Team</h2>
-          <p class="section-desc">
-            The dedicated core committees making AIExplore 2K26 a reality.
-          </p>
-        </div>
-
-        <div class="student-grid">
-          <!-- Team 1 -->
-          <div class="student-card">
-            <div class="student-team-name">Events</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">⚡</div>
-                <div class="lead-info">
-                  <div class="lead-name">Aditya Thakre</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">⚡</div>
-                <div class="lead-info">
-                  <div class="lead-name">Shubham Shamagate</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">🌟</div>
-                <div class="lead-info">
-                  <div class="lead-name">Manasvi Deoghare</div>
-                  <div class="lead-role">Co-head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">🌟</div>
-                <div class="lead-info">
-                  <div class="lead-name">Arya Gaydhane</div>
-                  <div class="lead-role">Co-head</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-events')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-events" class="members-list">
-              <div class="member-name">Core Event Management Unit</div>
-            </div>
-          </div>
-
-          <!-- Team 2 -->
-          <div class="student-card">
-            <div class="student-team-name">Sponsorship</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">🤝</div>
-                <div class="lead-info">
-                  <div class="lead-name">Aditya Thakre</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">🤝</div>
-                <div class="lead-info">
-                  <div class="lead-name">Shubham Shamagate</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">🤝</div>
-                <div class="lead-info">
-                  <div class="lead-name">Ritik Gajbhiye</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">🤝</div>
-                <div class="lead-info">
-                  <div class="lead-name">Chetan Athawale</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-sponsorship')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-sponsorship" class="members-list">
-              <div class="member-name">Adwait Pimple</div>
-              <div class="member-name">Arya Gaydhane</div>
-              <div class="member-name">Aryan Rahangdale</div>
-              <div class="member-name">Vaibhav Devgade</div>
-              <div class="member-name">Mohit Patil</div>
-              <div class="member-name">Archit Kharabe</div>
-              <div class="member-name">Kumkum Arsode</div>
-              <div class="member-name">Anup Alam</div>
-            </div>
-          </div>
-
-          <!-- Team 3 -->
-          <div class="student-card">
-            <div class="student-team-name">Marketing</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">📣</div>
-                <div class="lead-info">
-                  <div class="lead-name">Aditya Thakre</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">📣</div>
-                <div class="lead-info">
-                  <div class="lead-name">Rutika Bhoge</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">📣</div>
-                <div class="lead-info">
-                  <div class="lead-name">Lina Bhagat</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-marketing')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-marketing" class="members-list">
-              <div class="member-name">Chetan Athawale</div>
-              <div class="member-name">Arya Gaydhane</div>
-              <div class="member-name">Divya Gawande</div>
-              <div class="member-name">Adwait Pimple</div>
-              <div class="member-name">Apoorva Bhoyalkar</div>
-              <div class="member-name">Shubham Shamagat</div>
-              <div class="member-name">Mohini Duff</div>
-              <div class="member-name">Om Mankar</div>
-              <div class="member-name">Kaustubh Tajne</div>
-              <div class="member-name">Vedant</div>
-              <div class="member-name">Vaibhav Bhasang</div>
-              <div class="member-name">Sharvin Thakre</div>
-            </div>
-          </div>
-
-          <!-- Team 4 -->
-          <div class="student-card">
-            <div class="student-team-name">Technical Team</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">💻</div>
-                <div class="lead-info">
-                  <div class="lead-name">Aryan Mothghare</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-technical')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-technical" class="members-list">
-              <div class="member-name">Om Mankar</div>
-              <div class="member-name">Nikita Wagh</div>
-              <div class="member-name">Vallabh Shigroop</div>
-            </div>
-          </div>
-
-          <!-- Team 5 -->
-          <div class="student-card">
-            <div class="student-team-name">Logistic Team</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">📦</div>
-                <div class="lead-info">
-                  <div class="lead-name">Manasvi Deoghare</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">📦</div>
-                <div class="lead-info">
-                  <div class="lead-name">Tanmay Khambalkar</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">📦</div>
-                <div class="lead-info">
-                  <div class="lead-name">Avadhut Jadhav</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-logistics')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-logistics" class="members-list">
-              <div class="member-name">Mohit Patil</div>
-              <div class="member-name">Arya Gaydhane</div>
-              <div class="member-name">Pranali Gedam</div>
-              <div class="member-name">Aditya Gonde</div>
-              <div class="member-name">Aryan Mothghare</div>
-              <div class="member-name">Adwait Pimple</div>
-              <div class="member-name">Sharvin Thakre</div>
-              <div class="member-name">Sheel Shende</div>
-              <div class="member-name">Rutika Bhoge</div>
-              <div class="member-name">Purva Mahalle</div>
-              <div class="member-name">Kaustubh Tajne</div>
-              <div class="member-name">Vaibhav Bhasang</div>
-            </div>
-          </div>
-
-          <!-- Team 6 -->
-          <div class="student-card">
-            <div class="student-team-name">Hackathon</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">🚀</div>
-                <div class="lead-info">
-                  <div class="lead-name">Rasika Khare</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">🚀</div>
-                <div class="lead-info">
-                  <div class="lead-name">Om Mankar</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">🚀</div>
-                <div class="lead-info">
-                  <div class="lead-name">Mohini Duff</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">🚀</div>
-                <div class="lead-info">
-                  <div class="lead-name">Krushna Kale</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-hack')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-hack" class="members-list">
-              <div class="member-name">Nikita Wagh</div>
-              <div class="member-name">Omkar Waghmare</div>
-              <div class="member-name">Aryan Mothghare</div>
-              <div class="member-name">Aditya Thakre</div>
-              <div class="member-name">Vaishnavi Chaudhari</div>
-              <div class="member-name">Mansi Dhargave</div>
-              <div class="member-name">Shafin Sheikh</div>
-              <div class="member-name">Navmi Geurkar</div>
-              <div class="member-name">Kaustubh Tajne</div>
-              <div class="member-name">Vaibhav Devgade</div>
-              <div class="member-name">Rutika Bhoge</div>
-              <div class="member-name">Sakshi Pusdekar</div>
-            </div>
-          </div>
-
-          <!-- Team 7 -->
-          <div class="student-card">
-            <div class="student-team-name">Budget</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">💰</div>
-                <div class="lead-info">
-                  <div class="lead-name">Shubham Shamagate</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-budget')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-budget" class="members-list">
-              <div class="member-name">Aditya Thakre</div>
-            </div>
-          </div>
-
-          <!-- Team 8 -->
-          <div class="student-card">
-            <div class="student-team-name">Posters</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">🎨</div>
-                <div class="lead-info">
-                  <div class="lead-name">Vedant Kharabe</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">🎨</div>
-                <div class="lead-info">
-                  <div class="lead-name">Ritik Gajbhiye</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-posters')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-posters" class="members-list">
-              <div class="member-name">Purva Mahalle</div>
-              <div class="member-name">Lina Bhagat</div>
-              <div class="member-name">Snehal Chavan</div>
-            </div>
-          </div>
-
-          <!-- Team 9 -->
-          <div class="student-card">
-            <div class="student-team-name">Decoration</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">✨</div>
-                <div class="lead-info">
-                  <div class="lead-name">Arti Ghayde</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">✨</div>
-                <div class="lead-info">
-                  <div class="lead-name">Divya Gawande</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-decoration')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-decoration" class="members-list">
-              <div class="member-name">Lina Bhagat</div>
-              <div class="member-name">Mansi Dhargave</div>
-              <div class="member-name">Snehal Chavan</div>
-              <div class="member-name">Ayush</div>
-              <div class="member-name">Sharvin Thakre</div>
-              <div class="member-name">Sheel Shende</div>
-              <div class="member-name">Navmi</div>
-              <div class="member-name">Avanti</div>
-              <div class="member-name">Vaishnavi</div>
-              <div class="member-name">Pranjali Ledange</div>
-              <div class="member-name">Rutika Bhoge</div>
-              <div class="member-name">Samiksha Mathe</div>
-              <div class="member-name">Payal Shende</div>
-              <div class="member-name">Dolly Thakur</div>
-              <div class="member-name">Anushka Pawar</div>
-            </div>
-          </div>
-
-          <!-- Team 10 -->
-          <div class="student-card">
-            <div class="student-team-name">Anchors</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">🎤</div>
-                <div class="lead-info">
-                  <div class="lead-name">Aditya Thakre</div>
-                  <div class="lead-role">Organizing Unit</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">🎤</div>
-                <div class="lead-info">
-                  <div class="lead-name">Chetan Athawale</div>
-                  <div class="lead-role">Organizing Unit</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-anchors')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-anchors" class="members-list">
-              <div class="member-name">Lina Bhagat</div>
-              <div class="member-name">Vedanti Khole</div>
-            </div>
-          </div>
-
-          <!-- Team 11 -->
-          <div class="student-card">
-            <div class="student-team-name">Media</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">📸</div>
-                <div class="lead-info">
-                  <div class="lead-name">Ganesh Hetkar</div>
-                  <div class="lead-role">Student Head</div>
-                </div>
-              </div>
-
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-media')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-media" class="members-list">
-              <div class="member-name">Aasim</div>
-              <div class="member-name">Avdhut</div>
-              <div class="member-name">Swastik Raj</div>
-              <div class="member-name">Akshay Mandavkar</div>
-            </div>
-          </div>
-
-          <!-- Team 12 -->
-          <div class="student-card">
-            <div class="student-team-name">Hospitality</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">🏨</div>
-                <div class="lead-info">
-                  <div class="lead-name">Purva Mahalle</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-              <div class="lead-item">
-                <div class="lead-photo">🏨</div>
-                <div class="lead-info">
-                  <div class="lead-name">Manasvi Deoghare</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-hospitality')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-hospitality" class="members-list">
-              <div class="member-name">Lina Bhagat</div>
-              <div class="member-name">Divya Gawande</div>
-            </div>
-          </div>
-
-          <!-- Team 13 -->
-          <div class="student-card">
-            <div class="student-team-name">Document</div>
-            <div class="leads-group">
-              <div class="lead-item">
-                <div class="lead-photo">📄</div>
-                <div class="lead-info">
-                  <div class="lead-name">Pranjali Ledange</div>
-                  <div class="lead-role">Head</div>
-                </div>
-              </div>
-            </div>
-            <button class="members-toggle" onclick="toggleMembers('team-document')">
-              <span>View All Members</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-            <div id="team-document" class="members-list">
-              <div class="member-name">Ritik Gajbhiye</div>
-              <div class="member-name">Shubham Shamagate</div>
-              <div class="member-name">Manasvi Deoghare</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- FAQ -->
     <section class="section" id="faq" style="background: rgba(15, 23, 42, 0.2);">
@@ -4187,7 +3616,8 @@
             <div class="footer-col-title">Event</div>
             <span class="footer-link" onclick="smoothScrollTo('#prizes')">Prizes</span>
             <span class="footer-link" onclick="smoothScrollTo('#schedule')">Schedule</span>
-            <span class="footer-link" onclick="smoothScrollTo('#management')">Management</span>
+            <span class="footer-link" onclick="smoothScrollTo('#management')">GPG Management</span>
+            <a href="student-ema.html" class="footer-link" style="text-decoration: none;">Student EMA</a>
             <span class="footer-link" onclick="smoothScrollTo('#faq')">FAQ</span>
           </div>
           <div>
@@ -6466,7 +5896,6 @@
                 'prizes': 'reward_engine.initialized',
                 'schedule': 'hack_phase.deploy()',
                 'management': 'tgpcet_leadership.sync()',
-                'student-team': 'dept_cse_nodes.authorized',
                 'parallel-events': 'parallel_track_v2.init',
                 'faq': 'queries.resolve()',
                 'hero': 'tgpcet_virtual_campus.online'
@@ -6596,21 +6025,6 @@
         loop();
       }
 
-      function toggleMembers(id) {
-        const el = document.getElementById(id);
-        const btn = el.previousElementSibling;
-        const isOpen = el.classList.contains('open');
-
-        if (isOpen) {
-          el.classList.remove('open');
-          btn.querySelector('span').innerText = 'View All Members';
-          btn.querySelector('svg').style.transform = 'rotate(0deg)';
-        } else {
-          el.classList.add('open');
-          btn.querySelector('span').innerText = 'Hide Members';
-          btn.querySelector('svg').style.transform = 'rotate(180deg)';
-        }
-      }
 
       function switchDay(day, btn) {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -6627,7 +6041,7 @@
         selectProblem, regNext, regBack, submitRegistration,
         selectPayment, simulatePayment, toggleFaq, copyTeamCode,
         createTeam, joinTeam, leaveTeam, showDashPage, adminAction,
-        showAdminTab, adminFilter, exportCSV, adminLogin, toggleMembers,
+        showAdminTab, adminFilter, exportCSV, adminLogin,
         switchDay
       });
 
