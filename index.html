@@ -1017,62 +1017,157 @@
     }
 
     /* ========== SCHEDULE ========== */
-    /* ========== SCHEDULE CARD STACK ========== */
-    .schedule-cards {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-      max-width: 800px;
+    .schedule-wrap {
+      width: 100%;
+      max-width: 1200px;
       margin: 0 auto;
+      padding: 40px 20px;
+      background: rgba(15, 23, 42, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.03);
+      border-radius: 24px;
       position: relative;
-      z-index: 2;
     }
 
-    .event-card {
-      background: rgba(30, 41, 59, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 20px;
-      padding: 28px;
-      transition: all 0.4s var(--ease-out);
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    @media (min-width: 1024px) {
+      .schedule-wrap {
+        padding: 80px 40px;
+        border-radius: 32px;
+      }
+    }
+
+    .timeline {
       position: relative;
-      overflow: hidden;
-      backdrop-filter: blur(10px);
+      padding: 40px 0;
     }
 
-    .event-card:hover {
-      transform: translateY(-8px);
-      background: rgba(30, 41, 59, 0.7);
-      border-color: rgba(59, 130, 246, 0.4);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-    }
-
-    .event-card::before {
+    .timeline::before {
       content: "";
       position: absolute;
+      left: 20px;
+      /* Mobile first: left align */
       top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: linear-gradient(to bottom, var(--blue), var(--purple));
-      opacity: 0.6;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom,
+          transparent,
+          var(--blue) 10%,
+          var(--purple) 50%,
+          var(--blue) 90%,
+          transparent);
+      border-radius: 4px;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
     }
 
-    .event-badge-stack {
+    @media (min-width: 1024px) {
+      .timeline::before {
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        box-shadow: 0 0 25px rgba(59, 130, 246, 0.3);
+        animation: spine-pulse 4s ease-in-out infinite;
+      }
+    }
+
+    @keyframes spine-pulse {
+
+      0%,
+      100% {
+        opacity: 0.4;
+        filter: blur(1px);
+      }
+
+      50% {
+        opacity: 0.8;
+        filter: blur(0px);
+      }
+    }
+
+    /* ========== SCHEDULE ENHANCEMENTS ========== */
+    .schedule-tabs {
       display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
+      margin-bottom: 40px;
+      padding: 6px;
+      background: rgba(30, 41, 59, 0.4);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      width: fit-content;
+    }
+
+    @media (max-width: 640px) {
+      .schedule-tabs {
+        width: 100%;
+      }
+    }
+
+    .tab-btn {
+      padding: 10px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text3);
+      background: transparent;
+      transition: all 0.3s var(--ease-out);
+      flex: 1;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: var(--blue);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    }
+
+    .timeline-page {
+      display: none;
+      animation: fadeIn 0.4s var(--ease-out);
+    }
+
+    .timeline-page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .timeline {
+      position: relative;
+      padding: 20px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--blue), var(--purple), transparent);
+      opacity: 0.3;
+    }
+
+    @media (min-width: 1024px) {
+      .timeline::before {
+        left: 50%;
+        transform: translateX(-50%);
+      }
     }
 
     .timeline-item {
       position: relative;
-      display: flex;
-      flex-direction: column;
-      padding-left: 50px;
       margin-bottom: 40px;
-      width: 100%;
+      padding-left: 50px;
     }
 
     @media (min-width: 1024px) {
@@ -1092,35 +1187,61 @@
     .timeline-dot {
       position: absolute;
       left: 20px;
-      top: 0;
+      top: 24px;
       transform: translateX(-50%);
-      width: 16px;
-      height: 16px;
-      background: var(--bg);
-      border: 3px solid var(--blue);
+      width: 12px;
+      height: 12px;
+      background: var(--blue);
       border-radius: 50%;
       z-index: 10;
+      box-shadow: 0 0 10px var(--blue);
     }
 
     @media (min-width: 1024px) {
       .timeline-dot {
         left: 50%;
         top: 40px;
-        width: 24px;
-        height: 24px;
-        border-width: 4px;
-        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        width: 16px;
+        height: 16px;
       }
     }
 
     .timeline-content {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(30, 41, 59, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 24px;
-      transition: all 0.3s var(--ease-out);
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
       position: relative;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      text-align: left;
+      direction: ltr;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      overflow: hidden;
+    }
+
+    .timeline-content::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent, rgba(6, 182, 212, 0.1));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .timeline-content:hover {
+      border-color: rgba(6, 182, 212, 0.4);
+      background: rgba(30, 41, 59, 0.6);
+      transform: translateX(8px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     }
 
     @media (min-width: 1024px) {
@@ -1139,72 +1260,98 @@
         direction: ltr;
         text-align: left;
       }
+
+      .timeline-content:hover {
+        transform: translateY(-5px);
+      }
+
+      .timeline-item:nth-child(even) .timeline-content {
+        text-align: left;
+      }
     }
 
     .timeline-time {
       font-family: var(--mono);
-      font-size: 13px;
+      font-size: 14px;
       color: var(--blue);
-      opacity: 0.8;
+      opacity: 0.9;
       margin-bottom: 12px;
       display: block;
       letter-spacing: 1px;
     }
 
-    .event-card-title {
+    .timeline-title {
       font-family: var(--display);
-      font-size: 26px;
+      font-size: clamp(18px, 4.5vw, 24px);
       font-weight: 800;
       color: var(--text);
       letter-spacing: 0.03em;
       text-transform: uppercase;
+      line-height: 1.25;
+      margin: 0;
+      /* Managed by container gap */
     }
 
     .timeline-desc {
-      font-size: 16px;
+      font-size: 15px;
       color: var(--text2);
       line-height: 1.7;
-      opacity: 0.8;
+      opacity: 0.85;
+    }
+
+    @media (min-width: 768px) {
+      .timeline-desc {
+        font-size: 16px;
+      }
     }
 
     .exec-label {
       font-family: var(--mono);
       font-size: 11px;
       color: var(--purple);
-      background: rgba(139, 92, 246, 0.1);
+      background: rgba(139, 92, 246, 0.12);
       border: 1px solid rgba(139, 92, 246, 0.2);
       padding: 6px 14px;
       border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 24px;
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
       text-transform: lowercase;
+      margin: 0;
+      /* Managed by container gap */
     }
 
     @media (max-width: 992px) {
       .timeline::before {
-        left: 40px;
-        transform: none;
+        display: none;
+        /* Forget the glowing center line */
       }
 
       .timeline-item {
         grid-template-columns: 1fr;
-        gap: 32px;
-        padding-left: 80px;
-        direction: ltr !important;
-        margin-bottom: 48px;
-      }
-
-      .timeline-item .timeline-content {
-        text-align: left !important;
+        gap: 0;
+        padding-left: 0;
+        margin-bottom: 24px;
+        width: 100%;
       }
 
       .timeline-dot {
-        left: 40px;
-        top: 40px;
+        display: none;
+        /* Simple stacked cards */
+      }
+
+      .timeline-content {
+        transform: none !important;
+        border-radius: 12px;
+        padding: 20px;
+        background: rgba(30, 41, 59, 0.3);
+        border: 1px solid var(--border);
+      }
+
+      .timeline-content:hover {
+        transform: translateY(-2px) !important;
       }
     }
-
-
 
     /* ========== FAQ ========== */
     #faq {
@@ -2553,6 +2700,9 @@
       /* Grow downwards from top */
       gap: 4px;
       overflow: hidden;
+      max-height: 25vh;
+      -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
       transition: all 0.3s var(--ease-out);
     }
 
@@ -2620,8 +2770,40 @@
       opacity: 0.7;
     }
 
-    /* Scanline Effect */
-    body::after {
+    /* ========== MANAGEMENT ========== */
+    .management-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 32px;
+    }
+
+    @media (min-width: 640px) {
+      .management-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 32px;
+        margin-top: 48px;
+      }
+    }
+
+    .mgmt-card {
+      background: rgba(30, 41, 59, 0.5);
+      /* Stronger background for separation */
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.4s var(--ease-out);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      /* Stronger mobile shadow */
+    }
+
+    .mgmt-card::before {
       content: "";
       position: absolute;
       inset: 0;
@@ -2679,7 +2861,274 @@
       inset: 0;
       background: rgba(59, 130, 246, 0.05);
       pointer-events: none;
-      opacity: 0.3;
+      z-index: 3;
+      mix-blend-mode: overlay;
+    }
+
+    .mgmt-scanline {
+      display: none;
+    }
+
+    .mgmt-name {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    .mgmt-role {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .mgmt-desc {
+      font-size: 14px;
+      color: var(--text3);
+      line-height: 1.6;
+    }
+
+    .mgmt-contact {
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s var(--ease-out);
+    }
+
+    .mgmt-card:hover .mgmt-contact {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .mgmt-contact-link {
+      color: var(--text3);
+      transition: color 0.2s;
+      font-size: 18px;
+    }
+
+    .mgmt-contact-link:hover {
+      color: var(--blue);
+    }
+
+    .mgmt-tier-title {
+      grid-column: 1 / -1;
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--purple);
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin: 40px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .mgmt-tier-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, rgba(139, 92, 246, 0.3), transparent);
+    }
+
+    @media (max-width: 768px) {
+      .management-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ========== STUDENTS / ORGANIZERS ========== */
+    .student-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    .student-card {
+      background: rgba(30, 41, 59, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      padding: 24px;
+      transition: all 0.3s var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      height: fit-content;
+    }
+
+    .student-card:hover {
+      border-color: rgba(6, 182, 212, 0.3);
+      background: rgba(30, 41, 59, 0.5);
+    }
+
+    .student-team-name {
+      font-family: var(--display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--cyan);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .student-team-name::before {
+      content: "";
+      width: 4px;
+      height: 18px;
+      background: var(--cyan);
+      border-radius: 2px;
+    }
+
+    .leads-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .lead-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .lead-photo {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      overflow: hidden;
+    }
+
+    .lead-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .lead-info {
+      flex: 1;
+    }
+
+    .lead-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .lead-role {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .members-toggle {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .members-toggle:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      border-color: var(--text3);
+    }
+
+    .members-list {
+      display: none;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--border);
+      animation: slideDown 0.3s var(--ease-out);
+    }
+
+    .members-list.open {
+      display: block;
+    }
+
+    .member-name {
+      font-size: 13px;
+      color: var(--text3);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .member-name::before {
+      content: "•";
+      color: var(--cyan);
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ========== STICKY MOBILE CTA ========== */
+    .mobile-sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 16px 20px;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(6, 182, 212, 0.3);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.33, 1, 0.68, 1);
+    }
+
+    .mobile-sticky-cta.visible {
+      transform: translateY(0);
+    }
+
+    @media (min-width: 640px) {
+      .mobile-sticky-cta {
+        display: none !important;
+      }
+    }
+
+    .btn-lg {
+      padding: 16px 32px;
+      font-size: 17px;
     }
   </style>
 </head>
@@ -2718,12 +3167,10 @@
       <span class="nav-link" onclick="smoothScrollTo('#faq')">FAQ</span>
     </div>
     <div class="nav-actions" id="nav-actions">
-      <button class="btn btn-ghost btn-sm" onclick="openModal('login-modal')">
-        Log In
-      </button>
-      <button class="btn btn-primary btn-sm" onclick="openModal('signup-modal')">
-        Register Now
-      </button>
+      <a href="https://unstop.com/p/aiexplore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648480?utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
+        target="_blank" class="btn btn-primary btn-sm" style="text-decoration: none;">
+        Register on Unstop
+      </a>
     </div>
     <div class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
       <span></span><span></span><span></span>
@@ -2758,18 +3205,10 @@
           flex-direction: column;
           gap: 10px;
         ">
-      <button class="btn btn-secondary" style="width: 100%" onclick="
-            openModal('login-modal');
-            toggleMobileMenu();
-          ">
-        Log In
-      </button>
-      <button class="btn btn-primary" style="width: 100%" onclick="
-            openModal('signup-modal');
-            toggleMobileMenu();
-          ">
-        Register Now
-      </button>
+      <a href="https://unstop.com/p/aiexplore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648480?utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
+        target="_blank" class="btn btn-primary" style="width: 100%; text-decoration: none;">
+        Register on Unstop
+      </a>
     </div>
   </div>
 
@@ -2815,11 +3254,10 @@
               </div>
             </div>
             <div class="hero-actions" id="hero-actions">
-              <a href="https://unstop.com/p/aiexplore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648480?utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
-                target="_blank" class="btn btn-primary"
-                style="padding: 14px 28px; font-size: 16px; text-decoration: none;">
+              <button class="btn btn-primary" style="padding: 14px 28px; font-size: 16px"
+                onclick="openModal('signup-modal')">
                 Register Your Team →
-              </a>
+              </button>
               <button class="btn btn-secondary" style="padding: 14px 28px; font-size: 16px"
                 onclick="smoothScrollTo('#schedule')">
                 View Schedule
@@ -2990,81 +3428,110 @@
           </p>
         </div>
         <div class="schedule-wrap">
-          <div class="timeline">
-            <!-- ITEM 1 -->
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit a1f93c — init</span>
-                <div class="timeline-title">Reporting & Kit Distribution</div>
-                <div class="timeline-time">MAR 13 — 10:00 AM</div>
-                <div class="timeline-desc">
-                  Official reporting at TGPCET 3rd Building. Receive your hacker ID and physical kit.
+          <div class="schedule-tabs">
+            <button class="tab-btn active" onclick="switchDay(1, this)">Day 01 — Mar 13</button>
+            <button class="tab-btn" onclick="switchDay(2, this)">Day 02 — Mar 14</button>
+          </div>
+
+          <!-- DAY 1 -->
+          <div class="timeline-page active" id="day-1">
+            <div class="timeline">
+              <!-- ITEM 1 -->
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="exec-label">📅 13 March</div>
+                  <div class="timeline-time">🕙 10:00 AM</div>
+                  <div class="timeline-title">Reporting & Kit Distribution</div>
+                  <div class="timeline-desc">
+                    Official reporting at TGPCET 3rd Building. Receive your hacker ID, physical kit, and Wi-Fi
+                    credentials.
+                  </div>
+                </div>
+              </div>
+
+              <!-- ITEM 2 -->
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="exec-label">📅 13 March</div>
+                  <div class="timeline-time">🕙 11:30 AM</div>
+                  <div class="timeline-title">24-Hour Sprint Begins</div>
+                  <div class="timeline-desc">
+                    The countdown starts. All teams connected to internal network. Development phase active.
+                  </div>
+                </div>
+              </div>
+
+              <!-- ITEM 3 -->
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                  <div class="exec-label">📅 13 March</div>
+                  <div class="timeline-time">🕙 09:00 PM</div>
+                  <div class="timeline-title">Technical Mentorship Round</div>
+                  <div class="timeline-desc">
+                    Mid-hack analysis. Mentors inspect architecture and logic blocks for optimization.
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- ITEM 2 -->
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit b9e41d — start_hacking</span>
-                <div class="timeline-title">24-Hour Sprint Begins</div>
-                <div class="timeline-time">MAR 13 — 11:30 AM</div>
-                <div class="timeline-desc">
-                  The countdown starts. All teams connected to internal network. Development phase active.
+          <!-- DAY 2 -->
+          <div class="timeline-page" id="day-2">
+            <div class="timeline">
+              <!-- ITEM 4 -->
+              <div class="timeline-item">
+                <div class="timeline-dot" style="background: var(--purple); box-shadow: 0 0 10px var(--purple);"></div>
+                <div class="timeline-content" style="border-color: rgba(139, 92, 246, 0.3);">
+                  <div class="exec-label" style="color: var(--purple); border-color: var(--purple);">📅 14 March</div>
+                  <div class="timeline-time">🕙 11:30 AM</div>
+                  <div class="timeline-title">All Hacking Ends</div>
+                  <div class="timeline-desc">
+                    Execution stopped. All code base frozen. Final project submission window closes.
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- ITEM 3 -->
-            <div class="timeline-item">
-              <div class="timeline-dot"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit c3d8a2 — review_prototype</span>
-                <div class="timeline-title">Technical Mentorship Round</div>
-                <div class="timeline-time">MAR 13 — 09:00 PM</div>
-                <div class="timeline-desc">
-                  Mid-hack analysis. Mentors inspect architecture and logic blocks for optimization.
+              <!-- TRACKS -->
+              <div class="timeline-item">
+                <div class="timeline-dot" style="background: var(--cyan); box-shadow: 0 0 10px var(--cyan);"></div>
+                <div class="timeline-content" style="border-color: rgba(6, 182, 212, 0.3);">
+                  <div class="exec-label"
+                    style="color: var(--cyan); border-color: var(--cyan); background: rgba(6, 182, 212, 0.1);">📅 14
+                    March</div>
+                  <div class="timeline-time">🕙 10:00 AM onwards</div>
+                  <div class="timeline-title">Poster & Startup Showcase</div>
+                  <div class="timeline-desc">
+                    Concurrent events beginning at TGPCET floors and main seminar hall.
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- ITEM 4 -->
-            <div class="timeline-item">
-              <div class="timeline-dot" style="border-color: var(--purple);"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit d7e1f4 — stop_build</span>
-                <div class="timeline-title">All Hacking Ends</div>
-                <div class="timeline-time">MAR 14 — 11:30 AM</div>
-                <div class="timeline-desc">
-                  Execution stopped. All code base frozen. Final project submission window closes.
+              <!-- ITEM 5 -->
+              <div class="timeline-item">
+                <div class="timeline-dot" style="background: var(--purple); box-shadow: 0 0 10px var(--purple);"></div>
+                <div class="timeline-content" style="border-color: rgba(139, 92, 246, 0.3);">
+                  <div class="exec-label" style="color: var(--purple); border-color: var(--purple);">📅 14 March</div>
+                  <div class="timeline-time">🕙 01:00 PM</div>
+                  <div class="timeline-title">Final Demo & Evaluation</div>
+                  <div class="timeline-desc">
+                    Live production demo before the jury panel. Showcase your core innovation blocks.
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- ITEM 5 -->
-            <div class="timeline-item">
-              <div class="timeline-dot" style="border-color: var(--purple);"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit e2f8a9 — prod_demo</span>
-                <div class="timeline-title">Final Demo & Evaluation</div>
-                <div class="timeline-time">MAR 14 — 01:00 PM</div>
-                <div class="timeline-desc">
-                  Live production demo before the jury panel. Showcase your core innovation blocks.
-                </div>
-              </div>
-            </div>
-
-            <!-- ITEM 6 -->
-            <div class="timeline-item">
-              <div class="timeline-dot" style="border-color: var(--purple);"></div>
-              <div class="timeline-content">
-                <span class="exec-label">commit f6a3c7 — release_merge</span>
-                <div class="timeline-title">Awards & Master Merge</div>
-                <div class="timeline-time">MAR 14 — 04:00 PM</div>
-                <div class="timeline-desc">
-                  Winner announcements. Official certification and closing of the AIExplore 2K26 repo.
+              <!-- ITEM 6 -->
+              <div class="timeline-item">
+                <div class="timeline-dot" style="background: var(--purple); box-shadow: 0 0 10px var(--purple);"></div>
+                <div class="timeline-content" style="border-color: rgba(139, 92, 246, 0.3);">
+                  <div class="exec-label" style="color: var(--purple); border-color: var(--purple);">📅 14 March</div>
+                  <div class="timeline-time">🕙 04:00 PM</div>
+                  <div class="timeline-title">Awards & Master Merge</div>
+                  <div class="timeline-desc">
+                    Winner announcements. Official certification and closing of the AIExplore 2K26 repo.
+                  </div>
                 </div>
               </div>
             </div>
@@ -5921,7 +6388,7 @@
           });
         });
 
-        // 5. Schedule Timeline Glow
+        // 6. Schedule Timeline Glow
         const scheduleWrap = document.querySelector('.schedule-wrap');
         const timelineGlow = document.getElementById('timeline-glow');
 
@@ -5977,9 +6444,9 @@
           </div>
           <div class="log-msg">${msg}</div>
         `;
-          logContainer.prepend(entry);
-          if (logContainer.children.length > 10) {
-            logContainer.removeChild(logContainer.lastChild);
+          logContainer.append(entry); /* Grow downwards for top-aligned logs */
+          if (logContainer.children.length > 20) {
+            logContainer.removeChild(logContainer.firstChild);
           }
         }
 
@@ -5998,8 +6465,11 @@
               const msgs = {
                 'prizes': 'reward_engine.initialized',
                 'schedule': 'hack_phase.deploy()',
-                'faq': 'resolving_queries...',
-                'hero': 'system.boot_complete'
+                'management': 'tgpcet_leadership.sync()',
+                'student-team': 'dept_cse_nodes.authorized',
+                'parallel-events': 'parallel_track_v2.init',
+                'faq': 'queries.resolve()',
+                'hero': 'tgpcet_virtual_campus.online'
               };
               if (msgs[id]) addRuntimeLog('EXEC', msgs[id]);
             }
@@ -6126,14 +6596,57 @@
         loop();
       }
 
+      function toggleMembers(id) {
+        const el = document.getElementById(id);
+        const btn = el.previousElementSibling;
+        const isOpen = el.classList.contains('open');
+
+        if (isOpen) {
+          el.classList.remove('open');
+          btn.querySelector('span').innerText = 'View All Members';
+          btn.querySelector('svg').style.transform = 'rotate(0deg)';
+        } else {
+          el.classList.add('open');
+          btn.querySelector('span').innerText = 'Hide Members';
+          btn.querySelector('svg').style.transform = 'rotate(180deg)';
+        }
+      }
+
+      function switchDay(day, btn) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.timeline-page').forEach(p => p.classList.remove('active'));
+
+        btn.classList.add('active');
+        document.getElementById(`day-${day}`).classList.add('active');
+        addRuntimeLog('SCAN', `switching_to_phase: day_0${day}`);
+      }
+
       // Handle UI functions globally
       Object.assign(window, {
         openModal, closeModal, toggleMobileMenu, smoothScrollTo,
         selectProblem, regNext, regBack, submitRegistration,
         selectPayment, simulatePayment, toggleFaq, copyTeamCode,
         createTeam, joinTeam, leaveTeam, showDashPage, adminAction,
-        showAdminTab, adminFilter, exportCSV, adminLogin
+        showAdminTab, adminFilter, exportCSV, adminLogin, toggleMembers,
+        switchDay
       });
+
+      // Handle Sticky CTA Visibility
+      const stickyCta = document.getElementById('mobile-sticky-cta');
+      const heroBtn = document.querySelector('#hero .btn-primary');
+
+      if (stickyCta && heroBtn) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting && window.innerWidth < 640) {
+              stickyCta.classList.add('visible');
+            } else {
+              stickyCta.classList.remove('visible');
+            }
+          });
+        }, { threshold: 0 });
+        observer.observe(heroBtn);
+      }
     </script>
 </body>
 
