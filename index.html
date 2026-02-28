@@ -110,6 +110,17 @@
       max-width: 100%;
     }
 
+    .debug-tag {
+      position: fixed;
+      pointer-events: none;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--blue);
+      opacity: 0.2;
+      z-index: 1000;
+      transition: opacity 0.3s;
+    }
+
     /* ========== SCROLLBAR ========== */
     ::-webkit-scrollbar {
       width: 6px;
@@ -3040,6 +3051,7 @@
 
 <body>
   <div id="runtime-log-container" class="runtime-log"></div>
+  <div id="cursor-debug" class="debug-tag">SYS_READY</div>
   <canvas id="bg-canvas"></canvas>
   <canvas id="symbols-canvas"></canvas>
   <div id="toast-container"></div>
@@ -3623,7 +3635,7 @@
           </div>
           <div>
             <div class="footer-col-title">Participate</div>
-            <a href="https://unstop.com/o/kRdrvj2?lb=zpjAfFBx&utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
+            <a href="https://unstop.com/hackathons/ai-explore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648211?lb=zpjAfFBx&utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
               target="_blank" class="footer-link" style="text-decoration: none;">Register on Unstop</a>
           </div>
           <div class="footer-contact">
@@ -3681,9 +3693,10 @@
         <div class="sidebar-link participant-only" onclick="showDashPage('team')" data-page="team">
           <span class="sidebar-link-icon">👥</span> My Team
         </div>
-        <div class="sidebar-link participant-only" onclick="showDashPage('registration')" data-page="registration">
-          <span class="sidebar-link-icon">📋</span> Registration
-        </div>
+        <a href="https://unstop.com/hackathons/ai-explore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648211?lb=zpjAfFBx&utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
+          target="_blank" class="sidebar-link participant-only" style="text-decoration: none;">
+          <span class="sidebar-link-icon">📋</span> Register on Unstop
+        </a>
         <div class="sidebar-link participant-only" onclick="showDashPage('payment')" data-page="payment">
           <span class="sidebar-link-icon">💳</span> Payment
         </div>
@@ -3769,7 +3782,8 @@
         <div style="display: flex; gap: 12px; flex-wrap: wrap" id="dash-quick-actions">
           <div class="participant-only">
             <button class="btn btn-primary" onclick="showDashPage('team')" id="btn-create-team">Manage Team →</button>
-            <button class="btn btn-secondary" onclick="showDashPage('registration')">Register Project →</button>
+            <a href="https://unstop.com/hackathons/ai-explore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648211?lb=zpjAfFBx&utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
+              target="_blank" class="btn btn-secondary" style="text-decoration: none;">Register on Unstop →</a>
           </div>
           <div class="hero-actions">
             <a href="https://unstop.com/hackathons/ai-explore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648211?lb=zpjAfFBx&utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
@@ -4142,9 +4156,10 @@
             <p style="font-size: 14px; color: var(--text2); margin-bottom: 20px">
               Complete your project registration before making payment.
             </p>
-            <button class="btn btn-primary" onclick="showDashPage('registration')">
-              Go to Registration →
-            </button>
+            <a href="https://unstop.com/hackathons/ai-explore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648211?lb=zpjAfFBx&utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
+              target="_blank" class="btn btn-primary" style="text-decoration: none;">
+              Go to Unstop Registration →
+            </a>
           </div>
           <div id="payment-already-paid" class="hidden card" style="text-align: center; padding: 40px">
             <div class="success-icon" style="margin: 0 auto 16px">✅</div>
@@ -5937,7 +5952,7 @@
             debugTag.style.opacity = '0.2';
           }
           debugTag.style.left = (e.clientX + 15) + 'px';
-          debugTag.style.bottom = (h - e.clientY + 15) + 'px';
+          debugTag.style.top = (e.clientY + 15) + 'px';
         });
 
         window.addEventListener('mousedown', (e) => {
