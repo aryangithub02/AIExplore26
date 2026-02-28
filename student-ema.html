@@ -64,6 +64,45 @@
             pointer-events: none;
         }
 
+        /* Interactive Background Base */
+        #symbols-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: -5;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .glow-blob {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.04), transparent 80%);
+            border-radius: 50%;
+            z-index: -4;
+            pointer-events: none;
+            filter: blur(120px);
+        }
+
+        .glow-blob-purple {
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.06), transparent 70%);
+        }
+
+        .glow-blob-cyan {
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.06), transparent 70%);
+        }
+
+        .debug-tag {
+            position: fixed;
+            pointer-events: none;
+            font-family: var(--mono);
+            font-size: 10px;
+            color: var(--blue);
+            opacity: 0.2;
+            z-index: 1000;
+            transition: opacity 0.3s;
+        }
+
         .container {
             width: 100%;
             max-width: 1200px;
@@ -522,6 +561,13 @@
 
 <body>
     <!-- NAVBAR -->
+    <!-- INTERACTIVE BACKGROUND CORE -->
+    <canvas id="symbols-canvas"></canvas>
+    <div id="cursor-debug" class="debug-tag">SYS_READY</div>
+    <div class="glow-blob" style="top: 10%; right: -50px;"></div>
+    <div class="glow-blob glow-blob-purple" style="top: 40%; left: -100px;"></div>
+    <div class="glow-blob glow-blob-cyan" style="bottom: 10%; right: -100px;"></div>
+
     <nav class="navbar">
         <a href="index.html" class="nav-brand">
             <div class="nav-brand-icon">
@@ -942,6 +988,113 @@
 
         window.addEventListener('scroll', reveal);
         window.addEventListener('load', reveal);
+
+        // --- INTERACTIVE BACKGROUND ENGINE ---
+        function initBackground() {
+            const canvas = document.getElementById('symbols-canvas');
+            const debugTag = document.getElementById('cursor-debug');
+            const ctx = canvas.getContext('2d');
+            let w, h, nodes = [], streams = [];
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+                initNodes();
+            }
+
+            function initNodes() {
+                nodes = [];
+                const spacing = 100;
+                for (let x = 0; x <= w + spacing; x += spacing) {
+                    for (let y = 0; y <= h + spacing; y += spacing) {
+                        nodes.push({ bx: x, by: y, x: x, y: y });
+                    }
+                }
+            }
+
+            const mouse = { x: -1000, y: -1000 };
+            window.addEventListener('mousemove', e => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+
+                const target = document.elementFromPoint(e.clientX, e.clientY);
+                if (target && target.tagName !== 'CANVAS' && target.tagName !== 'BODY') {
+                    debugTag.style.opacity = '0.8';
+                } else {
+                    debugTag.style.opacity = '0.2';
+                }
+                debugTag.style.left = (e.clientX + 15) + 'px';
+                debugTag.style.top = (e.clientY + 15) + 'px';
+            });
+
+            function spawnStream() {
+                const maxStreams = w < 768 ? 8 : 15;
+                if (streams.length > maxStreams) return;
+                streams.push({
+                    x: Math.random() * w,
+                    y: -100,
+                    chars: Array.from({ length: w < 768 ? 8 : 12 }, () => Math.floor(Math.random() * 16).toString(16).toUpperCase()),
+                    speed: 1.5 + Math.random() * 2,
+                    opacity: 0.08 + Math.random() * 0.08
+                });
+            }
+
+            function loop() {
+                ctx.clearRect(0, 0, w, h);
+                const scrollY = window.scrollY * 0.15;
+
+                // 1. Magnetic Grid
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgba(59, 130, 246, 0.04)';
+                const skip = w < 768 ? 2 : 1;
+                for (let i = 0; i < nodes.length; i += skip) {
+                    const n = nodes[i];
+                    const dx = mouse.x - n.x;
+                    const dy = mouse.y - n.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const force = Math.max(0, (w < 768 ? 150 : 300) - dist) / (w < 768 ? 150 : 300);
+
+                    n.x += (n.bx + dx * force * 0.2 - n.x) * 0.1;
+                    n.y += (n.by + dy * force * 0.2 - (scrollY % 100) - n.y) * 0.1;
+
+                    if (i % (w < 768 ? 44 : 22) === 0 && dist < (w < 768 ? 100 : 200)) {
+                        ctx.moveTo(n.x, n.y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                    }
+                }
+                ctx.stroke();
+
+                // 2. Debugger Overlay (Persistent Crosshairs)
+                const scanOpacity = parseFloat(debugTag.style.opacity) || 0;
+                ctx.strokeStyle = `rgba(59, 130, 246, ${scanOpacity * 0.15})`;
+                ctx.setLineDash([10, 10]);
+                ctx.beginPath();
+                ctx.moveTo(0, mouse.y); ctx.lineTo(w, mouse.y);
+                ctx.moveTo(mouse.x, 0); ctx.lineTo(mouse.x, h);
+                ctx.stroke();
+                ctx.setLineDash([]);
+
+                // 3. Hex Streams
+                if (Math.random() < 0.02) spawnStream();
+                ctx.font = '9px "IBM Plex Mono"';
+                streams.forEach((s, i) => {
+                    s.y += s.speed;
+                    if (s.y > h + 150) streams.splice(i, 1);
+                    ctx.fillStyle = `rgba(59, 130, 246, ${s.opacity})`;
+                    s.chars.forEach((c, ci) => {
+                        ctx.fillText(c, s.x, s.y + ci * 12);
+                    });
+                });
+
+                requestAnimationFrame(loop);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            loop();
+        }
+
+        initBackground();
     </script>
 </body>
 
