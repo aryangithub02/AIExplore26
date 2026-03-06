@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="icon" type="image/png" href="aiexplore_logo_transparent_1771861055747.png" />
-    <title>Student EMA — Organizing Team @ AIExplore 2K26</title>
+    <title>Student Management — Organizing Team @ AIExplore 2K26</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -81,7 +81,6 @@
             border-radius: 50%;
             z-index: -4;
             pointer-events: none;
-            filter: blur(120px);
         }
 
         .glow-blob-purple {
@@ -420,6 +419,42 @@
             color: var(--text);
         }
 
+        .team-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            border: 3px solid rgba(80, 150, 255, 0.6);
+            box-shadow: 0 0 15px rgba(80, 150, 255, 0.4), 0 0 10px rgba(0, 140, 255, 0.4), 0 0 25px rgba(0, 140, 255, 0.3);
+            background: linear-gradient(135deg, #1a1f35, #0c1023);
+            padding: 4px;
+            flex-shrink: 0;
+            margin: 0 auto;
+        }
+
+        .member-card .team-image {
+            margin: 0 auto 20px auto;
+        }
+
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 50%;
+            display: block;
+        }
+
+
+
+        .member-card:hover .team-image,
+        .coord-card:hover .team-image {
+            transform: scale(1.08);
+            box-shadow: 0 0 25px rgba(80, 150, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+
         /* ========== COORDINATORS LIST ========== */
         .coordinator-list {
             display: grid;
@@ -594,7 +629,7 @@
                 </span>
                 <div class="dropdown-menu">
                     <a href="index.html#management" class="dropdown-item">🏛️ GPG Management</a>
-                    <a href="#" class="dropdown-item" style="color: var(--blue)">🎓 Student EMA</a>
+                    <a href="#" class="dropdown-item" style="color: var(--blue)">🎓 Student Management</a>
                 </div>
             </div>
 
@@ -605,7 +640,7 @@
     <!-- HERO SECTION -->
     <section class="hero-ema">
         <div class="container">
-            <span class="hero-subtitle" data-reveal>// Student EMA</span>
+            <span class="hero-subtitle" data-reveal>// Student Management</span>
             <h1 class="hero-title" data-reveal>Organizing Authority</h1>
             <p class="hero-desc" data-reveal>
                 Meet the dedicated team of student leaders, developers, and coordinators working tirelessly to make
@@ -631,7 +666,9 @@
                 </div>
             </div>
             <div class="coord-card" data-reveal>
-                <div class="coord-icon">🏅</div>
+                <div class="team-image">
+                    <img src="imgs/Shubham Sharnagate.png" alt="Shubham Sharnagate">
+                </div>
                 <div class="coord-info">
                     <h4>Shubham Sharnagate</h4>
                     <p>Event Head / CSE</p>
@@ -639,7 +676,9 @@
                 </div>
             </div>
             <div class="coord-card" data-reveal>
-                <div class="coord-icon">🎤</div>
+                <div class="team-image">
+                    <img src="imgs/Manasvi Deoghare.jpg" alt="Manasvi Deoghare">
+                </div>
                 <div class="coord-info">
                     <h4>Manasvi Deoghare</h4>
                     <p>Event Co-Head / CSE</p>
@@ -666,26 +705,14 @@
                     <div class="member-photo">💻</div>
                 </div>
                 <h3 class="member-name">Aryan Mothghare</h3>
-                <p class="member-role">Head</p>
+                <p class="member-role">Tech Head</p>
                 <p class="member-dept">Computer Science & Engineering</p>
                 <div class="member-social">
                     <a href="#" class="social-link">🔗</a>
                     <a href="#" class="social-link">🐙</a>
                 </div>
             </div>
-            <!-- Member -->
-            <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">⚡</div>
-                </div>
-                <h3 class="member-name">Om Mankar</h3>
-                <p class="member-role">Technical Team</p>
-                <p class="member-dept">Computer Science & Engineering</p>
-                <div class="member-social">
-                    <a href="#" class="social-link">🔗</a>
-                    <a href="#" class="social-link">🐙</a>
-                </div>
-            </div>
+
         </div>
 
         <!-- HACKATHON CORE TEAM -->
@@ -696,16 +723,8 @@
         <div class="team-grid">
             <!-- HEADS -->
             <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">🚀</div>
-                </div>
-                <h3 class="member-name">Rasika Khure</h3>
-                <p class="member-role">Head</p>
-                <p class="member-dept">Organizing Unit</p>
-            </div>
-            <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">🚀</div>
+                <div class="team-image">
+                    <img src="imgs/Om Mankar (2).png" alt="Om Mankar">
                 </div>
                 <h3 class="member-name">Om Mankar</h3>
                 <p class="member-role">Head</p>
@@ -720,8 +739,8 @@
                 <p class="member-dept">Organizing Unit</p>
             </div>
             <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">🚀</div>
+                <div class="team-image">
+                    <img src="imgs/Krushna Kale.png" alt="Krushna Kale">
                 </div>
                 <h3 class="member-name">Krushna Kale</h3>
                 <p class="member-role">Head</p>
@@ -731,25 +750,33 @@
 
         <!-- POSTER PRESENTATION TEAM -->
         <div class="section-header" data-reveal>
-            <h2 class="section-title">Poster Presentation Team</h2>
+            <h2 class="section-title">Visionexus(Poster Presentation) Team</h2>
             <p class="section-desc">Coordinating the creative showcase of research and design.</p>
         </div>
         <div class="team-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
             <!-- HEADS -->
             <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">🖼️</div>
+                <div class="team-image">
+                    <img src="imgs/Vedant Kharabe.jpg" alt="Vedant Kharabe">
                 </div>
                 <h3 class="member-name">Vedant Kharabe</h3>
                 <p class="member-role">Head</p>
                 <p class="member-dept">CSE Department</p>
             </div>
             <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">🎨</div>
+                <div class="team-image">
+                    <img src="imgs/Manasvi Deoghare.jpg" alt="Manasvi Deoghare">
                 </div>
-                <h3 class="member-name">Ritik Gajbhiye</h3>
+                <h3 class="member-name">Manasvi Deoghare</h3>
                 <p class="member-role">Head</p>
+                <p class="member-dept">CSE Department</p>
+            </div>
+            <div class="member-card" data-reveal>
+                <div class="team-image">
+                    <img src="imgs/Lina Bhagat.jpg" alt="Lina Bhagat">
+                </div>
+                <h3 class="member-name">Lina Bhagat</h3>
+                <p class="member-role">Coordinator</p>
                 <p class="member-dept">CSE Department</p>
             </div>
         </div>
