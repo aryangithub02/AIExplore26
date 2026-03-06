@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="icon" type="image/png" href="aiexplore_logo_transparent_1771861055747.png" />
-    <title>Student EMA — Organizing Team @ AIExplore 2K26</title>
+    <title>Student Management — Organizing Team @ AIExplore 2K26</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -81,7 +81,6 @@
             border-radius: 50%;
             z-index: -4;
             pointer-events: none;
-            filter: blur(120px);
         }
 
         .glow-blob-purple {
@@ -155,12 +154,18 @@
         .nav-brand-icon {
             width: 32px;
             height: 32px;
-            background: linear-gradient(135deg, var(--blue), var(--purple));
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
+            overflow: hidden;
+            background: none;
+        }
+
+        .nav-brand-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .nav-links {
@@ -420,6 +425,60 @@
             color: var(--text);
         }
 
+        .team-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            position: relative;
+            margin: 0 auto 24px;
+            padding: 8px;
+            background: linear-gradient(135deg, var(--blue), var(--purple));
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            flex-shrink: 0;
+        }
+
+        .mgmt-photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            background: var(--bg);
+            position: relative;
+            z-index: 2;
+            border: 4px solid var(--bg);
+        }
+
+        .mgmt-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s var(--ease-out);
+        }
+
+        .mgmt-photo-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(59, 130, 246, 0.05);
+            pointer-events: none;
+            z-index: 3;
+            mix-blend-mode: overlay;
+        }
+
+        .mgmt-scanline {
+            display: none;
+        }
+
+        .member-card:hover .mgmt-photo img,
+        .coord-card:hover .mgmt-photo img {
+            transform: scale(1.05);
+        }
+
+        .member-card:hover .team-image,
+        .coord-card:hover .team-image {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+            transition: all 0.3s ease;
+        }
+
         /* ========== COORDINATORS LIST ========== */
         .coordinator-list {
             display: grid;
@@ -571,10 +630,7 @@
     <nav class="navbar">
         <a href="index.html" class="nav-brand">
             <div class="nav-brand-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
-                </svg>
+                <img src="imgs/AIXplore Logo.jpg" alt="AIExplore 2K26">
             </div>
             <span>AIXPLORE <span style="color: var(--blue)">2K26</span></span>
         </a>
@@ -594,7 +650,7 @@
                 </span>
                 <div class="dropdown-menu">
                     <a href="index.html#management" class="dropdown-item">🏛️ GPG Management</a>
-                    <a href="#" class="dropdown-item" style="color: var(--blue)">🎓 Student EMA</a>
+                    <a href="#" class="dropdown-item" style="color: var(--blue)">🎓 Student Management</a>
                 </div>
             </div>
 
@@ -605,7 +661,7 @@
     <!-- HERO SECTION -->
     <section class="hero-ema">
         <div class="container">
-            <span class="hero-subtitle" data-reveal>// Student EMA</span>
+            <span class="hero-subtitle" data-reveal>// Student Management</span>
             <h1 class="hero-title" data-reveal>Organizing Authority</h1>
             <p class="hero-desc" data-reveal>
                 Meet the dedicated team of student leaders, developers, and coordinators working tirelessly to make
@@ -623,7 +679,13 @@
         <div class="coordinator-list">
             <!-- EVENT HEADS -->
             <div class="coord-card" data-reveal>
-                <div class="coord-icon">🏆</div>
+                <div class="team-image">
+                    <div class="mgmt-photo">
+                        <div class="mgmt-photo-overlay"></div>
+                        <div class="mgmt-scanline"></div>
+                        <img src="imgs/Aditya Thakre.jpg" alt="Aditya Thakre">
+                    </div>
+                </div>
                 <div class="coord-info">
                     <h4>Aditya Thakre</h4>
                     <p>Event Head / CSE</p>
@@ -631,7 +693,13 @@
                 </div>
             </div>
             <div class="coord-card" data-reveal>
-                <div class="coord-icon">🏅</div>
+                <div class="team-image">
+                    <div class="mgmt-photo">
+                        <div class="mgmt-photo-overlay"></div>
+                        <div class="mgmt-scanline"></div>
+                        <img src="imgs/Shubham Sharnagate.png" alt="Shubham Sharnagate">
+                    </div>
+                </div>
                 <div class="coord-info">
                     <h4>Shubham Sharnagate</h4>
                     <p>Event Head / CSE</p>
@@ -639,7 +707,13 @@
                 </div>
             </div>
             <div class="coord-card" data-reveal>
-                <div class="coord-icon">🎤</div>
+                <div class="team-image">
+                    <div class="mgmt-photo">
+                        <div class="mgmt-photo-overlay"></div>
+                        <div class="mgmt-scanline"></div>
+                        <img src="imgs/Manasvi Deoghare.jpg" alt="Manasvi Deoghare">
+                    </div>
+                </div>
                 <div class="coord-info">
                     <h4>Manasvi Deoghare</h4>
                     <p>Event Co-Head / CSE</p>
@@ -647,7 +721,13 @@
                 </div>
             </div>
             <div class="coord-card" data-reveal>
-                <div class="coord-icon">🛡️</div>
+                <div class="team-image">
+                    <div class="mgmt-photo">
+                        <div class="mgmt-photo-overlay"></div>
+                        <div class="mgmt-scanline"></div>
+                        <img src="imgs/Arya Gaydhane.jpg" alt="Arya Gaydhane">
+                    </div>
+                </div>
                 <div class="coord-info">
                     <h4>Arya Gaydhane</h4>
                     <p>Event Co-Head / CSE</p>
@@ -662,30 +742,22 @@
         <div class="team-grid">
             <!-- HEADS -->
             <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">💻</div>
+                <div class="team-image">
+                    <div class="mgmt-photo">
+                        <div class="mgmt-photo-overlay"></div>
+                        <div class="mgmt-scanline"></div>
+                        <img src="imgs/Aryan Motghare.jpg" alt="Aryan Mothghare">
+                    </div>
                 </div>
                 <h3 class="member-name">Aryan Mothghare</h3>
-                <p class="member-role">Head</p>
+                <p class="member-role">Tech Head</p>
                 <p class="member-dept">Computer Science & Engineering</p>
                 <div class="member-social">
                     <a href="#" class="social-link">🔗</a>
                     <a href="#" class="social-link">🐙</a>
                 </div>
             </div>
-            <!-- Member -->
-            <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">⚡</div>
-                </div>
-                <h3 class="member-name">Om Mankar</h3>
-                <p class="member-role">Technical Team</p>
-                <p class="member-dept">Computer Science & Engineering</p>
-                <div class="member-social">
-                    <a href="#" class="social-link">🔗</a>
-                    <a href="#" class="social-link">🐙</a>
-                </div>
-            </div>
+
         </div>
 
         <!-- HACKATHON CORE TEAM -->
@@ -696,32 +768,36 @@
         <div class="team-grid">
             <!-- HEADS -->
             <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">🚀</div>
-                </div>
-                <h3 class="member-name">Rasika Khure</h3>
-                <p class="member-role">Head</p>
-                <p class="member-dept">Organizing Unit</p>
-            </div>
-            <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">🚀</div>
+                <div class="team-image">
+                    <div class="mgmt-photo">
+                        <div class="mgmt-photo-overlay"></div>
+                        <div class="mgmt-scanline"></div>
+                        <img src="imgs/Om Mankar (2).png" alt="Om Mankar">
+                    </div>
                 </div>
                 <h3 class="member-name">Om Mankar</h3>
                 <p class="member-role">Head</p>
                 <p class="member-dept">Organizing Unit</p>
             </div>
             <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">🚀</div>
+                <div class="team-image">
+                    <div class="mgmt-photo">
+                        <div class="mgmt-photo-overlay"></div>
+                        <div class="mgmt-scanline"></div>
+                        <img src="imgs/Mohini Daf.jpg" alt="Mohini Duff">
+                    </div>
                 </div>
                 <h3 class="member-name">Mohini Duff</h3>
                 <p class="member-role">Head</p>
                 <p class="member-dept">Organizing Unit</p>
             </div>
             <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">🚀</div>
+                <div class="team-image">
+                    <div class="mgmt-photo">
+                        <div class="mgmt-photo-overlay"></div>
+                        <div class="mgmt-scanline"></div>
+                        <img src="imgs/Krushna Kale.png" alt="Krushna Kale">
+                    </div>
                 </div>
                 <h3 class="member-name">Krushna Kale</h3>
                 <p class="member-role">Head</p>
@@ -731,25 +807,45 @@
 
         <!-- POSTER PRESENTATION TEAM -->
         <div class="section-header" data-reveal>
-            <h2 class="section-title">Poster Presentation Team</h2>
+            <h2 class="section-title">Visionexus(Poster Presentation) Team</h2>
             <p class="section-desc">Coordinating the creative showcase of research and design.</p>
         </div>
         <div class="team-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
             <!-- HEADS -->
             <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">🖼️</div>
+                <div class="team-image">
+                    <div class="mgmt-photo">
+                        <div class="mgmt-photo-overlay"></div>
+                        <div class="mgmt-scanline"></div>
+                        <img src="imgs/Vedant Kharabe.jpg" alt="Vedant Kharabe">
+                    </div>
                 </div>
                 <h3 class="member-name">Vedant Kharabe</h3>
                 <p class="member-role">Head</p>
                 <p class="member-dept">CSE Department</p>
             </div>
             <div class="member-card" data-reveal>
-                <div class="member-photo-wrap">
-                    <div class="member-photo">🎨</div>
+                <div class="team-image">
+                    <div class="mgmt-photo">
+                        <div class="mgmt-photo-overlay"></div>
+                        <div class="mgmt-scanline"></div>
+                        <img src="imgs/Manasvi Deoghare.jpg" alt="Manasvi Deoghare">
+                    </div>
                 </div>
-                <h3 class="member-name">Ritik Gajbhiye</h3>
+                <h3 class="member-name">Manasvi Deoghare</h3>
                 <p class="member-role">Head</p>
+                <p class="member-dept">CSE Department</p>
+            </div>
+            <div class="member-card" data-reveal>
+                <div class="team-image">
+                    <div class="mgmt-photo">
+                        <div class="mgmt-photo-overlay"></div>
+                        <div class="mgmt-scanline"></div>
+                        <img src="imgs/Lina Bhagat.jpg" alt="Lina Bhagat">
+                    </div>
+                </div>
+                <h3 class="member-name">Lina Bhagat</h3>
+                <p class="member-role">Coordinator</p>
                 <p class="member-dept">CSE Department</p>
             </div>
         </div>
