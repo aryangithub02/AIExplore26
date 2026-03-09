@@ -250,6 +250,65 @@
             color: var(--text);
         }
 
+        /* ========== HAMBURGER & MOBILE MENU ========== */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 101;
+        }
+
+        @media (min-width: 1024px) {
+            .hamburger {
+                display: none;
+            }
+        }
+
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: all 0.3s var(--ease-out);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg);
+            z-index: 99;
+            padding: 24px;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto;
+        }
+
+        .mobile-menu.open {
+            display: flex;
+        }
+
+        .mobile-nav-link {
+            padding: 14px 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            color: var(--text2);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            text-decoration: none;
+        }
+
+        .mobile-nav-link:hover {
+            background: var(--card);
+            color: var(--text);
+        }
+
         /* ========== HERO SECTION ========== */
         .hero-ema {
             padding: 140px 0 60px;
@@ -656,7 +715,24 @@
 
             <a href="index.html#faq" class="nav-link">FAQ</a>
         </div>
+        <div class="hamburger" onclick="toggleMobileMenu()">
+            <span></span><span></span><span></span>
+        </div>
     </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html" class="mobile-nav-link" onclick="toggleMobileMenu()">🏠 Home</a>
+        <a href="index.html#prizes" class="mobile-nav-link" onclick="toggleMobileMenu()">🏆 Prizes</a>
+        <a href="index.html#schedule" class="mobile-nav-link" onclick="toggleMobileMenu()">📅 Schedule</a>
+        <div
+            style="padding: 10px 16px; font-family: var(--mono); font-size: 11px; color: var(--blue); text-transform: uppercase; letter-spacing: 2px;">
+            // Info</div>
+        <a href="index.html#management" class="mobile-nav-link" onclick="toggleMobileMenu()">🏛️ GPG Management</a>
+        <a href="#" class="mobile-nav-link active" style="color: var(--blue)" onclick="toggleMobileMenu()">🎓 Student
+            Management</a>
+        <a href="index.html#faq" class="mobile-nav-link" onclick="toggleMobileMenu()">❓ FAQ</a>
+    </div>
 
     <!-- HERO SECTION -->
     <section class="hero-ema">
@@ -822,18 +898,7 @@
                 <p class="member-role">Head</p>
                 <p class="member-dept">CSE Department</p>
             </div>
-            <div class="member-card" data-reveal>
-                <div class="team-image">
-                    <div class="mgmt-photo">
-                        <div class="mgmt-photo-overlay"></div>
-                        <div class="mgmt-scanline"></div>
-                        <img src="imgs/Manasvi Deoghare.jpg" alt="Manasvi Deoghare">
-                    </div>
-                </div>
-                <h3 class="member-name">Manasvi Deoghare</h3>
-                <p class="member-role">Head</p>
-                <p class="member-dept">CSE Department</p>
-            </div>
+
             <div class="member-card" data-reveal>
                 <div class="team-image">
                     <div class="mgmt-photo">
@@ -1004,6 +1069,13 @@
         }
 
         initBackground();
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const isOpening = !menu.classList.contains('open');
+            menu.classList.toggle('open');
+            document.body.style.overflow = isOpening ? 'hidden' : '';
+        }
     </script>
 </body>
 
