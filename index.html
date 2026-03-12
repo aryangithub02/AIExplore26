@@ -949,6 +949,27 @@
       }
     }
 
+    @keyframes title-glow {
+
+      0%,
+      100% {
+        filter: drop-shadow(0 0 10px rgba(6, 182, 212, 0.2));
+      }
+
+      50% {
+        filter: drop-shadow(0 0 25px rgba(6, 182, 212, 0.5));
+      }
+    }
+
+    .title-highlight {
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: title-glow 3s ease-in-out infinite;
+      display: inline-block;
+    }
+
     .section-desc {
       font-size: clamp(15px, 2vw, 18px);
       color: var(--text2);
@@ -3486,7 +3507,7 @@
       <div class="container">
         <div class="section-header">
           <div class="section-tag">// Technical Event</div>
-          <h2 class="section-title"><span style="background: linear-gradient(135deg, var(--cyan), var(--blue)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(6, 182, 212, 0.3);">VISIONEXUS</span></h2>
+          <h2 class="section-title"><span class="title-highlight">VISIONEXUS</span></h2>
           <p class="section-desc">
             Digital Poster Presentation — AIXPLORE 2K26 Technical Event.
           </p>
