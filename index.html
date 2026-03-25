@@ -34,9 +34,9 @@
       --blue-dark: #2563EB;
       --purple: #8B5CF6;
       --cyan: #06B6D4;
-      --pink: #EC4899;
       --green: #10B981;
       --red: #EF4444;
+      --pink: #EC4899;
       --yellow: #F59E0B;
       --text: rgba(255, 255, 255, 0.95);
       --text2: #CBD5E1;
@@ -117,7 +117,7 @@
       font-family: var(--mono);
       font-size: 10px;
       color: var(--blue);
-      opacity: 0.2;
+      opacity: 0;
       z-index: 1000;
       transition: opacity 0.3s;
     }
@@ -696,7 +696,7 @@
     }
 
     .hero-title .accent {
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      background: linear-gradient(135deg, #f472b6, var(--pink));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -3264,7 +3264,7 @@
       <div class="nav-brand-icon">
         <img src="imgs/AIXplore Logo.jpg" alt="AIExplore 2K26">
       </div>
-      <span style="color: var(--pink)">AIXPLORE 2K26</span>
+      <span>AIXPLORE <span style="color: var(--pink)">2K26</span></span>
     </div>
     <div class="nav-links">
       <span class="nav-link" onclick="smoothScrollTo('#prizes')">Prizes</span>
@@ -3354,7 +3354,7 @@
               <span class="hero-chip-dot"></span>Applications Open
             </div>
             <h1 class="hero-title">
-              <span style="color: var(--pink)">AIXPLORE 2K26</span><br />Mega Hackathon
+              AIXPLORE <span class="accent">2K26</span><br />Mega Hackathon
             </h1>
             <p class="hero-subtitle" style="margin-bottom: 24px;">
               Organized by <span style="color: var(--cyan); font-weight: 700; letter-spacing: 0.5px;">Department of
@@ -3506,11 +3506,14 @@
     <section class="section" id="parallel-events">
       <div class="glow-blob glow-blob-cyan" style="top: 20%; right: -150px;"></div>
       <div class="container">
-        <div class="section-header">
-          <div class="section-tag">// Technical Event</div>
-          <h2 class="section-title"><span class="title-highlight">VISIONEXUS</span></h2>
-          <p class="section-desc">
-            Digital Poster Presentation — AIXPLORE 2K26 Technical Event.
+        <div
+          style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 24px;">
+          <img src="imgs/visionexus1-Photoroom.png" alt="Visionexus Logo"
+            style="height: 350px; width: auto; filter: drop-shadow(0 0 15px rgba(139, 92, 246, 0.5)); margin-bottom: -100px;">
+          <h2 class="section-title" style="font-size: clamp(32px, 8vw, 64px); text-align: center; position: relative; z-index: 2;">Digital Poster
+            Presentation</h2>
+          <p class="section-desc" style="text-align: center;">
+            AIXPLORE 2K26 Technical Event
           </p>
         </div>
 
@@ -4084,7 +4087,7 @@
       <div class="container">
         <div class="footer-grid">
           <div>
-            <div class="footer-brand" style="color: var(--pink)">⚡ AIExplore 2K26</div>
+            <div class="footer-brand">⚡ AIExplore <span style="color: var(--pink)">2K26</span></div>
             <p class="footer-tagline">
               India's premier student hackathon, empowering the next
               generation of tech innovators to build what's next.
@@ -4145,7 +4148,7 @@
         </div>
         <div class="footer-bottom">
           <div class="footer-copy">
-            © 2026 AIXPLORE 2K26. TGPCET Department of CSE.
+            © 2026 AIXPLORE <span style="color: var(--pink)">2K26</span>. TGPCET Department of CSE.
           </div>
           <div class="footer-copy">Made with ❤️ for hackers</div>
         </div>
@@ -4158,7 +4161,7 @@
   <div id="dashboard-view">
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
-      <div class="sidebar-header" style="color: var(--pink)">⚡ AIExplore 2K26</div>
+      <div class="sidebar-header">⚡ AIExplore <span style="color: var(--pink)">2K26</span></div>
       <nav class="sidebar-nav" id="sidebar-nav">
         <!-- Participant Links -->
         <div class="sidebar-link active" onclick="showDashPage('overview')" data-page="overview">
