@@ -3047,13 +3047,14 @@
       background: rgba(43, 43, 43, 0.4);
       border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 32px;
+      padding: 24px;
       width: 320px;
-      height: 200px;
+      min-height: 280px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 16px;
       transition: all 0.3s var(--ease-out);
       position: relative;
       overflow: hidden;
@@ -3068,7 +3069,7 @@
     }
 
     .sponsor-logo {
-      max-height: 120px;
+      max-height: 110px;
       max-width: 100%;
       object-fit: contain;
       filter: grayscale(0.2) brightness(1.1);
@@ -3097,6 +3098,7 @@
       background: radial-gradient(circle at center, rgba(59, 130, 246, 0.05), transparent 70%);
       opacity: 0;
       transition: opacity 0.3s;
+      pointer-events: none;
     }
 
     .sponsor-card:hover::after {
@@ -4282,12 +4284,35 @@
         </div>
         <div class="sponsors-grid">
           <!-- Bootcoding -->
+          <a href="http://bootcoding.in/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+            <div class="sponsor-card">
+              <img src="imgs/blogohd.jpg.jpeg" alt="Bootcoding Logo" class="sponsor-logo">
+              <div class="sponsor-type">Our Sponsor</div>
+            </div>
+          </a>
+
+          <!-- IEEE -->
           <div class="sponsor-card">
-            <img src="imgs/blogohd.jpg.jpeg" alt="Bootcoding Logo" class="sponsor-logo">
-            <div class="sponsor-type">Our Sponsor</div>
+            <img src="imgs/logo student branch IEEE.png" alt="IEEE Logo" class="sponsor-logo">
+            <div class="sponsor-type">Technically Sponsored By IEEE Maharashtra</div>
           </div>
 
+          <!-- ABSCISSA AI -->
+          <div class="sponsor-card">
+            <a href="https://abscissa-training-institute--navalnj.replit.app" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; align-items: center;">
+              <img src="imgs/ABSCISSA AI.png" alt="ABSCISSA AI Logo" class="sponsor-logo">
+              <div class="sponsor-type" style="margin-bottom: 12px;">Our Sponsor</div>
+            </a>
+            <a href="doc/Brochure.pdf" target="_blank" class="btn-sm" style="text-decoration: none; font-size: 10px; padding: 4px 12px; border-radius: 6px; border: 1px solid rgba(59, 130, 246, 0.4); color: var(--blue); background: rgba(59, 130, 246, 0.05); font-family: var(--mono); cursor: pointer; transition: all 0.2s;">
+              📄 VIEW BROCHURE
+            </a>
+          </div>
 
+          <!-- Repairman -->
+          <div class="sponsor-card">
+            <img src="imgs/Repairman.jpeg" alt="Repairman Logo" class="sponsor-logo">
+            <div class="sponsor-type">Our Sponsor</div>
+          </div>
         </div>
       </div>
     </section>
