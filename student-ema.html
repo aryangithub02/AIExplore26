@@ -594,21 +594,152 @@
             display: inline-block;
         }
 
-        /* ========== FOOTER ========== */
+        /* ========== TECH EXPERIENCE FOOTER ========== */
         footer {
-            margin-top: 100px;
-            padding: 60px 0 30px;
-            background: rgba(28, 28, 28, 0.5);
+            background: linear-gradient(270deg, #020617, #0f172a, #020617);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 0 0 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% }
+            50% { background-position: 100% }
+            100% { background-position: 0% }
+        }
+
+        .footer-cta {
+            text-align: center;
+            padding: 100px 20px;
+            background: radial-gradient(circle at center, rgba(15, 23, 42, 0.8), transparent);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 60px;
+        }
+
+        .footer-cta h2 {
+            font-family: var(--display);
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .footer-cta p {
+            color: var(--text3);
+            font-size: 18px;
+            margin-bottom: 32px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .footer-card {
+            padding: 32px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s var(--ease-out);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        footer.revealed .footer-card {
+            animation: fadeUp 0.6s ease forwards;
+        }
+        footer.revealed .footer-card:nth-child(2) { animation-delay: 0.1s; }
+        footer.revealed .footer-card:nth-child(3) { animation-delay: 0.2s; }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .footer-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--blue);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .footer-card h4 {
+            font-family: var(--mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--blue);
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-link {
+            font-size: 15px;
+            color: var(--text2);
+            text-decoration: none;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-link:hover {
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .footer-bottom-wrap {
+            text-align: center;
+            padding-top: 40px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        .terminal-line {
+            font-family: var(--mono);
+            font-size: 13px;
+            color: var(--text3);
+            opacity: 0.6;
+            margin-bottom: 24px;
+        }
+
         .footer-bottom {
-            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .footer-bottom p {
             font-size: 14px;
             color: var(--text3);
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .signature {
+            font-family: var(--display);
+            font-size: 14px;
+            font-weight: 600;
+            background: linear-gradient(to right, var(--blue), var(--pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-top: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .footer-cta { padding: 60px 20px; }
+            .footer-card { padding: 24px; }
         }
 
         @keyframes title-glow {
@@ -933,18 +1064,52 @@
     </div>
 
     <!-- FOOTER -->
-    <footer>
-        <div class="container">
-            <div style="text-align: center;">
-                <div style="font-family: var(--display); font-size: 20px; font-weight: 800; margin-bottom: 12px;">⚡
-                    AIExplore <span style="color: var(--pink)">2K26</span></div>
-                <p style="color: var(--text3); font-size: 14px; max-width: 500px; margin: 0 auto;">
-                    Department of Computer Science & Engineering, Tulsiram Gaikwad Patil College of Engineering and
-                    Technology, Nagpur.
-                </p>
+    <footer id="main-footer">
+        <section class="footer-cta" style="margin-bottom: 60px;">
+            <div class="container">
+                <h2>Built in 24 Hours. Tested Under Pressure.</h2>
+                <p>Will your team make it to the final stage?</p>
+                <a href="index.html#register" class="btn" style="width: auto; padding: 16px 40px; border-radius: 100px; background: var(--blue); color: #fff; text-decoration: none; display: inline-block;">Join AIXPLORE 2K26 Now →</a>
             </div>
-            <div class="footer-bottom">
-                © 2026 AIXPLORE <span style="color: var(--pink)">2K26</span>. Organizing Authority.
+        </section>
+
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-card">
+                    <h4>Explore</h4>
+                    <div class="footer-links">
+                        <a href="index.html" class="footer-link">Home</a>
+                        <a href="index.html#prizes" class="footer-link">Prizes</a>
+                        <a href="index.html#schedule" class="footer-link">Schedule</a>
+                        <a href="gallery.html" class="footer-link">Gallery</a>
+                    </div>
+                </div>
+                <div class="footer-card">
+                    <h4>Participate</h4>
+                    <div class="footer-links">
+                        <a href="https://unstop.com/hackathons/ai-explore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648211?lb=zpjAfFBx&utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
+                            target="_blank" class="footer-link">Register on Unstop</a>
+                        <a href="student-ema.html" class="footer-link active">Student Management</a>
+                        <a href="index.html#management" class="footer-link">GPG Management</a>
+                    </div>
+                </div>
+                <div class="footer-card">
+                    <h4>Contact</h4>
+                    <div class="footer-links">
+                        <a href="tel:7058045278" class="footer-link">📞 Call Aditya</a>
+                        <a href="tel:9359910468" class="footer-link">📞 Call Shubham</a>
+                        <a href="https://instagram.com/aixplore_cse" target="_blank" class="footer-link">📸 Instagram</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom-wrap">
+                <p class="terminal-line">// crafted with caffeine & chaos</p>
+                <div class="footer-bottom">
+                    <p>© 2026 AIExplore — Built by TGPCET Engineers</p>
+                    <p>Not a template. Built from scratch.</p>
+                </div>
+                <p class="signature">Made under pressure. Just like the hackathon.</p>
             </div>
         </div>
     </footer>
@@ -1092,6 +1257,16 @@
             menu.classList.toggle('open');
             document.body.style.overflow = isOpening ? 'hidden' : '';
         }
+
+        // Reveal Footer Cards on Scroll
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('revealed');
+            });
+        }, { threshold: 0.1 });
+
+        const footer = document.getElementById('main-footer');
+        if (footer) footerObserver.observe(footer);
     </script>
 </body>
 
