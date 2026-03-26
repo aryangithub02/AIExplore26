@@ -1,222 +1,555 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="icon" type="image/png" href="aiexplore_logo_transparent_1771861055747.png" />
-    <title>Gallery AIXPLORE 2K25 — Legacy @ TGPCET</title>
+    <title>Gallery — AIXPLORE Legacy</title>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Inter:wght@300;400;500;600;700&family=Sora:wght@400;600;700;800&display=swap"
+        rel="stylesheet" />
+
+    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
         :root {
-            --bg: #1c1c1c;
-            --bg2: #2b2b2b;
-            --card: #2b2b2b;
-            --border: #3a3a3a;
+            --bg: #0f0f0f;
+            --bg-glass: rgba(15, 15, 15, 0.8);
+            --bg2: #1a1a1a;
+            --card: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
             --blue: #3B82F6;
             --purple: #8B5CF6;
             --cyan: #06B6D4;
             --pink: #EC4899;
-            --text: rgba(255, 255, 255, 0.95);
-            --text2: #CBD5E1;
-            --text3: #94A3B8;
+            --text: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.6);
+            --text-muted: rgba(255, 255, 255, 0.4);
             --mono: "IBM Plex Mono", monospace;
             --display: "Sora", sans-serif;
             --body: "Inter", sans-serif;
             --ease-out: cubic-bezier(0.33, 1, 0.68, 1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: var(--body);
             background: var(--bg);
             color: var(--text);
             overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
+        /* Ambient Noise Texture */
         body::after {
             content: "";
             position: fixed;
             inset: 0;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
             opacity: 0.03;
-            z-index: -1;
+            z-index: 1000;
             pointer-events: none;
         }
 
-        .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
-        /* Navbar */
+        /* Navbar Enhancement */
         .navbar {
             position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 1000;
-            padding: 0 24px;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1100;
+            padding: 0 40px;
             height: 72px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(28, 28, 28, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
         }
+
         .nav-brand {
             font-family: var(--display);
             font-size: 20px;
             font-weight: 800;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             text-decoration: none;
             color: var(--text);
         }
-        .nav-brand-icon img { height: 32px; width: auto; border-radius: 8px; }
-        .nav-links { display: none; align-items: center; gap: 8px; }
-        @media (min-width: 1024px) { .nav-links { display: flex; } }
+
+        .nav-brand-icon img {
+            height: 32px;
+            width: auto;
+            border-radius: 8px;
+        }
+
+        .nav-links {
+            display: none;
+            align-items: center;
+            gap: 12px;
+        }
+
+        @media (min-width: 1024px) {
+            .nav-links {
+                display: flex;
+            }
+        }
+
         .nav-link {
             padding: 8px 16px;
             border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text2);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dim);
             text-decoration: none;
             transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .nav-link:hover, .nav-link.active { color: var(--text); background: rgba(255, 255, 255, 0.05); }
 
-        /* Gallery Hero */
-        .gallery-hero {
-            padding: 160px 0 60px;
+        .nav-link:hover,
+        .nav-link.active {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Scroll Progress */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--blue), var(--purple), var(--cyan));
+            z-index: 1200;
+            width: 0;
+        }
+
+        /* Hero Section Refinement */
+        .hero {
+            height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             text-align: center;
             position: relative;
+            overflow: hidden;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            background-image: linear-gradient(rgba(15, 15, 15, 0.4), rgba(15, 15, 15, 0.95)), url('imgs/AIXPLORE 2K25/whatsapp image 2026-03-25 at 08.08.20 (3).jpeg');
         }
+
         .hero-title {
             font-family: var(--display);
-            font-size: clamp(36px, 10vw, 72px);
-            font-weight: 800;
-            letter-spacing: -2px;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #fff 30%, var(--blue));
+            font-size: clamp(50px, 15vw, 120px);
+            font-weight: 900;
+            letter-spacing: -6px;
+            line-height: 0.85;
+            text-transform: uppercase;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff 40%, var(--blue));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         .hero-subtitle {
             font-family: var(--mono);
-            font-size: 14px;
+            font-size: 13px;
             color: var(--cyan);
-            letter-spacing: 4px;
+            letter-spacing: 8px;
             text-transform: uppercase;
-            margin-bottom: 24px;
+            margin-bottom: 32px;
             display: block;
         }
 
-        /* Photo Grid */
-        .photo-grid {
-            columns: 1;
-            column-gap: 20px;
-            padding: 40px 0 100px;
-        }
-        @media (min-width: 640px) { .photo-grid { columns: 2; } }
-        @media (min-width: 1024px) { .photo-grid { columns: 3; } }
-        @media (min-width: 1400px) { .photo-grid { columns: 4; } }
-
-        .photo-item {
-            break-inside: avoid;
-            margin-bottom: 20px;
-            border-radius: 16px;
-            overflow: hidden;
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            transition: all 0.4s var(--ease-out);
+        /* Stats Grid with Layout Fix */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin: -80px auto 120px;
             position: relative;
-            cursor: zoom-in;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        .photo-item:hover {
-            transform: scale(1.02);
-            border-color: var(--blue);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             z-index: 10;
         }
-        .photo-item img {
-            width: 100%;
-            display: block;
-            transition: transform 0.6s var(--ease-out);
-        }
-        .photo-item:hover img { transform: scale(1.1); }
-        
-        .photo-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent 40%);
-            display: flex;
-            align-items: flex-end;
-            padding: 20px;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .photo-item:hover .photo-overlay { opacity: 1; }
-        .photo-info {
-            font-family: var(--display);
-            font-size: 12px;
-            font-weight: 600;
-            color: #fff;
-            letter-spacing: 0.5px;
+
+        .stat-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s var(--ease-out);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        /* Lightbox */
+        .stat-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--blue);
+            box-shadow: 0 30px 60px rgba(59, 130, 246, 0.2);
+        }
+
+        .stat-num {
+            font-family: var(--display);
+            font-size: 48px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-family: var(--mono);
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            letter-spacing: 3px;
+            font-weight: 600;
+        }
+
+        /* Timeline Connector & Sections */
+        .timeline-section {
+            padding: 120px 0;
+            position: relative;
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+            margin-left: 20px;
+            padding-left: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-section {
+                margin-left: 0;
+                padding-left: 24px;
+            }
+        }
+
+        .section-tag {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--blue);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 16px;
+            display: block;
+            position: relative;
+        }
+        
+        .section-tag::before {
+            content: "";
+            position: absolute;
+            left: -66px;
+            top: 50%;
+            width: 12px;
+            height: 12px;
+            background: var(--blue);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--blue);
+        }
+        
+        @media (max-width: 768px) {
+            .section-tag::before { left: -30px; }
+        }
+
+        .section-title {
+            font-family: var(--display);
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+            line-height: 1;
+        }
+
+        .section-desc {
+            color: var(--text-dim);
+            font-size: 18px;
+            max-width: 700px;
+            margin-bottom: 64px;
+            line-height: 1.6;
+        }
+
+        /* True Masonry Grid Fix */
+        .masonry-grid {
+            column-count: 1;
+            column-gap: 32px;
+            width: 100%;
+        }
+        
+        @media (min-width: 768px) { .masonry-grid { column-count: 2; } }
+        @media (min-width: 1200px) { .masonry-grid { column-count: 3; } }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 32px;
+            border-radius: 28px;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.5s var(--ease-out);
+            display: block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .gallery-item::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+            opacity: 0.8;
+            transition: opacity 0.4s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--blue);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            z-index: 50;
+        }
+
+        .gallery-item:hover::after { opacity: 1; }
+
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.8s var(--ease-out), filter 0.5s ease;
+            filter: brightness(0.85);
+        }
+
+        .gallery-item.loaded img { filter: brightness(1); }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s var(--ease-out);
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .item-category {
+            font-family: var(--mono);
+            font-size: 11px;
+            color: var(--cyan);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .item-title {
+            font-family: var(--display);
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        /* Lightbox Improvements */
         #lightbox {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(8, 8, 8, 0.98);
             z-index: 2000;
-            display: none;
+            display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px;
-            cursor: zoom-out;
-        }
-        #lightbox.active { display: flex; }
-        #lightbox img { max-width: 100%; max-height: 90vh; border-radius: 8px; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
-        .lightbox-close {
-            position: absolute;
-            top: 30px; right: 30px;
-            color: #fff; font-size: 32px;
-            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s var(--ease-out);
+            backdrop-filter: blur(30px);
         }
 
-        /* Glow blobs */
+        #lightbox.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .lightbox-content {
+            position: relative;
+            width: 90%;
+            height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 75vh;
+            border-radius: 12px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+            transform: scale(0.95);
+            transition: all 0.4s var(--ease-out);
+            object-fit: contain;
+        }
+
+        #lightbox.active .lightbox-img {
+            transform: scale(1);
+        }
+
+        .lightbox-caption {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #fff;
+            font-family: var(--display);
+            font-size: 20px;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+            z-index: 2020;
+            text-align: center;
+            width: 100%;
+        }
+
+        .lightbox-nav {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 40px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            z-index: 2020;
+        }
+
+        /* Nav Buttons Refined */
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: var(--blue);
+            border-color: var(--blue);
+            transform: scale(1.15);
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Ambient Glow Blobs Fix */
         .glow-blob {
             position: fixed;
-            width: 500px; height: 500px;
+            width: 800px;
+            height: 800px;
             border-radius: 50%;
-            filter: blur(150px);
-            z-index: -2;
+            z-index: -1;
+            filter: blur(200px);
+            opacity: 0.08;
             pointer-events: none;
-            opacity: 0.15;
+        }
+
+        /* CTA High-Impact Redesign */
+        .cta-section {
+            padding: 160px 0;
+            text-align: center;
+            background: linear-gradient(to bottom, transparent, rgba(37, 99, 235, 0.05));
+        }
+
+        .btn-join {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            padding: 24px 56px;
+            background: var(--blue);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 100px;
+            font-family: var(--display);
+            font-size: 18px;
+            font-weight: 800;
+            transition: all 0.4s var(--ease-out);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-join:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(59, 130, 246, 0.5);
+            background: #2563eb;
+        }
+
+        /* Winners Cards */
+        .winner-panel {
+            background: linear-gradient(135deg, rgba(251, 191, 36, 0.05), transparent);
+            border: 1px solid rgba(251, 191, 36, 0.2);
+            padding: 32px;
+            border-radius: 32px;
+            margin-bottom: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
         }
         
-        /* Footer */
-        footer { padding: 80px 0 40px; border-top: 1px solid var(--border); background: rgba(0,0,0,0.2); }
-        .footer-content { text-align: center; }
-        .footer-brand { font-family: var(--display); font-size: 24px; font-weight: 800; margin-bottom: 12px; }
-        .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
-        .footer-link { color: var(--text3); text-decoration: none; font-size: 14px; transition: color 0.2s; }
-        .footer-link:hover { color: var(--blue); }
-        .copyright { font-size: 13px; color: var(--text3); opacity: 0.6; }
-
+        .winner-badge {
+            font-family: var(--mono);
+            font-size: 11px;
+            padding: 6px 12px;
+            background: rgba(251, 191, 36, 0.1);
+            color: #fbbf24;
+            border-radius: 50px;
+            border: 1px solid rgba(251, 191, 36, 0.2);
+        }
     </style>
 </head>
+
 <body>
-    <div class="glow-blob" style="top: -100px; right: -100px; background: var(--blue);"></div>
-    <div class="glow-blob" style="bottom: -200px; left: -200px; background: var(--purple);"></div>
+    <div class="scroll-progress" id="progress-bar"></div>
+    <div class="glow-blob" style="top: 0; right: 0; background: var(--blue);"></div>
+    <div class="glow-blob" style="bottom: 0; left: 0; background: var(--purple);"></div>
 
     <nav class="navbar">
         <a href="index.html" class="nav-brand">
@@ -230,125 +563,304 @@
             <a href="#" class="nav-link active">Gallery</a>
             <a href="student-ema.html" class="nav-link">Team</a>
         </div>
-        <div class="hamburger" onclick="toggleMobileMenu()" style="display: flex; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; z-index: 1001;">
-            <span style="display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px;"></span>
-            <span style="display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px;"></span>
-            <span style="display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px;"></span>
+        <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
         </div>
     </nav>
 
     <!-- MOBILE MENU -->
-    <div class="mobile-menu" id="mobile-menu" style="display: none; position: fixed; inset: 0; background: var(--bg); z-index: 999; padding: 100px 24px 24px; flex-direction: column; gap: 12px;">
-        <a href="index.html" class="mobile-nav-link" style="font-size: 20px; color: var(--text2); text-decoration: none; padding: 12px; border-radius: 8px;" onclick="toggleMobileMenu()">🏠 Home</a>
-        <a href="index.html#prizes" class="mobile-nav-link" style="font-size: 20px; color: var(--text2); text-decoration: none; padding: 12px; border-radius: 8px;" onclick="toggleMobileMenu()">🏆 Prizes</a>
-        <a href="index.html#schedule" class="mobile-nav-link" style="font-size: 20px; color: var(--text2); text-decoration: none; padding: 12px; border-radius: 8px;" onclick="toggleMobileMenu()">📅 Schedule</a>
-        <a href="#" class="mobile-nav-link active" style="font-size: 20px; color: var(--blue); text-decoration: none; padding: 12px; border-radius: 8px;" onclick="toggleMobileMenu()">🖼️ Gallery</a>
-        <a href="student-ema.html" class="mobile-nav-link" style="font-size: 20px; color: var(--text2); text-decoration: none; padding: 12px; border-radius: 8px;" onclick="toggleMobileMenu()">👥 Student Team</a>
+    <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html" class="mobile-link">Home</a>
+        <a href="index.html#prizes" class="mobile-link">Prizes</a>
+        <a href="index.html#schedule" class="mobile-link">Schedule</a>
+        <a href="#" class="mobile-link active">Gallery</a>
+        <a href="student-ema.html" class="mobile-link">Team</a>
     </div>
 
-    <style>
-        .mobile-menu.open { display: flex !important; }
-        @media (min-width: 1024px) { .hamburger { display: none !important; } }
-    </style>
-
-    <script>
-        function toggleMobileMenu() {
-            const menu = document.getElementById("mobile-menu");
-            const isOpen = menu.classList.contains("open");
-            menu.classList.toggle("open");
-            document.body.style.overflow = isOpen ? "" : "hidden";
-        }
-    </script>
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <span class="hero-subtitle">Chronicles of 2K25 Edition</span>
+            <h1 class="hero-title">AIXPLORE 2K25</h1>
+            <p style="color: var(--text-dim); font-size: 20px; max-width: 700px; margin: 0 auto; letter-spacing: -0.5px;">
+                Where zero-day ideas met 24 hours of pure innovation. Relive the journey of India's elite student talent.
+            </p>
+        </div>
+    </section>
 
     <main class="container">
-        <section class="gallery-hero">
-            <span class="hero-subtitle">// Legacy</span>
-            <h1 class="hero-title">AIXPLORE 2K25</h1>
-            <p style="color: var(--text2); max-width: 600px; margin: 0 auto; line-height: 1.6;">
-                Revisiting the moments of brilliance, sleepless nights, and groundbreaking innovations from our previous edition.
-            </p>
+        <!-- STATS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-num" id="stat-teams">50+</div>
+                <div class="stat-label">Incredible Teams</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-hours">24</div>
+                <div class="stat-label">Non-Stop Hours</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-num" id="stat-prize">₹30k+</div>
+                <div class="stat-label">Cash Pool Won</div>
+            </div>
+        </div>
+
+        <!-- TIMELINE SECTION 1: INAUGURATION -->
+        <section class="timeline-section" id="stage-launch">
+            <div class="section-info">
+                <span class="section-tag">01 // The Kickoff</span>
+                <h2 class="section-title">Grand Inauguration</h2>
+                <p class="section-desc">The energy was electric as dignitaries, mentors, and 50+ ambitious teams gathered to launch the most anticipated tech sprint of the year.</p>
+            </div>
+            <div class="masonry-grid" id="grid-launch"></div>
         </section>
 
-        <div class="photo-grid" id="gallery-grid">
-            <!-- Images will be injected here -->
-        </div>
+        <!-- TIMELINE SECTION 2: HACKING -->
+        <section class="timeline-section" id="stage-hacking">
+            <div class="section-info">
+                <span class="section-tag">02 // The Grind</span>
+                <h2 class="section-title">Deep Hacking</h2>
+                <p class="section-desc">Sleepless nights, architectural debates, and intense coding. Industry mentors provided critical feedback throughout the 24-hour development cycle.</p>
+            </div>
+            <div class="masonry-grid" id="grid-hacking"></div>
+        </section>
+
+        <!-- TIMELINE SECTION 3: WINNERS -->
+        <section class="timeline-section" id="stage-finals" style="border-bottom: none;">
+            <div class="section-info">
+                <span class="section-tag">03 // The Glory</span>
+                <h2 class="section-title">Winners Circle</h2>
+                <p class="section-desc">After rigorous evaluation by a jury of experts, the most scalable and innovative solutions were awarded the top honors.</p>
+            </div>
+            
+            <!-- Prize Highlight -->
+            <div class="winner-panel">
+                <div style="flex: 1;">
+                    <div class="winner-badge">LEGACY 2K25</div>
+                    <h3 style="font-family: var(--display); font-size: 32px; margin: 16px 0;">Outstanding Success</h3>
+                    <p style="color: var(--text-dim);">Celebrating the brilliant minds that pushed the boundaries of AI & Engineering at TGPCET.</p>
+                </div>
+                <div style="display: flex; gap: 16px;">
+                    <div style="text-align:center;">
+                        <div style="font-size: 32px;">🥇</div>
+                        <div style="font-family: var(--mono); font-size: 14px; font-weight:800; color: #fbbf24;">₹15K</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size: 32px;">🥈</div>
+                        <div style="font-family: var(--mono); font-size: 14px; font-weight:800; color: #94a3b8;">₹10K</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <div style="font-size: 32px;">🥉</div>
+                        <div style="font-family: var(--mono); font-size: 14px; font-weight:800; color: #b45309;">₹5K</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="masonry-grid" id="grid-finals"></div>
+        </section>
     </main>
 
-    <div id="lightbox" onclick="this.classList.remove('active')">
-        <span class="lightbox-close">&times;</span>
-        <img src="" alt="Full size photo">
+    <!-- LIGHTBOX -->
+    <div id="lightbox">
+        <div id="lightbox-counter" style="position: absolute; top: 30px; left: 40px; color: var(--text-dim); font-family: var(--mono); font-size: 14px; letter-spacing: 2px; z-index: 10;">01 / 16</div>
+        <div class="lightbox-content">
+            <div class="lightbox-close">&times;</div>
+            <img src="" alt="Full view" class="lightbox-img">
+            <div class="lightbox-caption"></div>
+            <div class="lightbox-nav">
+                <div class="nav-btn" id="prev-btn">←</div>
+                <div class="nav-btn" id="next-btn">→</div>
+            </div>
+        </div>
     </div>
 
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-brand">AIXPLORE <span style="color: var(--pink)">2K26</span></div>
-            <div class="footer-links">
-                <a href="index.html" class="footer-link">Home</a>
-                <a href="index.html#venue" class="footer-link">Venue</a>
-                <a href="student-ema.html" class="footer-link">Student Team</a>
-                <a href="index.html#faq" class="footer-link">FAQ</a>
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+        <div class="container">
+            <span class="hero-subtitle">Upcoming Edition</span>
+            <h2 style="font-family: var(--display); font-size: clamp(32px, 8vw, 64px); font-weight: 800; margin-bottom: 24px; letter-spacing: -2px;">Be the next top innovator.</h2>
+            <p style="color: var(--text-dim); font-size: 20px; max-width: 600px; margin: 0 auto 48px;">
+                Limited slots available for AIXPLORE 2K26. Join the league of elite student developers.
+            </p>
+            <a href="index.html#register" class="btn-join">Join AIXPLORE 2K26 Now →</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="padding: 80px 0 40px; border-top: 1px solid var(--border); background: #080808; text-align: center;">
+        <div class="container">
+            <div class="nav-brand" style="justify-content: center; margin-bottom: 32px;">
+                <div class="nav-brand-icon"><img src="imgs/AIXplore Logo.jpg" alt="AIExplore"></div>
+                <span>AIXPLORE <span style="color: var(--pink)">2K26</span></span>
             </div>
-            <p class="copyright">© 2026 AIExplore @ TGPCET CSE. All rights reserved.</p>
+            <div style="display: flex; justify-content: center; gap: 32px; margin-bottom: 40px;">
+                <a href="index.html" style="color: var(--text-muted); text-decoration: none; font-size: 14px;">Home</a>
+                <a href="student-ema.html" style="color: var(--text-muted); text-decoration: none; font-size: 14px;">Team</a>
+                <a href="index.html#venue" style="color: var(--text-muted); text-decoration: none; font-size: 14px;">Venue</a>
+            </div>
+            <p style="color: var(--text-muted); font-size: 12px; font-family: var(--mono); letter-spacing: 1px;">
+                © 2026 AIXPLORE @ TGPCET CSE. DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING.
+            </p>
         </div>
     </footer>
 
     <script>
-        const images = [
-            "WhatsApp Image 2026-03-25 at 08.08.17.jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.18 (1).jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.18.jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.19 (1).jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.19 (2).jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.19 (3).jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.19.jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.20 (1).jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.20 (2).jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.20 (3).jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.20.jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.21 (1).jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.21 (2).jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.21.jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.22 (1).jpeg",
-            "WhatsApp Image 2026-03-25 at 08.08.22.jpeg"
-        ];
+        // Gallery Data Distribution with Correct Case Filenames
+        const galleryData = {
+            launch: [
+                { src: "Inaguration.jpeg", title: "Ceremony Launch", type: "STAGE" },
+                { src: "Inaguaration.jpeg", title: "Dignitary Welcome", type: "INAUGURATION" },
+                { src: "presentation.jpeg", title: "Keynote Insights", type: "KNOWLEDGE" }
+            ],
+            hacking: [
+                { src: "final pitch.jpeg", title: "Technical Round 01", type: "JUDGING" },
+                { src: "final pitch 2.jpeg", title: "Logic Scrutiny", type: "EVALUATION" },
+                { src: "final pitch 3.jpeg", title: "Technical Sprint", type: "HACKING" },
+                { src: "falicitation.jpeg", title: "Felicitation Ceremony", type: "HONOUR" },
+                { src: "falicitation 2.jpeg", title: "Special Recognition", type: "AWARD" }
+            ],
+            finals: [
+                { src: "winners.jpeg", title: "The Champions", type: "LEGACY" },
+                { src: "winner 2.jpeg", title: "Winning Moment", type: "GLORY" },
+                { src: "winners 3.jpeg", title: "Outstanding Achievement", type: "SUCCESS" },
+                { src: "winners 4.jpeg", title: "Top Innovators", type: "VICTORY" },
+                { src: "winners 5.jpeg", title: "Performance Merit", type: "RECOGNITION" },
+                { src: "winners 6.jpeg", title: "Winner Collection", type: "CELEBRATION" },
+                { src: "winners 7.jpeg", title: "Prize Distribution", type: "GALA" },
+                { src: "winners 8.jpeg", title: "Grand Finale Close", type: "EVENT" }
+            ]
+        };
 
-        const grid = document.getElementById('gallery-grid');
+        const allImages = [...galleryData.launch, ...galleryData.hacking, ...galleryData.finals];
+        let currentIndex = 0;
+
+        // Initialize Grids
+        function initGrids() {
+            Object.keys(galleryData).forEach(key => {
+                const grid = document.getElementById(`grid-${key}`);
+                galleryData[key].forEach(imgObj => {
+                    const item = document.createElement('div');
+                    item.className = 'gallery-item';
+                    item.innerHTML = `
+                        <img src="imgs/AIXPLORE 2K25/${imgObj.src}" alt="${imgObj.title}" loading="lazy">
+                        <div class="gallery-overlay">
+                            <span class="item-category">${imgObj.type}</span>
+                            <h3 class="item-title">${imgObj.title}</h3>
+                        </div>
+                    `;
+                    
+                    const img = item.querySelector('img');
+                    if (img.complete) {
+                        item.classList.add('loaded');
+                    } else {
+                        img.onload = () => item.classList.add('loaded');
+                    }
+                    
+                    item.onclick = () => openLightbox(imgObj.src);
+                    grid.appendChild(item);
+                });
+            });
+        }
+
         const lightbox = document.getElementById('lightbox');
-        const lightboxImg = lightbox.querySelector('img');
+        const lbImg = lightbox.querySelector('.lightbox-img');
+        const lbCaption = lightbox.querySelector('.lightbox-caption');
 
-        images.forEach((img, index) => {
-            const item = document.createElement('div');
-            item.className = 'photo-item';
-            const imgPath = `imgs/AIXPLORE 2K25/${img}`;
+        function openLightbox(src) {
+            currentIndex = allImages.findIndex(img => img.src === src);
+            updateLightbox();
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function updateLightbox() {
+            const data = allImages[currentIndex];
+            lbImg.style.opacity = '0';
+            setTimeout(() => {
+                lbImg.src = `imgs/AIXPLORE 2K25/${data.src}`;
+                lbCaption.innerText = data.title;
+                document.getElementById('lightbox-counter').innerText = `${currentIndex + 1} / ${allImages.length}`;
+                lbImg.style.opacity = '1';
+            }, 200);
+        }
+
+        // Close logic
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        lightbox.querySelector('.lightbox-close').onclick = closeLightbox;
+        
+        // Backdrop click to close
+        lightbox.onclick = (e) => {
+            if (e.target === lightbox) closeLightbox();
+        };
+
+        // Keyboard Navigation
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
             
-            item.innerHTML = `
-                <img src="${imgPath}" alt="AIXPLORE 2K25 Event Photo">
-                <div class="photo-overlay">
-                    <div class="photo-info">AIXPLORE Legacy // 0${index + 1}</div>
-                </div>
-            `;
-            
-            item.onclick = () => {
-                lightboxImg.src = imgPath;
-                lightbox.classList.add('active');
-            };
-
-            grid.appendChild(item);
-        });
-
-        // Animations using GSAP and ScrollTrigger
-        gsap.registerPlugin(ScrollTrigger);
-        gsap.to('.photo-item', {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            ease: "expo.out",
-            scrollTrigger: {
-                trigger: '.photo-grid',
-                start: "top 85%"
+            if (e.key === 'ArrowRight') {
+                currentIndex = (currentIndex + 1) % allImages.length;
+                updateLightbox();
+            } else if (e.key === 'ArrowLeft') {
+                currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+                updateLightbox();
+            } else if (e.key === 'Escape') {
+                closeLightbox();
             }
         });
+
+        document.getElementById('next-btn').onclick = (e) => {
+            e.stopPropagation();
+            currentIndex = (currentIndex + 1) % allImages.length;
+            updateLightbox();
+        };
+
+        document.getElementById('prev-btn').onclick = (e) => {
+            e.stopPropagation();
+            currentIndex = (currentIndex - 1 + allImages.length) % allImages.length;
+            updateLightbox();
+        };
+
+        // Scroll Progress
+        window.onscroll = () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        };
+
+        // Hamburger
+        document.getElementById('hamburger').onclick = () => {
+            document.getElementById('mobile-menu').classList.toggle('open');
+        };
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        function initAnimations() {
+            gsap.from('.hero-title', { y: 80, opacity: 0, duration: 1.2, ease: "expo.out" });
+            
+            gsap.utils.toArray('.timeline-section').forEach(section => {
+                gsap.from(section, {
+                    opacity: 0,
+                    y: 40,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%"
+                    }
+                });
+            });
+        }
+
+        window.onload = () => {
+            initGrids();
+            initAnimations();
+        };
     </script>
 </body>
+
 </html>
