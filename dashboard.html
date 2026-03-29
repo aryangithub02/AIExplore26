@@ -826,7 +826,7 @@
                 <span id="syncText">Connecting to Cloud...</span>
             </div>
             <div style="margin-top: 12px; font-size: 10px; color: var(--text3); line-height: 1.4;">
-                Data is synced to: aix-server.onrender.com
+                Data is synced to: aiexplore26.onrender.com
             </div>
         </div>
     </aside>
@@ -1079,7 +1079,7 @@
         async function fetchInitialJSON() {
             try {
                 // Try to load from Cloud first
-                const response = await fetch('https://aix-server.onrender.com/get-json?v=' + Date.now());
+                const response = await fetch('https://aiexplore26.onrender.com/get-json?v=' + Date.now());
                 if (!response.ok) throw new Error();
                 teams = await response.json();
                 saveBoard();
@@ -1108,7 +1108,7 @@
             const statusText = document.getElementById('syncText');
 
             try {
-                const response = await fetch('https://aix-server.onrender.com/save-json', {
+                const response = await fetch('https://aiexplore26.onrender.com/save-json', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(teams)
