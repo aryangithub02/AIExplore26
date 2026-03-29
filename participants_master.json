@@ -3,7 +3,7 @@
         "id": "UPC9X22C",
         "name": "IIOT INNOVATORS",
         "status": "In-progress",
-        "score": 8.5,
+        "score": 9,
         "members": [
             {
                 "name": "Prachi charlewar",
@@ -14,7 +14,7 @@
                 "dept": "IIOT",
                 "year": "1st Year",
                 "gradYear": "2028",
-                "isLeader": true
+                "isLeader": false
             },
             {
                 "name": "Karishma meshram",
@@ -25,7 +25,7 @@
                 "dept": "IIOT",
                 "year": "1st Year",
                 "gradYear": "2028",
-                "isLeader": false
+                "isLeader": true
             },
             {
                 "name": "Janvi lambat",

@@ -96,13 +96,36 @@
             top: 0;
             display: flex;
             flex-direction: column;
-            z-index: 50;
-            transition: transform 0.3s var(--ease);
+            z-index: 1000;
+            transition: transform 0.4s var(--ease);
+        }
+
+        .sidebar.open {
+            transform: translateX(0) !important;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 999;
+            display: none;
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+            opacity: 1;
         }
 
         .sidebar-header {
             padding: 32px 24px;
             border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .sidebar-nav {
@@ -111,6 +134,7 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            overflow-y: auto;
         }
 
         .nav-item {
@@ -151,6 +175,26 @@
             flex: 1;
             margin-left: 280px;
             padding: 40px;
+            transition: 0.3s;
+            max-width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 44px;
+            height: 44px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .top-row {
@@ -302,12 +346,6 @@
             color: white;
         }
 
-        .active-mode {
-            background: rgba(59, 130, 246, 0.2) !important;
-            color: var(--blue) !important;
-            border-color: var(--blue) !important;
-        }
-
         /* Data Table */
         .table-wrap {
             background: var(--card);
@@ -417,35 +455,30 @@
             border-color: var(--red);
         }
 
-        /* MODAL SYSTEM */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(12px);
-            z-index: 1000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+        /* ========== RESPONSIVENESS ========== */
+        @media (max-width: 1100px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
-        .modal.active {
-            display: flex;
+        @media (max-width: 1024px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; padding: 80px 20px 40px 20px; }
+            .menu-toggle { display: flex; }
+            .top-row { flex-direction: column; align-items: flex-start; gap: 20px; }
         }
 
-        .modal-container {
-            width: 100%;
-            max-width: 960px;
-            background: var(--bg2);
-            border: 1px solid var(--border);
-            border-radius: 28px;
-            position: relative;
-            max-height: 94vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        @media (max-width: 768px) {
+            .toolbar { flex-direction: column; }
+            .search-container { width: 100%; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .modal-container { border-radius: 0; height: 100vh; max-height: 100vh; }
+            .member-info-grid { grid-template-columns: 1fr !important; }
+            .table-wrap { overflow-x: auto; }
+            table { min-width: 700px; }
+            .stat-info .value { font-size: 22px; }
+            .analytics-grid { grid-template-columns: 1fr !important; }
+            .top-row { margin-bottom: 25px; }
+            .page-title h1 { font-size: 24px; }
         }
 
         .modal-header {
@@ -804,13 +837,17 @@
 </head>
 
 <body>
-    <aside class="sidebar">
+    <div class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <aside class="sidebar" id="mainSidebar">
         <div class="sidebar-header">
             <div style="display: flex; align-items: center; gap: 12px;">
                 <img src="aiexplore_logo_transparent_1771861055747.png" height="36" alt="Logo">
-                <span
-                    style="font-family: var(--display); font-weight: 800; font-size: 20px; letter-spacing: -0.5px;">AX26
-                    CORE</span>
+                <span style="font-family: var(--display); font-weight: 800; font-size: 20px;">AX26 CORE</span>
+            </div>
+            <div class="menu-toggle-inner" style="display: none; cursor: pointer; color: var(--text3);" onclick="toggleSidebar()">
+                <i class="fas fa-times"></i>
             </div>
         </div>
         <nav class="sidebar-nav">
@@ -819,22 +856,18 @@
             <a href="#" class="nav-item" onclick="switchView('analytics', this)"><i class="fas fa-chart-line"></i>
                 Analytics Overview</a>
             <a href="#" class="nav-item" onclick="exportMasterCSV()"><i class="fas fa-file-export"></i> Local Export</a>
-            <a href="#" class="nav-item" onclick="downloadFromCloud('csv')"><i class="fas fa-cloud-arrow-down" style="color: var(--blue);"></i> Cloud CSV Export</a>
-            <a href="#" class="nav-item" onclick="downloadFromCloud('json')"><i class="fas fa-rotate" style="color: var(--yellow);"></i> Restore from Cloud</a>
-            <div style="margin: 30px 0 10px 16px; font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 2px; font-weight: 800;">Sync Context</div>
-            <div style="padding: 0 16px 20px 16px; display: flex; gap: 4px;">
-                <button id="mode-cloud" class="btn btn-secondary active-mode" style="flex: 1; font-size: 10px; padding: 6px;" onclick="setSyncMode('cloud')">Cloud</button>
-                <button id="mode-local" class="btn btn-secondary" style="flex: 1; font-size: 10px; padding: 6px;" onclick="setSyncMode('local')">Local</button>
-            </div>
+            <a href="#" class="nav-item" onclick="fetchInitialJSON()"><i class="fas fa-rotate" style="color: var(--yellow);"></i> Refresh from Sheets</a>
+            <a href="https://docs.google.com/spreadsheets/d/1Ia9yYL4e-IlfU3H4N-SdyqCA0bDpZ35lO_JC_UE4aXk" target="_blank" class="nav-item"><i class="fas fa-file-excel" style="color: #0F9D58;"></i> Open Manager Sheet</a>
 
+            <div style="margin: 30px 0 10px 16px; font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 2px; font-weight: 800;">Real-time Sync</div>
             <div id="syncStatus" class="sync-badge sync-offline">
                 <div style="width: 8px; height: 8px; border-radius: 50%; background: currentColor;"></div>
-                <span id="syncText">Connecting...</span>
+                <span id="syncText">Connecting Sheets...</span>
             </div>
             <div style="margin-top: 12px; font-size: 10px; color: var(--text3); line-height: 1.4;" id="syncEndpoint">
-                Target: aiexplore26.onrender.com
+                Target: Google Sheets DB
             </div>
-        </div>
+        </nav>
     </aside>
 
     <main class="main-content">
@@ -1055,7 +1088,44 @@
         </div>
     </div>
 
+    <style>
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal.active { display: flex; }
+        .modal-container {
+            width: 100%;
+            max-width: 960px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            position: relative;
+            max-height: 94vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        }
+        @media (max-width: 768px) {
+            .modal { padding: 0; }
+            .modal-container { border-radius: 0; height: 100vh; max-height: 100vh; }
+        }
+    </style>
+
     <script>
+        function toggleSidebar() {
+            document.getElementById('mainSidebar').classList.toggle('open');
+            document.getElementById('sidebarOverlay').classList.toggle('active');
+        }
+
         let teams = [];
         let charts = {};
         const STORAGE_KEY = 'ax26_teams_master_v6'; // Bumped version to force cache refresh / include new team
@@ -1083,41 +1153,68 @@
         }
 
         const SYNC_MODES = {
+            sheets: 'https://script.google.com/macros/s/AKfycbwqjP-GVaXu076K-PHkysNrhDGo9rBj96SKW29VSV4hzntAZ_XuH-4gFYj9-yCYE7LK/exec',
             cloud: 'https://aiexplore26.onrender.com',
             local: 'http://localhost:8000'
         };
-        let API_BASE = SYNC_MODES.cloud;
+        let API_BASE = SYNC_MODES.sheets;
 
         function setSyncMode(mode) {
             API_BASE = SYNC_MODES[mode];
+            document.getElementById('mode-sheets').classList.toggle('active-mode', mode === 'sheets');
             document.getElementById('mode-cloud').classList.toggle('active-mode', mode === 'cloud');
             document.getElementById('mode-local').classList.toggle('active-mode', mode === 'local');
-            document.getElementById('syncEndpoint').innerText = 'Target: ' + API_BASE.replace('https://', '').replace('http://', '');
+            
+            const displayUrl = mode === 'sheets' ? 'Google Sheets DB' : API_BASE.replace('https://', '').replace('http://', '');
+            document.getElementById('syncEndpoint').innerText = 'Target: ' + displayUrl;
+            
             saveBoard();
         }
 
+        const SHEETS_API = 'https://script.google.com/macros/s/AKfycbwqjP-GVaXu076K-PHkysNrhDGo9rBj96SKW29VSV4hzntAZ_XuH-4gFYj9-yCYE7LK/exec';
+
         async function fetchInitialJSON() {
+            const statusBadge = document.getElementById('syncStatus');
+            const statusText = document.getElementById('syncText');
+            
             try {
-                // Try from Currently selected API first
-                const response = await fetch(`${API_BASE}/get-json?v=${Date.now()}`);
+                const response = await fetch(SHEETS_API);
                 if (!response.ok) throw new Error();
-                teams = await response.json();
-                saveBoard();
+                let rawTeams = await response.json();
+                
+                // AUTO-CALC ACADEMIC YEAR IF MISSING
+                const currentYear = 2025; // Base year for hackathon
+                teams = rawTeams.map(t => ({
+                    ...t,
+                    members: t.members.map(m => {
+                        if (!m.year || m.year === '-') {
+                            const grad = parseInt(m.gradYear) || 0;
+                            if (grad > 0) {
+                                const diff = grad - currentYear;
+                                if (diff === 4) m.year = "1st Year";
+                                else if (diff === 3) m.year = "2nd Year";
+                                else if (diff === 2) m.year = "3rd Year";
+                                else if (diff === 1) m.year = "4th Year";
+                            }
+                        }
+                        return m;
+                    })
+                }));
+                
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(teams));
                 renderBoard();
-                console.log("Loaded from API: " + API_BASE);
+                
+                statusBadge.className = 'sync-badge sync-online';
+                statusText.innerText = 'Sheets Connected';
             } catch (err) {
-                console.log("API not found... trying fallback local JSON file.");
-                try {
-                    const localRes = await fetch('participants_master.json?v=' + Date.now());
-                    if (!localRes.ok) throw new Error('JSON load failed');
-                    teams = await localRes.json();
-                    saveBoard();
-                    renderBoard();
-                } catch (localErr) {
-                    console.error("Master JSON not found or empty. Using empty state.", localErr);
-                    teams = [];
+                console.log("Sheets API failed... trying local cache.");
+                const saved = localStorage.getItem(STORAGE_KEY);
+                if (saved) {
+                    teams = JSON.parse(saved);
                     renderBoard();
                 }
+                statusBadge.className = 'sync-badge sync-offline';
+                statusText.innerText = 'Offline Mode';
             }
         }
 
@@ -1127,37 +1224,20 @@
             const statusText = document.getElementById('syncText');
 
             try {
-                const response = await fetch(`${API_BASE}/save-json`, {
+                // Post to Google Sheets Bridge
+                await fetch(SHEETS_API, {
                     method: 'POST',
+                    mode: 'no-cors', // Standard for simple Apps Script POST
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(teams)
                 });
-                if (response.ok) {
-                    statusBadge.className = 'sync-badge sync-online';
-                    statusText.innerText = 'Synced Successfully';
-                } else throw new Error();
+                
+                statusBadge.className = 'sync-badge sync-online';
+                statusText.innerText = 'Changes Saved';
             } catch (err) {
                 statusBadge.className = 'sync-badge sync-offline';
-                statusText.innerText = 'Sync Unavailable';
-                console.warn("Sync failed. Changes in LocalStorage only.");
-            }
-        }
-
-        async function downloadFromCloud(type) {
-            try {
-                const url = type === 'csv' ? `${API_BASE}/get-csv` : `${API_BASE}/get-json`;
-                const filename = type === 'csv' ? 'ax26_master_list.csv' : 'participants_master.json';
-                
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Download failed');
-                
-                const blob = await response.blob();
-                const link = document.createElement('a');
-                link.href = URL.createObjectURL(blob);
-                link.download = filename;
-                link.click();
-            } catch (err) {
-                alert('Connection Error: Could not download from ' + API_BASE);
+                statusText.innerText = 'Save Failed';
+                console.error("Sync failed.");
             }
         }
 
