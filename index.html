@@ -3639,24 +3639,7 @@
               <span style="opacity: 0.8; font-size: 0.95em;">9th &amp; 10th April 2026 — 24 Hours of Pure
                 Innovation.</span>
             </p>
-            <div class="countdown" id="countdown">
-              <div class="countdown-unit">
-                <span class="countdown-num" id="cd-days">00</span>
-                <div class="countdown-label">Days</div>
-              </div>
-              <div class="countdown-unit">
-                <span class="countdown-num" id="cd-hours">00</span>
-                <div class="countdown-label">Hours</div>
-              </div>
-              <div class="countdown-unit">
-                <span class="countdown-num" id="cd-mins">00</span>
-                <div class="countdown-label">Mins</div>
-              </div>
-              <div class="countdown-unit">
-                <span class="countdown-num" id="cd-secs">00</span>
-                <div class="countdown-label">Secs</div>
-              </div>
-            </div>
+
             <div class="hero-actions" id="hero-actions">
               <a href="https://unstop.com/hackathons/ai-explore-2k26-tulsiram-gaikwad-patil-college-of-engineering-and-technology-1648211?lb=zpjAfFBx&utm_medium=Share&utm_source=aryanmot5820&utm_campaign=Online_coding_challenge"
                 target="_blank" class="btn btn-primary"
@@ -4604,11 +4587,10 @@
           </div>
           <div class="dash-subtitle" id="dash-subtitle">Here's your hackathon dashboard.</div>
         </div>
-        <div id="closed-banner-dash" class="closed-banner hidden">
-          <div class="closed-banner-title">⛔ Registration Closed</div>
+        <div id="closed-banner-dash" class="closed-banner hidden" style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.3);">
+          <div class="closed-banner-title" style="color:var(--green)">⚡ Hackathon is Live!</div>
           <div class="closed-banner-msg">
-            The registration deadline has passed. You can still view your
-            submission.
+            The coding phase has officially begun. Good luck to your team!
           </div>
         </div>
         <div class="dash-cards">
@@ -4784,8 +4766,8 @@
               Complete all steps to register your team's project.
             </div>
           </div>
-          <div id="reg-deadline-closed" class="closed-banner hidden">
-            <div class="closed-banner-title">⛔ Registration Closed</div>
+          <div id="reg-deadline-closed" class="closed-banner hidden" style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.3);">
+            <div class="closed-banner-title" style="color:var(--green)">⚡ Hackathon is Live!</div>
             <div class="closed-banner-msg">
               The deadline has passed. Your submission is locked.
             </div>
@@ -5641,47 +5623,15 @@
       // ============================================================
       // COUNTDOWN
       // ============================================================
-      function updateCountdown() {
-        const now = new Date();
-        const diff = DEADLINE - now;
-        if (diff <= 0) {
-          document.getElementById("cd-days").textContent = "00";
-          document.getElementById("cd-hours").textContent = "00";
-          document.getElementById("cd-mins").textContent = "00";
-          document.getElementById("cd-secs").textContent = "00";
-          showDeadlineClosed();
-          return;
-        }
-        const d = Math.floor(diff / 86400000);
-        const h = Math.floor((diff % 86400000) / 3600000);
-        const m = Math.floor((diff % 3600000) / 60000);
-        const s = Math.floor((diff % 60000) / 1000);
-        document.getElementById("cd-days").textContent = String(d).padStart(
-          2,
-          "0",
-        );
-        document.getElementById("cd-hours").textContent = String(h).padStart(
-          2,
-          "0",
-        );
-        document.getElementById("cd-mins").textContent = String(m).padStart(
-          2,
-          "0",
-        );
-        document.getElementById("cd-secs").textContent = String(s).padStart(
-          2,
-          "0",
-        );
-      }
+
       function isDeadlinePassed() {
         return new Date() > DEADLINE;
       }
       function showDeadlineClosed() {
         document.getElementById("hero-actions").innerHTML =
-          '<div class="closed-banner" style="text-align:left;margin-bottom:0;"><div class="closed-banner-title">⛔ Registrations Closed</div><div class="closed-banner-msg">The deadline has passed. Stay tuned for AIExplore 2K26 2026!</div></div>';
+          '<div class="closed-banner" style="text-align:left;margin-bottom:0;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);"><div class="closed-banner-title" style="color:var(--green)">⚡ Hackathon is Live!</div><div class="closed-banner-msg">The coding phase has officially begun. Good luck to all the participating teams!</div></div>';
       }
-      setInterval(updateCountdown, 1000);
-      updateCountdown();
+      showDeadlineClosed();
 
       // ============================================================
       // FAQ

@@ -855,6 +855,7 @@
                 <table>
                     <thead>
                         <tr>
+                            <th style="width: 50px;">#</th>
                             <th>Team Name & ID</th>
                             <th>Team Leader</th>
                             <th>Members</th>
@@ -1190,10 +1191,11 @@
                 return m && st && vMatch;
             });
 
-            filtered.forEach(t => {
+            filtered.forEach((t, index) => {
                 const leader = t.members.find(m => m.isLeader) || t.members[0];
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
+                    <td style="color: var(--text3); font-weight: 600;">${index + 1}</td>
                     <td>
                         <div class="team-name" onclick="viewTeam('${t.id}')">
                             <i class="fas fa-caret-right" style="font-size: 10px; color: var(--blue);"></i> ${t.name}
