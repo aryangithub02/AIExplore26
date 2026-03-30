@@ -814,8 +814,8 @@
                 <div class="stat-card">
                     <div class="stat-icon" style="color: var(--green);"><i class="fas fa-check-double"></i></div>
                     <div class="stat-info">
-                        <div class="label">Verified</div>
-                        <div class="value" id="stat-verified">92</div>
+                        <div class="label">Verified Teams</div>
+                        <div class="value" id="stat-verified">0</div>
                     </div>
                 </div>
                 <div class="stat-card">
@@ -835,6 +835,11 @@
                             placeholder="Search by team, candidate, college, or technology..."
                             oninput="handleMasterSearch(this.value)">
                     </div>
+                    <select class="btn btn-secondary" id="verifiedFilter" onchange="runFilters()">
+                        <option value="all">Verification: All</option>
+                        <option value="verified">Verified Only</option>
+                        <option value="unverified">Unverified Only</option>
+                    </select>
                     <select class="btn btn-secondary" id="statusFilter" onchange="runFilters()">
                         <option value="all">All Operations</option>
                         <option value="In-progress">In-progress</option>
@@ -854,6 +859,7 @@
                             <th>Team Leader</th>
                             <th>Members</th>
                             <th>Status</th>
+                            <th>Verified</th>
                             <th>Score</th>
                             <th style="text-align: right;">Command</th>
                         </tr>
@@ -925,6 +931,13 @@
                                 <select id="fStatus">
                                     <option value="In-progress">In-progress</option>
                                     <option value="Complete">Complete</option>
+                                </select>
+                            </div>
+                            <div class="field-group">
+                                <label>Verified</label>
+                                <select id="fVerified">
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
                                 </select>
                             </div>
                         </div>
@@ -1034,7 +1047,7 @@
 
         let teams = [];
         let charts = {};
-        const STORAGE_KEY = 'ax26_teams_master_v6'; // Bumped version to force cache refresh / include new team
+        const STORAGE_KEY = 'ax26_teams_master_v7'; // Bumped version to force cache refresh / include new team
 
         window.onload = () => {
             const saved = localStorage.getItem(STORAGE_KEY);
@@ -1090,9 +1103,15 @@
                 
                 // AUTO-CALC ACADEMIC YEAR IF MISSING
                 const currentYear = 2025; // Base year for hackathon
-                teams = rawTeams.map(t => ({
-                    ...t,
-                    members: t.members.map(m => {
+                
+                // Fallback Verified List (if API is stale)
+                const verifiedP = ["9545300989","8600487598","7263842962","8237833808","7387394801","8010945450","7768820280","8767859749","9359211306","9322893263","8087789959","9860767429","9307113617","9322767525","8080595054","8605468557","9529721212","8329423722","9096560097","9322154832"];
+                const cleanPhone = p => String(p).replace(/\D/g, '').slice(-10);
+
+                teams = rawTeams.map(t => {
+                    let teamVerified = typeof t.isVerified === 'boolean' ? t.isVerified : false;
+                    
+                    const mlist = t.members.map(m => {
                         if (!m.year || m.year === '-') {
                             const grad = parseInt(m.gradYear) || 0;
                             if (grad > 0) {
@@ -1104,8 +1123,18 @@
                             }
                         }
                         return m;
-                    })
-                }));
+                    });
+                    
+                    // Safe Fallback: if API failed to parse isVerified, compute it locally
+                    if (typeof t.isVerified !== 'boolean') {
+                        const leader = mlist.find(x => x.isLeader) || mlist[0];
+                        if (leader && verifiedP.includes(cleanPhone(leader.phone))) {
+                            teamVerified = true;
+                        }
+                    }
+                    
+                    return { ...t, members: mlist, isVerified: teamVerified };
+                });
                 
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(teams));
                 renderBoard();
@@ -1146,7 +1175,7 @@
             }
         }
 
-        function renderBoard(search = "", status = "all") {
+        function renderBoard(search = "", status = "all", verified = "all") {
             const tbody = document.getElementById('teamsTbody');
             tbody.innerHTML = '';
             const filtered = teams.filter(t => {
@@ -1154,7 +1183,11 @@
                 const m = t.name.toLowerCase().includes(s) || t.id.toLowerCase().includes(s) ||
                     t.members.some(mem => mem.name.toLowerCase().includes(s));
                 const st = status === 'all' || t.status === status;
-                return m && st;
+                let vMatch = true;
+                if (verified === 'verified') vMatch = t.isVerified;
+                if (verified === 'unverified') vMatch = !t.isVerified;
+                
+                return m && st && vMatch;
             });
 
             filtered.forEach(t => {
@@ -1173,6 +1206,7 @@
                     </td>
                     <td><i class="fas fa-users"></i> ${t.members.length}</td>
                     <td><span class="status-pill ${t.status === 'Complete' ? 'pill-complete' : 'pill-in-progress'}">${t.status}</span></td>
+                    <td><span class="status-pill ${t.isVerified ? 'pill-complete' : ''}" style="${!t.isVerified ? 'background: rgba(255,255,255,0.05); color: var(--text3); border: 1px solid var(--border);' : ''}">${t.isVerified ? '<i class="fas fa-check-circle"></i> YES' : 'NO'}</span></td>
                     <td><strong style="color: var(--blue); font-size: 16px;">${t.score.toFixed(1)}</strong></td>
                     <td class="actions-cell">
                         <div class="icon-btn" onclick="viewTeam('${t.id}')"><i class="fas fa-eye"></i></div>
@@ -1187,9 +1221,22 @@
         function updateStatsDisplay(data) {
             document.getElementById('stat-teams').innerText = data.length;
             document.getElementById('stat-devs').innerText = data.reduce((a, b) => a + b.members.length, 0);
-            document.getElementById('stat-verified').innerText = data.filter(t => t.status === 'Complete').length;
+            document.getElementById('stat-verified').innerText = data.filter(t => t.isVerified).length;
             const avg = data.length ? (data.reduce((a, b) => a + b.score, 0) / data.length).toFixed(1) : '0.0';
             document.getElementById('stat-avg').innerText = avg;
+        }
+
+        function handleMasterSearch(val) {
+            const status = document.getElementById('statusFilter').value;
+            const verified = document.getElementById('verifiedFilter').value;
+            renderBoard(val, status, verified);
+        }
+
+        function runFilters() {
+            const search = document.getElementById('masterSearch').value;
+            const status = document.getElementById('statusFilter').value;
+            const verified = document.getElementById('verifiedFilter').value;
+            renderBoard(search, status, verified);
         }
 
         function openFormModal() {
@@ -1231,6 +1278,7 @@
             document.getElementById('editTeamId').value = t.id;
             document.getElementById('fTeamName').value = t.name;
             document.getElementById('fStatus').value = t.status;
+            document.getElementById('fVerified').value = t.isVerified ? "true" : "false";
             document.getElementById('fScore').value = t.score;
             document.getElementById('membersContainer').innerHTML = '';
             t.members.forEach(m => addMemberBlock(m.isLeader, m));
@@ -1257,6 +1305,7 @@
                 id: id || 'T-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
                 name: document.getElementById('fTeamName').value,
                 status: document.getElementById('fStatus').value,
+                isVerified: document.getElementById('fVerified').value === "true",
                 score: parseFloat(document.getElementById('fScore').value) || 0,
                 members
             };
@@ -1275,9 +1324,16 @@
             document.getElementById('vSize').innerText = t.members.length;
             document.getElementById('vCollege').innerText = leader?.college || 'Unknown Institution';
             document.getElementById('vAddress').innerText = leader?.address || 'Unknown Location';
+            
             const pill = document.getElementById('vStatusPill');
             pill.innerText = t.status.toUpperCase();
             pill.className = `status-pill pill-${t.status === 'Complete' ? 'complete' : 'in-progress'}`;
+            
+            // Just quickly patch vStatusPill area with a Verified badge if needed:
+            if (t.isVerified) {
+                pill.innerText += " • VERIFIED";
+                pill.className = "status-pill pill-complete";
+            }
             const list = document.getElementById('vMembersList');
             list.innerHTML = '';
             t.members.forEach(m => {

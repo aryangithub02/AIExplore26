@@ -26,7 +26,7 @@ def save_csv(teams):
         "Candidate's Mobile", "Candidate's Location", "User Type", "Domain", 
         "Course", "Course Specialization", "Course Type", "Course Duration (years)", 
         "Year of Graduation", "Candidate's Organisation", "Differently Abled", 
-        "Status", "Candidate's Report", "Report Link", "Round 1 Score"
+        "Status", "Candidate's Report", "Report Link", "Round 1 Score", "Verified or not"
     ]
     
     rows = []
@@ -53,7 +53,8 @@ def save_csv(teams):
                 "Status": t.get('status', 'In-progress'),
                 "Candidate's Report": "Pending",
                 "Report Link": "-",
-                "Round 1 Score": t.get('score', 0)
+                "Round 1 Score": t.get('score', 0),
+                "Verified or not": "Yes" if t.get('status') == 'Verified' else "No"
             })
             
     try:
