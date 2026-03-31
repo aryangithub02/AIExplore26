@@ -791,9 +791,14 @@
                     <h1>Deployment Center</h1>
                     <p>Manage hackathon participants and team configurations</p>
                 </div>
-                <button class="btn btn-primary" onclick="openFormModal()">
-                    <i class="fas fa-user-plus"></i> Manual Registration
-                </button>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn btn-secondary" onclick="printReport()">
+                        <i class="fas fa-file-pdf"></i> PDF Report
+                    </button>
+                    <button class="btn btn-primary" onclick="openFormModal()">
+                        <i class="fas fa-user-plus"></i> Manual Registration
+                    </button>
+                </div>
             </header>
 
             <section class="stats-grid">
@@ -1226,6 +1231,14 @@
             document.getElementById('stat-verified').innerText = data.filter(t => t.isVerified).length;
             const avg = data.length ? (data.reduce((a, b) => a + b.score, 0) / data.length).toFixed(1) : '0.0';
             document.getElementById('stat-avg').innerText = avg;
+            
+            // Store stats for analytics export
+            window.currentStats = {
+                teams: data.length,
+                devs: data.reduce((a, b) => a + b.members.length, 0),
+                verified: data.filter(t => t.isVerified).length,
+                avgScore: avg
+            };
         }
 
         function handleMasterSearch(val) {
@@ -1378,6 +1391,7 @@
                 t.members.forEach(m => {
                     rows.push({
                         'Team Name': t.name, 'Team ID': t.id, 'Status': t.status, 'Score': t.score,
+                        'isVerified': t.isVerified ? 'Yes' : 'No',
                         'Candidate Name': m.name, 'Phone': m.phone, 'Email': m.email, 'Address': m.address,
                         'College': m.college, 'Department': m.dept, 'Year': m.year, 'Grad Year': m.gradYear,
                         'Role': m.isLeader ? 'Leader' : 'Member'
@@ -1388,8 +1402,58 @@
             const blob = new Blob([csvData], { type: 'text/csv' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = `AX26_Teams_Report_${new Date().toISOString().split('T')[0]}.csv`;
+            link.download = `AX26_Master_Participants_${new Date().toISOString().split('T')[0]}.csv`;
             link.click();
+        }
+
+        function exportAnalyticsCSV() {
+            if (!window.currentStats) return;
+            
+            const pData = teams.flatMap(t => t.members);
+            const colleges = {};
+            const depts = {};
+            const years = {};
+            
+            pData.forEach(m => {
+                const c = getCanonicalCollegeName(m.college);
+                colleges[c] = (colleges[c] || 0) + 1;
+                depts[m.dept || 'Other'] = (depts[m.dept || 'Other'] || 0) + 1;
+                years[m.year || 'Unknown'] = (years[m.year || 'Unknown'] || 0) + 1;
+            });
+
+            let csvContent = "AIXPLORE 2K26 ANALYTICS SUMMARY\n";
+            csvContent += `Report Generated: ${new Date().toLocaleString()}\n\n`;
+            csvContent += "OVERVIEW STATS\n";
+            csvContent += `Total Teams,${window.currentStats.teams}\n`;
+            csvContent += `Total Participants,${window.currentStats.devs}\n`;
+            csvContent += `Verified Teams,${window.currentStats.verified}\n`;
+            csvContent += `Average Selection Score,${window.currentStats.avgScore}\n\n`;
+
+            csvContent += "COLLEGE DISTRIBUTION (Nagpur Region)\n";
+            Object.entries(colleges).sort((a,b)=>b[1]-a[1]).forEach(([k,v]) => {
+                csvContent += `${k},${v}\n`;
+            });
+
+            csvContent += "\nDEPARTMENT BREAKDOWN\n";
+            Object.entries(depts).sort((a,b)=>b[1]-a[1]).forEach(([k,v]) => {
+                csvContent += `${k},${v}\n`;
+            });
+
+            const blob = new Blob([csvContent], { type: 'text/csv' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `AX26_Analytics_Report_${new Date().toISOString().split('T')[0]}.csv`;
+            link.click();
+        }
+
+        function printReport() {
+            // Switch to analytics view first to ensure charts are rendered
+            switchView('analytics', document.querySelector('[onclick*="analytics"]'));
+            
+            // Small delay for view transition
+            setTimeout(() => {
+                window.print();
+            }, 500);
         }
 
         function resetEngine() {
@@ -1414,13 +1478,16 @@
             });
             drawBarChart('cityChart', cities, 'Participants', '#3B82F6');
 
-            // 2. Nagpur College Chart
+            // 2. Nagpur College Chart (with Normalization)
             const nColleges = {};
             pData.forEach(m => {
-                const col = m.college || "Unknown";
-                if (col.toLowerCase().includes('nagpur')) {
-                    const shortCol = col.split(',')[0].substring(0, 30);
-                    nColleges[shortCol] = (nColleges[shortCol] || 0) + 1;
+                const rawCollege = m.college || "Unknown";
+                const canonical = getCanonicalCollegeName(rawCollege);
+                
+                const low = rawCollege.toLowerCase();
+                // Filter for Nagpur-linked or major regional colleges
+                if (low.includes('nagpur') || low.includes('jd') || low.includes('ycce') || low.includes('pce') || low.includes('raisoni') || low.includes('rcoem') || low.includes('kdk') || low.includes('pallotti') || low.includes('gaikwad patil') || low.includes('tgpcet')) {
+                    nColleges[canonical] = (nColleges[canonical] || 0) + 1;
                 }
             });
             drawBarChart('collegeChart', nColleges, 'Participants', '#8B5CF6', 'y');
@@ -1457,6 +1524,64 @@
                 else scores["8-10"]++;
             });
             drawBarChart('scoreChart', scores, 'Teams', '#F59E0B');
+        }
+
+        function getCanonicalCollegeName(name) {
+            if (!name) return "Unknown Institution";
+            let n = name.toLowerCase().trim();
+
+            // 1. Specific High-Priority Matches (Prevents misclassification)
+            if (n.includes('gaikwad patil') || n.includes('tgpcet')) {
+                return "TGPCET, Nagpur";
+            }
+            if (n.includes('jd college') || n.includes('j d college') || n.includes('jdiet') || n.includes('jdcoem')) {
+                return "JD College of Engineering";
+            }
+            if (n.includes('ycce') || n.includes('yeshwantrao chavan')) {
+                return "YCCE, Nagpur";
+            }
+
+            // 2. Priyadarshini Group (Split into branches)
+            if (n.includes('priyadarshini') || n.includes('pce') || n.includes('p.c.e')) {
+                if (n.includes('bhagwati') || n.includes('pbce')) return "Priyadarshini Bhagwati (PBCE)";
+                if (n.includes('indira') || n.includes('piet')) return "Priyadarshini Indira (PIET)";
+                if (n.includes('kannamwar') || n.includes('pcek')) return "PCE, Kannamwar";
+                // Only return general PCE if it's not one of the above
+                if (n.includes('gaikwad patil')) return "TGPCET, Nagpur"; // Extra safety
+                return "Priyadarshini College (PCE)";
+            }
+
+            // 3. Other Major Institutions
+            if (n.includes('pallotti') || n.includes('st. vincent') || n.includes('svpcet')) {
+                return "St. Vincent Pallotti";
+            }
+            if (n.includes('kdk')) {
+                return "KDK College";
+            }
+            if (n.includes('gh raisoni') || n.includes('raisoni') || n.includes('ghrce') || n.includes('ghriem')) {
+                return "G.H. Raisoni";
+            }
+            if (n.includes('rkne') || n.includes('ramdeobaba') || n.includes('rcoem') || n.includes('rnus')) {
+                return "Ramdeobaba University";
+            }
+            if (n.includes('sb jain')) return "S.B. Jain Institute";
+            if (n.includes('suryodaya')) return "Suryodaya College";
+            if (n.includes('vnit')) return "VNIT Nagpur";
+            if (n.includes('iiit')) return "IIIT Nagpur";
+            if (n.includes('cummins')) return "Cummins For Women";
+            if (n.includes('gcoe') || n.includes('gce')) {
+                if (n.includes('nagpur')) return "Government College (GCOEN)";
+                if (n.includes('jalgaon')) return "GCOE, Jalgaon";
+                return "Government College (GCE)";
+            }
+            
+            // Cleanup generic strings
+            return name.split(',')[0].trim()
+                .replace(/ college of engineering/gi, '')
+                .replace(/ institute of technology/gi, '')
+                .replace(/ and management/gi, '')
+                .replace(/ nagpur/gi, '')
+                .substring(0, 30);
         }
 
         function drawBarChart(id, dataMap, label, color, axis = 'x') {

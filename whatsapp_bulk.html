@@ -25,7 +25,7 @@
             radial-gradient(circle at 90% 80%,rgba(255,0,124,0.05)0%,transparent 40%);
         }
         header {padding:2rem;text-align:center;border-bottom:1px solid var(--border);background:var(--glass);backdrop-filter:blur(10px);position:sticky;top:0;z-index:100;}
-        h1 {font-size:2.5rem;font-weight:800;background:linear-gradient(to right,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;}
+        h1 {font-size:2.5rem;font-weight:800;background:linear-gradient(to right,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;}
         .badge {font-family:'JetBrains Mono',monospace;font-size:0.8rem;background:rgba(0,242,254,0.1);color:var(--primary);padding:4px 12px;border-radius:20px;border:1px solid rgba(0,242,254,0.2);text-transform:uppercase;display:inline-block;margin-top:0.5rem;}
         main {max-width:1200px;width:95%;margin:3rem auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
         @media(max-width:968px){main{grid-template-columns:1fr;}}
@@ -60,6 +60,138 @@
         @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
         .card{animation:fadeIn .6s ease-out forwards;}
         .card:nth-child(2){animation-delay:.2s;}
+
+        /* Bot Assistant Styles */
+        .bot-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 15px;
+            pointer-events: none;
+        }
+        .bot-bubble {
+            background: var(--glass);
+            border: 1px solid var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: 20px 20px 0 20px;
+            max-width: 280px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px rgba(0,242,254,0.2);
+            font-size: 0.9rem;
+            line-height: 1.4;
+            color: var(--text);
+            backdrop-filter: blur(15px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: auto;
+        }
+        .bot-bubble.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .bot-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0,242,254,0.4);
+            cursor: pointer;
+            pointer-events: auto;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        .bot-avatar:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        .bot-avatar svg {
+            width: 35px;
+            height: 35px;
+            fill: #000;
+        }
+        .bot-eye {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            top: 22px;
+            animation: blink 4s infinite;
+        }
+        .bot-eye.left { left: 18px; }
+        .bot-eye.right { right: 18px; }
+        @keyframes blink {
+            0%, 90%, 100% { transform: scaleY(1); }
+            95% { transform: scaleY(0.1); }
+        }
+        .pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: var(--primary);
+            opacity: 0.5;
+            animation: pulse-out 2s infinite;
+        }
+        @keyframes pulse-out {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        /* Terminal Style for Links */
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 12px;
+            width: 100%;
+        }
+        .link-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-dim);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .link-item.processed {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(0,242,254,0.05);
+        }
+        .link-item:hover {
+            border-color: var(--secondary);
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-dim);
+            display: inline-block;
+            margin-right: 8px;
+        }
+        .processed .status-dot {
+            background: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -123,18 +255,30 @@ AIExplore 2K26 Organizing Committee</textarea>
                 <div class="batch-settings"><input type="number" id="batch-size" value="5" min="1" max="20"><p style="font-size:.85rem;color:var(--text-dim);line-height:1.4;">Select how many chats to open at once. Higher numbers might lag your browser.</p></div>
             </div>
             <button class="btn btn-primary" id="launch-btn" onclick="launchBatch()">Launch Next Batch 🚀</button>
-            <div class="step-info"><strong>How to use:</strong><ol style="margin-left:1.5rem;margin-top:.5rem;line-height:1.7;">
-                <li>Paste your clean phone numbers (include country code).</li>
-                <li>Click "Launch Next Batch".</li>
-                <li>Switch to WhatsApp, hit Enter, and return.</li>
-                <li>The tool tracks opened chats automatically.</li>
+            <div class="step-info"><strong>System Protocol:</strong><ol style="margin-left:1.5rem;margin-top:.5rem;line-height:1.7;">
+                <li>The bot opens the chat with your message pre-filled.</li>
+                <li>For security, **you must press Enter** in each tab to send.</li>
+                <li>**Pro Tip:** Use `Enter` then `Ctrl+W` to send and close fast!</li>
+                <li>Keep the tab batch size low (5-8) to avoid system lag.</li>
             </ol></div>
         </section>
         <section class="card">
-            <div class="card-title"><span>3</span> Generated Links</div>
-            <div id="link-list" class="link-list"></div>
+            <div class="card-title"><span>3</span> Dispatcher Queue</div>
+            <div id="link-list" class="link-list">
+                <p style="color:var(--text-dim);font-size:.9rem;text-align:center;width:100%;padding:2rem;">Queue is empty. Systems ready.</p>
+            </div>
         </section>
     </main>
+
+    <div class="bot-container">
+        <div class="bot-bubble" id="bot-message">Hello! I'm your AI Dispatcher. Ready to help you reach out to participants?</div>
+        <div class="bot-avatar" onclick="toggleBot()">
+            <div class="pulse"></div>
+            <div class="bot-eye left"></div>
+            <div class="bot-eye right"></div>
+            <svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:#000;"><path d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0 2c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm-5 6h10v2H7v-2zm2 4h6v2H9v-2z"/></svg>
+        </div>
+    </div>
     <footer>AIExplore 2K26 Organizing Committee • Systems & Tools</footer>
     <script>
     const numbersEl = document.getElementById('numbers');
@@ -146,17 +290,38 @@ AIExplore 2K26 Organizing Committee</textarea>
     const progressText = document.getElementById('progress-text');
     const batchInfo = document.getElementById('current-batch-info');
     const launchBtn = document.getElementById('launch-btn');
+    const botMessage = document.getElementById('bot-message');
     const linkListDiv = document.getElementById('link-list');
     let sentSet = new Set();
     let numbers = [];
 
+    function say(text, duration = 4000) {
+        botMessage.textContent = text;
+        botMessage.classList.add('active');
+        if (duration) {
+            setTimeout(() => {
+                if (botMessage.textContent === text) {
+                    botMessage.classList.remove('active');
+                }
+            }, duration);
+        }
+    }
+
+    function toggleBot() {
+        botMessage.classList.toggle('active');
+    }
+
     function init(){
         numbers = getNumbers();
         updateStats();
+        setTimeout(() => say("Welcome to the AIXplore Command Center! Paste your numbers to begin."), 1000);
+        
+        // Restore manual links if any (v1.0 compat)
+        if(localStorage.getItem('wa_msg')) messageEl.value = localStorage.getItem('wa_msg');
     }
 
     function getNumbers(){
-        return numbersEl.value.split('\n')
+        return numbersEl.value.trim().split('\n')
             .map(n=>n.trim().replace(/\D/g,''))
             .filter(n=>n.length>=10);
     }
@@ -172,45 +337,73 @@ AIExplore 2K26 Organizing Committee</textarea>
         const pct = total===0?0:Math.round(sent/total*100);
         progressFill.style.width = pct+'%';
         progressText.textContent = pct+'% Complete';
-        launchBtn.disabled = remaining===0;
-        launchBtn.textContent = remaining===0 ? 'All Sent! 🎉' : 'Launch Next Batch 🚀';
+        launchBtn.disabled = (remaining===0 && total > 0) || total === 0;
+        
+        if (total === 0) {
+            launchBtn.textContent = 'Awaiting Payload...';
+        } else if (remaining === 0) {
+            launchBtn.textContent = 'Mission Accomplished! 🎉';
+            say("All packets have been delivered. Excellent work!", 5000);
+        } else {
+            launchBtn.textContent = `Launch Next Batch (${Math.min(remaining, parseInt(document.getElementById('batch-size').value || 5))}) 🚀`;
+        }
     }
 
-    // Schedule opening of each link with a delay to avoid popup blockers
     function launchBatch(){
         const batchSize = parseInt(document.getElementById('batch-size').value) || 5;
         const msg = encodeURIComponent(messageEl.value);
         let opened = 0;
-        linkListDiv.innerHTML = '';
+        
+        say(`Initiating warp sequence... Opening ${batchSize} channels.`, 3000);
+        
+        if (!document.getElementById('link-grid')) {
+            linkListDiv.innerHTML = '<div class="link-grid" id="link-grid"></div>';
+        }
+        const grid = document.getElementById('link-grid');
+
         for(let i=0; i<numbers.length && opened<batchSize; i++){
             if(!sentSet.has(i)){
-                const url = `https://wa.me/${numbers[i]}?text=${msg}`;
-                // create visible link for user reference
+                const currentIdx = i;
+                // Using api.whatsapp.com for better pre-fill reliability
+                const url = `https://api.whatsapp.com/send?phone=${numbers[i]}&text=${msg}`;
+                
                 const a = document.createElement('a');
                 a.href = url;
                 a.target = '_blank';
-                a.textContent = `Chat ${opened+1}`;
-                a.style.display = 'inline-block';
-                a.style.margin = '4px';
-                linkListDiv.appendChild(a);
-                // schedule opening after a short delay
+                a.className = 'link-item';
+                a.innerHTML = `<span class="status-dot"></span>CHAT_${(currentIdx+1).toString().padStart(3, '0')}`;
+                grid.insertBefore(a, grid.firstChild);
+
                 setTimeout(() => {
-                    window.open(url, '_blank');
-                }, opened * 800); // 800 ms between each tab
-                sentSet.add(i);
+                    const win = window.open(url, '_blank');
+                    if (!win) {
+                        say("System Alert: Popup blocker detected! Please enable popups.", 5000);
+                    } else {
+                        say(`Channel ${(currentIdx+1)} open! Press Enter to send. Next in 5s...`, 4000);
+                        if (opened === batchSize - 1) {
+                            setTimeout(() => say("Batch sequence completed! Ready for next data stream. 🚀", 6000), 1000);
+                        }
+                    }
+                    a.classList.add('processed');
+                    sentSet.add(currentIdx);
+                    updateStats();
+                }, opened * 5000); // 5s delay for manual dispatching pace
+                
                 opened++;
             }
         }
-        batchInfo.textContent = opened ? `Scheduled ${opened} chats.` : 'No more numbers.';
-        updateStats();
+        
+        if (opened === 0) say("No more active targets in the list.");
+        batchInfo.textContent = `Dispatching Batch...`;
     }
 
     function resetApp(){
-        if(confirm('Clear all data?')){
+        if(confirm('Reset all systems? progress will be purged.')){
             numbersEl.value = '';
             sentSet.clear();
             updateStats();
-            linkListDiv.innerHTML = '';
+            linkListDiv.innerHTML = '<p style="color:var(--text-dim);font-size:.9rem;text-align:center;width:100%;padding:2rem;">Queue is empty. Systems ready.</p>';
+            say("Buffer cleared. Ready for next data stream.");
         }
     }
 
