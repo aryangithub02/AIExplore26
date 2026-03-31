@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIExplore 2K26 | Bulk WhatsApp Dispatcher</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --accent: #ff007c;
+            --bg: #0b0e14;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #e0e6ed;
+            --text-dim: #94a3b8;
+            --glass: rgba(15, 23, 42, 0.8);
+        }
+        * {margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif;}
+        body {background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;background-image:
+            radial-gradient(circle at 10% 20%,rgba(0,242,254,0.05)0%,transparent 40%),
+            radial-gradient(circle at 90% 80%,rgba(255,0,124,0.05)0%,transparent 40%);
+        }
+        header {padding:2rem;text-align:center;border-bottom:1px solid var(--border);background:var(--glass);backdrop-filter:blur(10px);position:sticky;top:0;z-index:100;}
+        h1 {font-size:2.5rem;font-weight:800;background:linear-gradient(to right,var(--primary),var(--secondary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;}
+        .badge {font-family:'JetBrains Mono',monospace;font-size:0.8rem;background:rgba(0,242,254,0.1);color:var(--primary);padding:4px 12px;border-radius:20px;border:1px solid rgba(0,242,254,0.2);text-transform:uppercase;display:inline-block;margin-top:0.5rem;}
+        main {max-width:1200px;width:95%;margin:3rem auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
+        @media(max-width:968px){main{grid-template-columns:1fr;}}
+        .card {background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:2rem;backdrop-filter:blur(5px);transition:transform .3s ease,border-color .3s ease;}
+        .card:hover{border-color:rgba(255,255,255,0.2);}
+        .card-title{font-size:1.25rem;font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;}
+        .card-title span{width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+        textarea{width:100%;height:300px;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:12px;padding:1rem;color:var(--text);font-size:.95rem;line-height:1.6;resize:none;outline:none;transition:border-color .3s;}
+        textarea:focus{border-color:var(--primary);}
+        .input-group{margin-bottom:1.5rem;}
+        label{display:block;margin-bottom:.5rem;font-size:.85rem;color:var(--text-dim);font-weight:500;}
+        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
+        .stat-box{background:rgba(0,0,0,0.2);padding:1rem;border-radius:16px;text-align:center;}
+        .stat-value{display:block;font-size:1.5rem;font-weight:800;color:var(--primary);}
+        .stat-label{font-size:.7rem;text-transform:uppercase;color:var(--text-dim);letter-spacing:1px;}
+        .btn{width:100%;padding:1rem;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);font-size:1rem;display:flex;align-items:center;justify-content:center;gap:.5rem;}
+        .btn-primary{background:linear-gradient(to right,var(--primary),var(--secondary));color:#000;box-shadow:0 4px 20px rgba(0,242,254,0.3);}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,242,254,0.4);}
+        .btn-primary:active{transform:scale(.98);}
+        .btn-secondary{background:transparent;border:1px solid var(--border);color:var(--text);margin-top:1rem;}
+        .btn-secondary:hover{background:rgba(255,255,255,0.05);}
+        .progress-container{margin-top:2rem;}
+        .progress-bar{height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;margin-bottom:.5rem;}
+        #progress-fill{height:100%;width:0%;background:linear-gradient(to right,var(--primary),var(--secondary));transition:width .5s ease;}
+        .batch-settings{display:flex;gap:1rem;margin-bottom:1.5rem;}
+        .batch-settings input{width:80px;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:.5rem;color:var(--text);text-align:center;}
+        .link-list{margin-top:1rem;display:flex;flex-wrap:wrap;}
+        .link-list a{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:0.5rem 1rem;margin:4px;color:var(--primary);text-decoration:none;transition:transform .2s;}
+        .link-list a:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,242,254,0.2);}
+        footer{margin-top:auto;padding:2rem;text-align:center;color:var(--text-dim);font-size:.85rem;}
+        .step-info{background:rgba(255,255,255,0.02);padding:1rem;border-radius:12px;margin-top:1.5rem;font-size:.85rem;border-left:3px solid var(--accent);}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+        .card{animation:fadeIn .6s ease-out forwards;}
+        .card:nth-child(2){animation-delay:.2s;}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AIExplore 2K26</h1>
+        <div class="badge">WhatsApp Bulk Dispatcher v1.0</div>
+    </header>
+    <main>
+        <section class="card">
+            <div class="card-title"><span>1</span> Configure Messages</div>
+            <div class="input-group">
+                <label for="numbers">Phone Numbers (one per line)</label>
+                <textarea id="numbers" placeholder="917058045278&#10;919359910468&#10;..."></textarea>
+            </div>
+            <div class="input-group">
+                <label for="message">Message Template</label>
+                <textarea id="message" style="height:200px;">Dear Team Head,
+
+Greetings from the AIExplore 2K26 Organizing Committee.
+
+We would like to inform you about important updates regarding the event structure and schedule.
+
+AIExplore 2K26 has been postponed and will now be conducted later this month. The revised dates will be announced shortly on the official Unstop page. We request all teams to regularly check the platform for updates.
+
+Round 1 (Online PPT Shortlisting Round) remains completely free for all participants. Only shortlisted teams will advance to Round 2.
+
+Round 2 will be the 24-hour offline hackathon. Participation in this final round will require a mandatory registration fee per team. The exact amount and payment details will be communicated only to shortlisted teams.
+
+We appreciate your cooperation and enthusiasm. Kindly ensure your team is prepared for the upcoming updates and submission deadlines.
+
+For any queries, please feel free to contact:
+
+Event Heads:
+Aditya Thakre – 7058045278
+Shubham Sharnagate – 9359910468
+
+Technical Head:
+Aryan Motghare – 7248955703
+
+Best regards,
+AIExplore 2K26 Organizing Committee</textarea>
+            </div>
+            <button class="btn btn-secondary" onclick="resetApp()">Reset All Fields</button>
+        </section>
+        <section class="card">
+            <div class="card-title"><span>2</span> Dispatcher Control</div>
+            <div class="stats">
+                <div class="stat-box"><span class="stat-value" id="stats-total">0</span><span class="stat-label">Total</span></div>
+                <div class="stat-box"><span class="stat-value" id="stats-sent">0</span><span class="stat-label">Sent</span></div>
+                <div class="stat-box"><span class="stat-value" id="stats-remaining">0</span><span class="stat-label">Remaining</span></div>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar"><div id="progress-fill"></div></div>
+                <div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--text-dim);">
+                    <span id="progress-text">0% Complete</span>
+                    <span id="current-batch-info">Ready to start</span>
+                </div>
+            </div>
+            <div style="margin:2rem 0;">
+                <label>Opening Batch Size</label>
+                <div class="batch-settings"><input type="number" id="batch-size" value="5" min="1" max="20"><p style="font-size:.85rem;color:var(--text-dim);line-height:1.4;">Select how many chats to open at once. Higher numbers might lag your browser.</p></div>
+            </div>
+            <button class="btn btn-primary" id="launch-btn" onclick="launchBatch()">Launch Next Batch 🚀</button>
+            <div class="step-info"><strong>How to use:</strong><ol style="margin-left:1.5rem;margin-top:.5rem;line-height:1.7;">
+                <li>Paste your clean phone numbers (include country code).</li>
+                <li>Click "Launch Next Batch".</li>
+                <li>Switch to WhatsApp, hit Enter, and return.</li>
+                <li>The tool tracks opened chats automatically.</li>
+            </ol></div>
+        </section>
+        <section class="card">
+            <div class="card-title"><span>3</span> Generated Links</div>
+            <div id="link-list" class="link-list"></div>
+        </section>
+    </main>
+    <footer>AIExplore 2K26 Organizing Committee • Systems & Tools</footer>
+    <script>
+    const numbersEl = document.getElementById('numbers');
+    const messageEl = document.getElementById('message');
+    const statsTotal = document.getElementById('stats-total');
+    const statsSent = document.getElementById('stats-sent');
+    const statsRemaining = document.getElementById('stats-remaining');
+    const progressFill = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-text');
+    const batchInfo = document.getElementById('current-batch-info');
+    const launchBtn = document.getElementById('launch-btn');
+    const linkListDiv = document.getElementById('link-list');
+    let sentSet = new Set();
+    let numbers = [];
+
+    function init(){
+        numbers = getNumbers();
+        updateStats();
+    }
+
+    function getNumbers(){
+        return numbersEl.value.split('\n')
+            .map(n=>n.trim().replace(/\D/g,''))
+            .filter(n=>n.length>=10);
+    }
+
+    function updateStats(){
+        numbers = getNumbers();
+        const total = numbers.length;
+        const sent = sentSet.size;
+        const remaining = total - sent;
+        statsTotal.textContent = total;
+        statsSent.textContent = sent;
+        statsRemaining.textContent = remaining;
+        const pct = total===0?0:Math.round(sent/total*100);
+        progressFill.style.width = pct+'%';
+        progressText.textContent = pct+'% Complete';
+        launchBtn.disabled = remaining===0;
+        launchBtn.textContent = remaining===0 ? 'All Sent! 🎉' : 'Launch Next Batch 🚀';
+    }
+
+    // Schedule opening of each link with a delay to avoid popup blockers
+    function launchBatch(){
+        const batchSize = parseInt(document.getElementById('batch-size').value) || 5;
+        const msg = encodeURIComponent(messageEl.value);
+        let opened = 0;
+        linkListDiv.innerHTML = '';
+        for(let i=0; i<numbers.length && opened<batchSize; i++){
+            if(!sentSet.has(i)){
+                const url = `https://wa.me/${numbers[i]}?text=${msg}`;
+                // create visible link for user reference
+                const a = document.createElement('a');
+                a.href = url;
+                a.target = '_blank';
+                a.textContent = `Chat ${opened+1}`;
+                a.style.display = 'inline-block';
+                a.style.margin = '4px';
+                linkListDiv.appendChild(a);
+                // schedule opening after a short delay
+                setTimeout(() => {
+                    window.open(url, '_blank');
+                }, opened * 800); // 800 ms between each tab
+                sentSet.add(i);
+                opened++;
+            }
+        }
+        batchInfo.textContent = opened ? `Scheduled ${opened} chats.` : 'No more numbers.';
+        updateStats();
+    }
+
+    function resetApp(){
+        if(confirm('Clear all data?')){
+            numbersEl.value = '';
+            sentSet.clear();
+            updateStats();
+            linkListDiv.innerHTML = '';
+        }
+    }
+
+    numbersEl.addEventListener('input',()=>{sentSet.clear();updateStats();});
+    messageEl.addEventListener('input',()=>{localStorage.setItem('wa_msg',messageEl.value);});
+    init();
+</script>
+</body>
+</html>
