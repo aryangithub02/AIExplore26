@@ -1332,7 +1332,7 @@
                     <td><strong style="color: var(--blue); font-size: 16px;">${t.score.toFixed(1)}</strong></td>
                     <td class="actions-cell">
                         <div class="icon-btn" style="color: #25D366;" onclick="whatsappTeam('${t.id}')" title="Send WhatsApp Message">
-                            <i class="fab fa-whatsapp"></i>
+                            <i class="fa-brands fa-whatsapp"></i>
                         </div>
                         <div class="icon-btn" style="color: ${t.isVerified ? 'var(--green)' : 'var(--text3)'};" onclick="toggleVerify('${t.id}')" title="${t.isVerified ? 'Unverify Team' : 'Verify Team'}">
                             <i class="fas fa-user-check"></i>
@@ -1503,18 +1503,29 @@
         }
 
         function whatsappTeam(id) {
-            const t = teams.find(x => x.id === id);
-            if (!t) return;
-            const leader = t.members.find(m => m.isLeader) || t.members[0];
-            if (!leader || !leader.phone) {
-                alert("Team leader phone number not found!");
-                return;
-            }
+            try {
+                const t = teams.find(x => x.id === id);
+                if (!t) {
+                    alert("Team not found in current view.");
+                    return;
+                }
+                
+                const leader = t.members.find(m => m.isLeader) || t.members[0];
+                if (!leader || !leader.phone) {
+                    alert(`Contact info missing for ${t.name}. Please ensure a team leader phone is present.`);
+                    return;
+                }
 
-            const phone = leader.phone.replace(/\D/g, '');
-            const formattedPhone = phone.length === 10 ? '91' + phone : phone;
+                // Ensure phone is a string and clean it
+                const phoneStr = String(leader.phone).replace(/\D/g, '');
+                if (phoneStr.length < 10) {
+                    alert(`Invalid phone number format: ${leader.phone}`);
+                    return;
+                }
 
-            const message = `Hi Team,
+                const formattedPhone = phoneStr.length === 10 ? '91' + phoneStr : phoneStr;
+
+                const message = `Hi Team,
 
 You have been shortlisted for Round 2 of AIXplore 2K26, but your registration is still pending.
 
@@ -1528,8 +1539,17 @@ If already done, please ignore this message.
 
 — Team AIXplore 2K26`;
 
-            const url = `https://api.whatsapp.com/send?phone=${formattedPhone}&text=${encodeURIComponent(message)}`;
-            window.open(url, '_blank');
+                const url = `https://api.whatsapp.com/send?phone=${formattedPhone}&text=${encodeURIComponent(message)}`;
+                
+                // Open in a new tab
+                const win = window.open(url, '_blank');
+                if (!win) {
+                    alert("Pop-up blocked! Please allow pop-ups for this dashboard to open WhatsApp.");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("An error occurred while launching WhatsApp dispatcher.");
+            }
         }
 
         function toggleVerify(id) {
