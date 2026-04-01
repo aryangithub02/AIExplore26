@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AIExplore 2K26 | Bulk WhatsApp Dispatcher</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary: #00f2fe;
@@ -19,47 +22,301 @@
             --text-dim: #94a3b8;
             --glass: rgba(15, 23, 42, 0.8);
         }
-        * {margin:0;padding:0;box-sizing:border-box;font-family:'Outfit',sans-serif;}
-        body {background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;background-image:
-            radial-gradient(circle at 10% 20%,rgba(0,242,254,0.05)0%,transparent 40%),
-            radial-gradient(circle at 90% 80%,rgba(255,0,124,0.05)0%,transparent 40%);
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
         }
-        header {padding:2rem;text-align:center;border-bottom:1px solid var(--border);background:var(--glass);backdrop-filter:blur(10px);position:sticky;top:0;z-index:100;}
-        h1 {font-size:2.5rem;font-weight:800;background:linear-gradient(to right,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;}
-        .badge {font-family:'JetBrains Mono',monospace;font-size:0.8rem;background:rgba(0,242,254,0.1);color:var(--primary);padding:4px 12px;border-radius:20px;border:1px solid rgba(0,242,254,0.2);text-transform:uppercase;display:inline-block;margin-top:0.5rem;}
-        main {max-width:1200px;width:95%;margin:3rem auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem;}
-        @media(max-width:968px){main{grid-template-columns:1fr;}}
-        .card {background:var(--card-bg);border:1px solid var(--border);border-radius:24px;padding:2rem;backdrop-filter:blur(5px);transition:transform .3s ease,border-color .3s ease;}
-        .card:hover{border-color:rgba(255,255,255,0.2);}
-        .card-title{font-size:1.25rem;font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;}
-        .card-title span{width:32px;height:32px;background:rgba(255,255,255,0.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;}
-        textarea{width:100%;height:300px;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:12px;padding:1rem;color:var(--text);font-size:.95rem;line-height:1.6;resize:none;outline:none;transition:border-color .3s;}
-        textarea:focus{border-color:var(--primary);}
-        .input-group{margin-bottom:1.5rem;}
-        label{display:block;margin-bottom:.5rem;font-size:.85rem;color:var(--text-dim);font-weight:500;}
-        .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:2rem;}
-        .stat-box{background:rgba(0,0,0,0.2);padding:1rem;border-radius:16px;text-align:center;}
-        .stat-value{display:block;font-size:1.5rem;font-weight:800;color:var(--primary);}
-        .stat-label{font-size:.7rem;text-transform:uppercase;color:var(--text-dim);letter-spacing:1px;}
-        .btn{width:100%;padding:1rem;border-radius:12px;border:none;font-weight:600;cursor:pointer;transition:all .3s cubic-bezier(.4,0,.2,1);font-size:1rem;display:flex;align-items:center;justify-content:center;gap:.5rem;}
-        .btn-primary{background:linear-gradient(to right,var(--primary),var(--secondary));color:#000;box-shadow:0 4px 20px rgba(0,242,254,0.3);}
-        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,242,254,0.4);}
-        .btn-primary:active{transform:scale(.98);}
-        .btn-secondary{background:transparent;border:1px solid var(--border);color:var(--text);margin-top:1rem;}
-        .btn-secondary:hover{background:rgba(255,255,255,0.05);}
-        .progress-container{margin-top:2rem;}
-        .progress-bar{height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;margin-bottom:.5rem;}
-        #progress-fill{height:100%;width:0%;background:linear-gradient(to right,var(--primary),var(--secondary));transition:width .5s ease;}
-        .batch-settings{display:flex;gap:1rem;margin-bottom:1.5rem;}
-        .batch-settings input{width:80px;background:rgba(0,0,0,0.3);border:1px solid var(--border);border-radius:8px;padding:.5rem;color:var(--text);text-align:center;}
-        .link-list{margin-top:1rem;display:flex;flex-wrap:wrap;}
-        .link-list a{background:var(--card-bg);border:1px solid var(--border);border-radius:8px;padding:0.5rem 1rem;margin:4px;color:var(--primary);text-decoration:none;transition:transform .2s;}
-        .link-list a:hover{transform:scale(1.05);box-shadow:0 4px 12px rgba(0,242,254,0.2);}
-        footer{margin-top:auto;padding:2rem;text-align:center;color:var(--text-dim);font-size:.85rem;}
-        .step-info{background:rgba(255,255,255,0.02);padding:1rem;border-radius:12px;margin-top:1.5rem;font-size:.85rem;border-left:3px solid var(--accent);}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-        .card{animation:fadeIn .6s ease-out forwards;}
-        .card:nth-child(2){animation-delay:.2s;}
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(0, 242, 254, 0.05)0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 124, 0.05)0%, transparent 40%);
+        }
+
+        header {
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            background: rgba(0, 242, 254, 0.1);
+            color: var(--primary);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            text-transform: uppercase;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        main {
+            max-width: 1200px;
+            width: 95%;
+            margin: 3rem auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media(max-width:968px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(5px);
+            transition: transform .3s ease, border-color .3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: .75rem;
+        }
+
+        .card-title span {
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        textarea {
+            width: 100%;
+            height: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--text);
+            font-size: .95rem;
+            line-height: 1.6;
+            resize: none;
+            outline: none;
+            transition: border-color .3s;
+        }
+
+        textarea:focus {
+            border-color: var(--primary);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: .5rem;
+            font-size: .85rem;
+            color: var(--text-dim);
+            font-weight: 500;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .stat-value {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: .7rem;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .3s cubic-bezier(.4, 0, .2, 1);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: .5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: #000;
+            box-shadow: 0 4px 20px rgba(0, 242, 254, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 242, 254, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: scale(.98);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            margin-top: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .progress-container {
+            margin-top: 2rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: .5rem;
+        }
+
+        #progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transition: width .5s ease;
+        }
+
+        .batch-settings {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .batch-settings input {
+            width: 80px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: .5rem;
+            color: var(--text);
+            text-align: center;
+        }
+
+        .link-list {
+            margin-top: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .link-list a {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            margin: 4px;
+            color: var(--primary);
+            text-decoration: none;
+            transition: transform .2s;
+        }
+
+        .link-list a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 242, 254, 0.2);
+        }
+
+        footer {
+            margin-top: auto;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: .85rem;
+        }
+
+        .step-info {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-top: 1.5rem;
+            font-size: .85rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeIn .6s ease-out forwards;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: .2s;
+        }
 
         /* Bot Assistant Styles */
         .bot-container {
@@ -73,13 +330,14 @@
             gap: 15px;
             pointer-events: none;
         }
+
         .bot-bubble {
             background: var(--glass);
             border: 1px solid var(--primary);
             padding: 1rem 1.5rem;
             border-radius: 20px 20px 0 20px;
             max-width: 280px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px rgba(0,242,254,0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 242, 254, 0.2);
             font-size: 0.9rem;
             line-height: 1.4;
             color: var(--text);
@@ -89,10 +347,12 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             pointer-events: auto;
         }
+
         .bot-bubble.active {
             opacity: 1;
             transform: translateY(0);
         }
+
         .bot-avatar {
             width: 60px;
             height: 60px;
@@ -101,21 +361,24 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 20px rgba(0,242,254,0.4);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
             cursor: pointer;
             pointer-events: auto;
             position: relative;
             overflow: hidden;
             transition: transform 0.3s;
         }
+
         .bot-avatar:hover {
             transform: scale(1.1) rotate(5deg);
         }
+
         .bot-avatar svg {
             width: 35px;
             height: 35px;
             fill: #000;
         }
+
         .bot-eye {
             position: absolute;
             width: 8px;
@@ -125,12 +388,28 @@
             top: 22px;
             animation: blink 4s infinite;
         }
-        .bot-eye.left { left: 18px; }
-        .bot-eye.right { right: 18px; }
-        @keyframes blink {
-            0%, 90%, 100% { transform: scaleY(1); }
-            95% { transform: scaleY(0.1); }
+
+        .bot-eye.left {
+            left: 18px;
         }
+
+        .bot-eye.right {
+            right: 18px;
+        }
+
+        @keyframes blink {
+
+            0%,
+            90%,
+            100% {
+                transform: scaleY(1);
+            }
+
+            95% {
+                transform: scaleY(0.1);
+            }
+        }
+
         .pulse {
             position: absolute;
             width: 100%;
@@ -140,9 +419,17 @@
             opacity: 0.5;
             animation: pulse-out 2s infinite;
         }
+
         @keyframes pulse-out {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.5); opacity: 0; }
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
         }
 
         /* Terminal Style for Links */
@@ -152,8 +439,9 @@
             gap: 12px;
             width: 100%;
         }
+
         .link-item {
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border);
             border-radius: 10px;
             padding: 12px;
@@ -169,17 +457,20 @@
             align-items: center;
             justify-content: center;
         }
+
         .link-item.processed {
             border-color: var(--primary);
             color: var(--primary);
-            background: rgba(0,242,254,0.05);
+            background: rgba(0, 242, 254, 0.05);
         }
+
         .link-item:hover {
             border-color: var(--secondary);
             color: #fff;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
         }
+
         .status-dot {
             width: 8px;
             height: 8px;
@@ -188,12 +479,14 @@
             display: inline-block;
             margin-right: 8px;
         }
+
         .processed .status-dot {
             background: var(--primary);
             box-shadow: 0 0 8px var(--primary);
         }
     </style>
 </head>
+
 <body>
     <header>
         <h1>AIExplore 2K26</h1>
@@ -239,12 +532,17 @@ AIExplore 2K26 Organizing Committee</textarea>
         <section class="card">
             <div class="card-title"><span>2</span> Dispatcher Control</div>
             <div class="stats">
-                <div class="stat-box"><span class="stat-value" id="stats-total">0</span><span class="stat-label">Total</span></div>
-                <div class="stat-box"><span class="stat-value" id="stats-sent">0</span><span class="stat-label">Sent</span></div>
-                <div class="stat-box"><span class="stat-value" id="stats-remaining">0</span><span class="stat-label">Remaining</span></div>
+                <div class="stat-box"><span class="stat-value" id="stats-total">0</span><span
+                        class="stat-label">Total</span></div>
+                <div class="stat-box"><span class="stat-value" id="stats-sent">0</span><span
+                        class="stat-label">Sent</span></div>
+                <div class="stat-box"><span class="stat-value" id="stats-remaining">0</span><span
+                        class="stat-label">Remaining</span></div>
             </div>
             <div class="progress-container">
-                <div class="progress-bar"><div id="progress-fill"></div></div>
+                <div class="progress-bar">
+                    <div id="progress-fill"></div>
+                </div>
                 <div style="display:flex;justify-content:space-between;font-size:.8rem;color:var(--text-dim);">
                     <span id="progress-text">0% Complete</span>
                     <span id="current-batch-info">Ready to start</span>
@@ -252,164 +550,175 @@ AIExplore 2K26 Organizing Committee</textarea>
             </div>
             <div style="margin:2rem 0;">
                 <label>Opening Batch Size</label>
-                <div class="batch-settings"><input type="number" id="batch-size" value="5" min="1" max="20"><p style="font-size:.85rem;color:var(--text-dim);line-height:1.4;">Select how many chats to open at once. Higher numbers might lag your browser.</p></div>
+                <div class="batch-settings"><input type="number" id="batch-size" value="5" min="1" max="20">
+                    <p style="font-size:.85rem;color:var(--text-dim);line-height:1.4;">Select how many chats to open at
+                        once. Higher numbers might lag your browser.</p>
+                </div>
             </div>
             <button class="btn btn-primary" id="launch-btn" onclick="launchBatch()">Launch Next Batch 🚀</button>
-            <div class="step-info"><strong>System Protocol:</strong><ol style="margin-left:1.5rem;margin-top:.5rem;line-height:1.7;">
-                <li>The bot opens the chat with your message pre-filled.</li>
-                <li>For security, **you must press Enter** in each tab to send.</li>
-                <li>**Pro Tip:** Use `Enter` then `Ctrl+W` to send and close fast!</li>
-                <li>Keep the tab batch size low (5-8) to avoid system lag.</li>
-            </ol></div>
+            <div class="step-info"><strong>System Protocol:</strong>
+                <ol style="margin-left:1.5rem;margin-top:.5rem;line-height:1.7;">
+                    <li>The bot opens the chat with your message pre-filled.</li>
+                    <li>For security, **you must press Enter** in each tab to send.</li>
+                    <li>**Pro Tip:** Use `Enter` then `Ctrl+W` to send and close fast!</li>
+                    <li>Keep the tab batch size low (5-8) to avoid system lag.</li>
+                </ol>
+            </div>
         </section>
         <section class="card">
             <div class="card-title"><span>3</span> Dispatcher Queue</div>
             <div id="link-list" class="link-list">
-                <p style="color:var(--text-dim);font-size:.9rem;text-align:center;width:100%;padding:2rem;">Queue is empty. Systems ready.</p>
+                <p style="color:var(--text-dim);font-size:.9rem;text-align:center;width:100%;padding:2rem;">Queue is
+                    empty. Systems ready.</p>
             </div>
         </section>
     </main>
 
     <div class="bot-container">
-        <div class="bot-bubble" id="bot-message">Hello! I'm your AI Dispatcher. Ready to help you reach out to participants?</div>
+        <div class="bot-bubble" id="bot-message">Hello! I'm your AI Dispatcher. Ready to help you reach out to
+            participants?</div>
         <div class="bot-avatar" onclick="toggleBot()">
             <div class="pulse"></div>
             <div class="bot-eye left"></div>
             <div class="bot-eye right"></div>
-            <svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:#000;"><path d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0 2c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm-5 6h10v2H7v-2zm2 4h6v2H9v-2z"/></svg>
+            <svg viewBox="0 0 24 24" style="width:28px;height:28px;fill:#000;">
+                <path
+                    d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zm0 2c-4.42 0-8 3.58-8 8s3.58 8 8 8 8-3.58 8-8-3.58-8-8-8zm-5 6h10v2H7v-2zm2 4h6v2H9v-2z" />
+            </svg>
         </div>
     </div>
     <footer>AIExplore 2K26 Organizing Committee • Systems & Tools</footer>
     <script>
-    const numbersEl = document.getElementById('numbers');
-    const messageEl = document.getElementById('message');
-    const statsTotal = document.getElementById('stats-total');
-    const statsSent = document.getElementById('stats-sent');
-    const statsRemaining = document.getElementById('stats-remaining');
-    const progressFill = document.getElementById('progress-fill');
-    const progressText = document.getElementById('progress-text');
-    const batchInfo = document.getElementById('current-batch-info');
-    const launchBtn = document.getElementById('launch-btn');
-    const botMessage = document.getElementById('bot-message');
-    const linkListDiv = document.getElementById('link-list');
-    let sentSet = new Set();
-    let numbers = [];
+        const numbersEl = document.getElementById('numbers');
+        const messageEl = document.getElementById('message');
+        const statsTotal = document.getElementById('stats-total');
+        const statsSent = document.getElementById('stats-sent');
+        const statsRemaining = document.getElementById('stats-remaining');
+        const progressFill = document.getElementById('progress-fill');
+        const progressText = document.getElementById('progress-text');
+        const batchInfo = document.getElementById('current-batch-info');
+        const launchBtn = document.getElementById('launch-btn');
+        const botMessage = document.getElementById('bot-message');
+        const linkListDiv = document.getElementById('link-list');
+        let sentSet = new Set();
+        let numbers = [];
 
-    function say(text, duration = 4000) {
-        botMessage.textContent = text;
-        botMessage.classList.add('active');
-        if (duration) {
-            setTimeout(() => {
-                if (botMessage.textContent === text) {
-                    botMessage.classList.remove('active');
-                }
-            }, duration);
-        }
-    }
-
-    function toggleBot() {
-        botMessage.classList.toggle('active');
-    }
-
-    function init(){
-        numbers = getNumbers();
-        updateStats();
-        setTimeout(() => say("Welcome to the AIXplore Command Center! Paste your numbers to begin."), 1000);
-        
-        // Restore manual links if any (v1.0 compat)
-        if(localStorage.getItem('wa_msg')) messageEl.value = localStorage.getItem('wa_msg');
-    }
-
-    function getNumbers(){
-        return numbersEl.value.trim().split('\n')
-            .map(n=>n.trim().replace(/\D/g,''))
-            .filter(n=>n.length>=10);
-    }
-
-    function updateStats(){
-        numbers = getNumbers();
-        const total = numbers.length;
-        const sent = sentSet.size;
-        const remaining = total - sent;
-        statsTotal.textContent = total;
-        statsSent.textContent = sent;
-        statsRemaining.textContent = remaining;
-        const pct = total===0?0:Math.round(sent/total*100);
-        progressFill.style.width = pct+'%';
-        progressText.textContent = pct+'% Complete';
-        launchBtn.disabled = (remaining===0 && total > 0) || total === 0;
-        
-        if (total === 0) {
-            launchBtn.textContent = 'Awaiting Payload...';
-        } else if (remaining === 0) {
-            launchBtn.textContent = 'Mission Accomplished! 🎉';
-            say("All packets have been delivered. Excellent work!", 5000);
-        } else {
-            launchBtn.textContent = `Launch Next Batch (${Math.min(remaining, parseInt(document.getElementById('batch-size').value || 5))}) 🚀`;
-        }
-    }
-
-    function launchBatch(){
-        const batchSize = parseInt(document.getElementById('batch-size').value) || 5;
-        const msg = encodeURIComponent(messageEl.value);
-        let opened = 0;
-        
-        say(`Initiating warp sequence... Opening ${batchSize} channels.`, 3000);
-        
-        if (!document.getElementById('link-grid')) {
-            linkListDiv.innerHTML = '<div class="link-grid" id="link-grid"></div>';
-        }
-        const grid = document.getElementById('link-grid');
-
-        for(let i=0; i<numbers.length && opened<batchSize; i++){
-            if(!sentSet.has(i)){
-                const currentIdx = i;
-                // Using api.whatsapp.com for better pre-fill reliability
-                const url = `https://api.whatsapp.com/send?phone=${numbers[i]}&text=${msg}`;
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.target = '_blank';
-                a.className = 'link-item';
-                a.innerHTML = `<span class="status-dot"></span>CHAT_${(currentIdx+1).toString().padStart(3, '0')}`;
-                grid.insertBefore(a, grid.firstChild);
-
+        function say(text, duration = 4000) {
+            botMessage.textContent = text;
+            botMessage.classList.add('active');
+            if (duration) {
                 setTimeout(() => {
-                    const win = window.open(url, '_blank');
-                    if (!win) {
-                        say("System Alert: Popup blocker detected! Please enable popups.", 5000);
-                    } else {
-                        say(`Channel ${(currentIdx+1)} open! Press Enter to send. Next in 5s...`, 4000);
-                        if (opened === batchSize - 1) {
-                            setTimeout(() => say("Batch sequence completed! Ready for next data stream. 🚀", 6000), 1000);
-                        }
+                    if (botMessage.textContent === text) {
+                        botMessage.classList.remove('active');
                     }
-                    a.classList.add('processed');
-                    sentSet.add(currentIdx);
-                    updateStats();
-                }, opened * 5000); // 5s delay for manual dispatching pace
-                
-                opened++;
+                }, duration);
             }
         }
-        
-        if (opened === 0) say("No more active targets in the list.");
-        batchInfo.textContent = `Dispatching Batch...`;
-    }
 
-    function resetApp(){
-        if(confirm('Reset all systems? progress will be purged.')){
-            numbersEl.value = '';
-            sentSet.clear();
-            updateStats();
-            linkListDiv.innerHTML = '<p style="color:var(--text-dim);font-size:.9rem;text-align:center;width:100%;padding:2rem;">Queue is empty. Systems ready.</p>';
-            say("Buffer cleared. Ready for next data stream.");
+        function toggleBot() {
+            botMessage.classList.toggle('active');
         }
-    }
 
-    numbersEl.addEventListener('input',()=>{sentSet.clear();updateStats();});
-    messageEl.addEventListener('input',()=>{localStorage.setItem('wa_msg',messageEl.value);});
-    init();
-</script>
+        function init() {
+            numbers = getNumbers();
+            updateStats();
+            setTimeout(() => say("Welcome to the AIXplore Command Center! Paste your numbers to begin."), 1000);
+
+            // Restore manual links if any (v1.0 compat)
+            if (localStorage.getItem('wa_msg')) messageEl.value = localStorage.getItem('wa_msg');
+        }
+
+        function getNumbers() {
+            return numbersEl.value.trim().split('\n')
+                .map(n => n.trim().replace(/\D/g, ''))
+                .filter(n => n.length >= 10);
+        }
+
+        function updateStats() {
+            numbers = getNumbers();
+            const total = numbers.length;
+            const sent = sentSet.size;
+            const remaining = total - sent;
+            statsTotal.textContent = total;
+            statsSent.textContent = sent;
+            statsRemaining.textContent = remaining;
+            const pct = total === 0 ? 0 : Math.round(sent / total * 100);
+            progressFill.style.width = pct + '%';
+            progressText.textContent = pct + '% Complete';
+            launchBtn.disabled = (remaining === 0 && total > 0) || total === 0;
+
+            if (total === 0) {
+                launchBtn.textContent = 'Awaiting Payload...';
+            } else if (remaining === 0) {
+                launchBtn.textContent = 'Mission Accomplished! 🎉';
+                say("All packets have been delivered. Excellent work!", 5000);
+            } else {
+                launchBtn.textContent = `Launch Next Batch (${Math.min(remaining, parseInt(document.getElementById('batch-size').value || 5))}) 🚀`;
+            }
+        }
+
+        function launchBatch() {
+            const batchSize = parseInt(document.getElementById('batch-size').value) || 5;
+            const msg = encodeURIComponent(messageEl.value);
+            let opened = 0;
+
+            say(`Initiating warp sequence... Opening ${batchSize} channels.`, 3000);
+
+            if (!document.getElementById('link-grid')) {
+                linkListDiv.innerHTML = '<div class="link-grid" id="link-grid"></div>';
+            }
+            const grid = document.getElementById('link-grid');
+
+            for (let i = 0; i < numbers.length && opened < batchSize; i++) {
+                if (!sentSet.has(i)) {
+                    const currentIdx = i;
+                    // Using api.whatsapp.com for better pre-fill reliability
+                    const url = `https://api.whatsapp.com/send?phone=${numbers[i]}&text=${msg}`;
+
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.target = '_blank';
+                    a.className = 'link-item';
+                    a.innerHTML = `<span class="status-dot"></span>CHAT_${(currentIdx + 1).toString().padStart(3, '0')}`;
+                    grid.insertBefore(a, grid.firstChild);
+
+                    setTimeout(() => {
+                        const win = window.open(url, '_blank');
+                        if (!win) {
+                            say("System Alert: Popup blocker detected! Please enable popups.", 5000);
+                        } else {
+                            say(`Channel ${(currentIdx + 1)} open! Press Enter to send. Next in 5s...`, 4000);
+                            if (opened === batchSize - 1) {
+                                setTimeout(() => say("Batch sequence completed! Ready for next data stream. 🚀", 6000), 1000);
+                            }
+                        }
+                        a.classList.add('processed');
+                        sentSet.add(currentIdx);
+                        updateStats();
+                    }, opened * 5000); // 5s delay for manual dispatching pace
+
+                    opened++;
+                }
+            }
+
+            if (opened === 0) say("No more active targets in the list.");
+            batchInfo.textContent = `Dispatching Batch...`;
+        }
+
+        function resetApp() {
+            if (confirm('Reset all systems? progress will be purged.')) {
+                numbersEl.value = '';
+                sentSet.clear();
+                updateStats();
+                linkListDiv.innerHTML = '<p style="color:var(--text-dim);font-size:.9rem;text-align:center;width:100%;padding:2rem;">Queue is empty. Systems ready.</p>';
+                say("Buffer cleared. Ready for next data stream.");
+            }
+        }
+
+        numbersEl.addEventListener('input', () => { sentSet.clear(); updateStats(); });
+        messageEl.addEventListener('input', () => { localStorage.setItem('wa_msg', messageEl.value); });
+        init();
+    </script>
 </body>
+
 </html>

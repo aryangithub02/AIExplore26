@@ -107,7 +107,7 @@
         .sidebar-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(4px);
             z-index: 999;
             display: none;
@@ -194,7 +194,7 @@
             justify-content: center;
             color: white;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .top-row {
@@ -457,36 +457,113 @@
 
         /* ========== RESPONSIVENESS ========== */
         @media (max-width: 1100px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 1024px) {
-            .sidebar { transform: translateX(-100%); }
-            .main-content { margin-left: 0; padding: 80px 20px 40px 20px; }
-            .menu-toggle { display: flex; }
-            .top-row { flex-direction: column; align-items: flex-start; gap: 20px; }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 80px 20px 40px 20px;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .top-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
         }
 
         @media (max-width: 768px) {
-            .toolbar { flex-direction: column; }
-            .search-container { width: 100%; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .modal-container { border-radius: 0; height: 100vh; max-height: 100vh; }
-            .member-info-grid { grid-template-columns: 1fr !important; }
-            .table-wrap { overflow-x: auto; }
-            table { min-width: 700px; }
-            .stat-info .value { font-size: 22px; }
-            .analytics-grid { grid-template-columns: 1fr !important; }
-            .top-row { margin-bottom: 25px; }
-            .page-title h1 { font-size: 24px; }
-            
+            .toolbar {
+                flex-direction: column;
+            }
+
+            .search-container {
+                width: 100%;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-container {
+                border-radius: 0;
+                height: 100vh;
+                max-height: 100vh;
+            }
+
+            .member-info-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .table-wrap {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 700px;
+            }
+
+            .stat-info .value {
+                font-size: 22px;
+            }
+
+            .analytics-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .top-row {
+                margin-bottom: 25px;
+            }
+
+            .page-title h1 {
+                font-size: 24px;
+            }
+
             /* Profile View Specifics (Mobile Force Reduction) */
-            .dash-top { padding: 20px !important; }
-            .dash-team-title { font-size: 20px !important; letter-spacing: -0.5px !important; line-height: 1 !important; margin-bottom: 15px !important; }
-            .dash-team-meta { flex-direction: column !important; gap: 6px !important; font-size: 12px !important; }
-            .dash-body { padding: 20px !important; }
-            .member-detail-card { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; padding: 20px !important; }
-            .member-avatar { width: 40px !important; height: 40px !important; font-size: 14px !important; }
+            .dash-top {
+                padding: 20px !important;
+            }
+
+            .dash-team-title {
+                font-size: 20px !important;
+                letter-spacing: -0.5px !important;
+                line-height: 1 !important;
+                margin-bottom: 15px !important;
+            }
+
+            .dash-team-meta {
+                flex-direction: column !important;
+                gap: 6px !important;
+                font-size: 12px !important;
+            }
+
+            .dash-body {
+                padding: 20px !important;
+            }
+
+            .member-detail-card {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 16px !important;
+                padding: 20px !important;
+            }
+
+            .member-avatar {
+                width: 40px !important;
+                height: 40px !important;
+                font-size: 14px !important;
+            }
         }
 
         .modal-header {
@@ -552,8 +629,13 @@
             gap: 20px;
         }
 
-        .field-grid.two { grid-template-columns: repeat(2, 1fr); }
-        .field-grid.three { grid-template-columns: repeat(3, 1fr); }
+        .field-grid.two {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .field-grid.three {
+            grid-template-columns: repeat(3, 1fr);
+        }
 
         .field-group {
             display: flex;
@@ -570,7 +652,7 @@
             letter-spacing: 1px;
         }
 
-        .field-group input, 
+        .field-group input,
         .field-group select {
             background: var(--bg);
             border: 1px solid var(--border);
@@ -582,7 +664,9 @@
             transition: 0.2s;
         }
 
-        .field-group input:focus { border-color: var(--blue); }
+        .field-group input:focus {
+            border-color: var(--blue);
+        }
 
         .form-member-card {
             background: var(--card);
@@ -603,7 +687,9 @@
             transition: 0.2s;
         }
 
-        .form-member-card .remove-btn:hover { opacity: 1; }
+        .form-member-card .remove-btn:hover {
+            opacity: 1;
+        }
 
         /* Detail Cards (View Mode) */
         .member-detail-card {
@@ -628,7 +714,7 @@
             font-weight: 800;
             color: white;
             flex-shrink: 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
         }
 
         .m-info-item label {
@@ -640,7 +726,10 @@
             margin-bottom: 4px;
         }
 
-        .m-info-item span { font-size: 14px; font-weight: 500; }
+        .m-info-item span {
+            font-size: 14px;
+            font-weight: 500;
+        }
 
         /* App-specific glassmorphism bits */
         .dash-top {
@@ -760,7 +849,8 @@
                 <img src="aiexplore_logo_transparent_1771861055747.png" height="36" alt="Logo">
                 <span style="font-family: var(--display); font-weight: 800; font-size: 20px;">AX26 CORE</span>
             </div>
-            <div class="menu-toggle-inner" style="display: none; cursor: pointer; color: var(--text3);" onclick="toggleSidebar()">
+            <div class="menu-toggle-inner" style="display: none; cursor: pointer; color: var(--text3);"
+                onclick="toggleSidebar()">
                 <i class="fas fa-times"></i>
             </div>
         </div>
@@ -770,10 +860,15 @@
             <a href="#" class="nav-item" onclick="switchView('analytics', this)"><i class="fas fa-chart-line"></i>
                 Analytics Overview</a>
             <a href="#" class="nav-item" onclick="exportMasterCSV()"><i class="fas fa-file-export"></i> Local Export</a>
-            <a href="#" class="nav-item" onclick="fetchInitialJSON()"><i class="fas fa-rotate" style="color: var(--yellow);"></i> Refresh from Sheets</a>
-            <a href="https://docs.google.com/spreadsheets/d/1Ia9yYL4e-IlfU3H4N-SdyqCA0bDpZ35lO_JC_UE4aXk" target="_blank" class="nav-item"><i class="fas fa-file-excel" style="color: #0F9D58;"></i> Open Manager Sheet</a>
+            <a href="#" class="nav-item" onclick="fetchInitialJSON()"><i class="fas fa-rotate"
+                    style="color: var(--yellow);"></i> Refresh from Sheets</a>
+            <a href="https://docs.google.com/spreadsheets/d/1Ia9yYL4e-IlfU3H4N-SdyqCA0bDpZ35lO_JC_UE4aXk"
+                target="_blank" class="nav-item"><i class="fas fa-file-excel" style="color: #0F9D58;"></i> Open Manager
+                Sheet</a>
 
-            <div style="margin: 30px 0 10px 16px; font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 2px; font-weight: 800;">Real-time Sync</div>
+            <div
+                style="margin: 30px 0 10px 16px; font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 2px; font-weight: 800;">
+                Real-time Sync</div>
             <div id="syncStatus" class="sync-badge sync-offline">
                 <div style="width: 8px; height: 8px; border-radius: 50%; background: currentColor;"></div>
                 <span id="syncText">Connecting Sheets...</span>
@@ -968,7 +1063,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="submit" form="deploymentForm" class="btn btn-primary" style="flex: 1; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);">Save Configuration</button>
+                <button type="submit" form="deploymentForm" class="btn btn-primary"
+                    style="flex: 1; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);">Save Configuration</button>
                 <button type="button" class="btn btn-secondary" onclick="closeModal()">Dismiss</button>
             </div>
         </div>
@@ -986,21 +1082,28 @@
             <div class="dash-view active" style="overflow-y: auto; flex: 1; display: flex; flex-direction: column;">
                 <div class="dash-top">
                     <div id="vStatusPill" class="status-pill pill-in-progress"
-                        style="width: fit-content; margin-bottom: 24px; padding: 6px 16px; font-size: 12px;">IN-PROGRESS</div>
+                        style="width: fit-content; margin-bottom: 24px; padding: 6px 16px; font-size: 12px;">IN-PROGRESS
+                    </div>
                     <h2 class="dash-team-title" id="vTeamName">Team Name</h2>
                     <div class="dash-team-meta">
-                        <span><i class="fas fa-fingerprint" style="color: var(--blue); margin-right: 8px;"></i> ID: <strong id="vTeamId" style="color: white;">AX-000</strong></span>
-                        <span><i class="fas fa-star" style="color: var(--yellow); margin-right: 8px;"></i> R1 Score: <strong id="vScore" style="color: white;">0.0</strong></span>
-                        <span><i class="fas fa-users" style="color: var(--purple); margin-right: 8px;"></i> Size: <strong id="vSize" style="color: white;">0</strong></span>
+                        <span><i class="fas fa-fingerprint" style="color: var(--blue); margin-right: 8px;"></i> ID:
+                            <strong id="vTeamId" style="color: white;">AX-000</strong></span>
+                        <span><i class="fas fa-star" style="color: var(--yellow); margin-right: 8px;"></i> R1 Score:
+                            <strong id="vScore" style="color: white;">0.0</strong></span>
+                        <span><i class="fas fa-users" style="color: var(--purple); margin-right: 8px;"></i> Size:
+                            <strong id="vSize" style="color: white;">0</strong></span>
                     </div>
                 </div>
 
                 <div class="dash-body">
                     <div style="margin-bottom: 40px;">
                         <div class="form-section-head"><i class="fas fa-building"></i> Primary Institution</div>
-                        <div style="background: var(--card); border: 1px solid var(--border); padding: 32px; border-radius: 24px;">
-                            <h3 id="vCollege" style="font-family: var(--display); font-size: 22px; margin-bottom: 8px;">Suryodaya College</h3>
-                            <div id="vAddress" style="color: var(--text3); font-size: 14px;"><i class="fas fa-location-dot"></i> Nagpur, MH</div>
+                        <div
+                            style="background: var(--card); border: 1px solid var(--border); padding: 32px; border-radius: 24px;">
+                            <h3 id="vCollege" style="font-family: var(--display); font-size: 22px; margin-bottom: 8px;">
+                                Suryodaya College</h3>
+                            <div id="vAddress" style="color: var(--text3); font-size: 14px;"><i
+                                    class="fas fa-location-dot"></i> Nagpur, MH</div>
                         </div>
                     </div>
 
@@ -1025,7 +1128,11 @@
             justify-content: center;
             padding: 20px;
         }
-        .modal.active { display: flex; }
+
+        .modal.active {
+            display: flex;
+        }
+
         .modal-container {
             width: 100%;
             max-width: 960px;
@@ -1039,9 +1146,17 @@
             overflow: hidden;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
         }
+
         @media (max-width: 768px) {
-            .modal { padding: 0; }
-            .modal-container { border-radius: 0; height: 100vh; max-height: 100vh; }
+            .modal {
+                padding: 0;
+            }
+
+            .modal-container {
+                border-radius: 0;
+                height: 100vh;
+                max-height: 100vh;
+            }
         }
     </style>
 
@@ -1089,10 +1204,10 @@
             document.getElementById('mode-sheets').classList.toggle('active-mode', mode === 'sheets');
             document.getElementById('mode-cloud').classList.toggle('active-mode', mode === 'cloud');
             document.getElementById('mode-local').classList.toggle('active-mode', mode === 'local');
-            
+
             const displayUrl = mode === 'sheets' ? 'Google Sheets DB' : API_BASE.replace('https://', '').replace('http://', '');
             document.getElementById('syncEndpoint').innerText = 'Target: ' + displayUrl;
-            
+
             saveBoard();
         }
 
@@ -1101,22 +1216,22 @@
         async function fetchInitialJSON() {
             const statusBadge = document.getElementById('syncStatus');
             const statusText = document.getElementById('syncText');
-            
+
             try {
                 const response = await fetch(SHEETS_API);
                 if (!response.ok) throw new Error();
                 let rawTeams = await response.json();
-                
+
                 // AUTO-CALC ACADEMIC YEAR IF MISSING
                 const currentYear = 2025; // Base year for hackathon
-                
+
                 // Fallback Verified List (if API is stale)
-                const verifiedP = ["9545300989","8600487598","7263842962","8237833808","7387394801","8010945450","7768820280","8767859749","9359211306","9322893263","8087789959","9860767429","9307113617","9322767525","8080595054","8605468557","9529721212","8329423722","9096560097","9322154832"];
+                const verifiedP = ["9545300989", "8600487598", "7263842962", "8237833808", "7387394801", "8010945450", "7768820280", "8767859749", "9359211306", "9322893263", "8087789959", "9860767429", "9307113617", "9322767525", "8080595054", "8605468557", "9529721212", "8329423722", "9096560097", "9322154832"];
                 const cleanPhone = p => String(p).replace(/\D/g, '').slice(-10);
 
                 teams = rawTeams.map(t => {
                     let teamVerified = typeof t.isVerified === 'boolean' ? t.isVerified : false;
-                    
+
                     const mlist = t.members.map(m => {
                         if (!m.year || m.year === '-') {
                             const grad = parseInt(m.gradYear) || 0;
@@ -1130,7 +1245,7 @@
                         }
                         return m;
                     });
-                    
+
                     // Safe Fallback: if API failed to parse isVerified, compute it locally
                     if (typeof t.isVerified !== 'boolean') {
                         const leader = mlist.find(x => x.isLeader) || mlist[0];
@@ -1138,13 +1253,13 @@
                             teamVerified = true;
                         }
                     }
-                    
+
                     return { ...t, members: mlist, isVerified: teamVerified };
                 });
-                
+
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(teams));
                 renderBoard();
-                
+
                 statusBadge.className = 'sync-badge sync-online';
                 statusText.innerText = 'Sheets Connected';
             } catch (err) {
@@ -1172,7 +1287,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(teams)
                 });
-                
+
                 statusBadge.className = 'sync-badge sync-online';
                 statusText.innerText = 'Changes Saved';
             } catch (err) {
@@ -1192,7 +1307,7 @@
                 let vMatch = true;
                 if (verified === 'verified') vMatch = t.isVerified;
                 if (verified === 'unverified') vMatch = !t.isVerified;
-                
+
                 return m && st && vMatch;
             });
 
@@ -1213,11 +1328,17 @@
                     </td>
                     <td><i class="fas fa-users"></i> ${t.members.length}</td>
                     <td><span class="status-pill ${t.status === 'Complete' ? 'pill-complete' : 'pill-in-progress'}">${t.status}</span></td>
-                    <td><span class="status-pill ${t.isVerified ? 'pill-complete' : ''}" style="${!t.isVerified ? 'background: rgba(255,255,255,0.05); color: var(--text3); border: 1px solid var(--border);' : ''}">${t.isVerified ? '<i class="fas fa-check-circle"></i> YES' : 'NO'}</span></td>
+                    <td><span class="status-pill ${t.isVerified ? 'pill-complete' : ''}" onclick="toggleVerify('${t.id}')" style="cursor: pointer; ${!t.isVerified ? 'background: rgba(255,255,255,0.05); color: var(--text3); border: 1px solid var(--border);' : ''}">${t.isVerified ? '<i class="fas fa-check-circle"></i> YES' : 'NO'}</span></td>
                     <td><strong style="color: var(--blue); font-size: 16px;">${t.score.toFixed(1)}</strong></td>
                     <td class="actions-cell">
-                        <div class="icon-btn" onclick="viewTeam('${t.id}')"><i class="fas fa-eye"></i></div>
-                        <div class="icon-btn edit" onclick="editTeamForm('${t.id}')"><i class="fas fa-pen"></i></div>
+                        <div class="icon-btn" style="color: #25D366;" onclick="whatsappTeam('${t.id}')" title="Send WhatsApp Message">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="icon-btn" style="color: ${t.isVerified ? 'var(--green)' : 'var(--text3)'};" onclick="toggleVerify('${t.id}')" title="${t.isVerified ? 'Unverify Team' : 'Verify Team'}">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div class="icon-btn" onclick="viewTeam('${t.id}')" title="View Details"><i class="fas fa-eye"></i></div>
+                        <div class="icon-btn edit" onclick="editTeamForm('${t.id}')" title="Edit Team"><i class="fas fa-pen"></i></div>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -1231,7 +1352,7 @@
             document.getElementById('stat-verified').innerText = data.filter(t => t.isVerified).length;
             const avg = data.length ? (data.reduce((a, b) => a + b.score, 0) / data.length).toFixed(1) : '0.0';
             document.getElementById('stat-avg').innerText = avg;
-            
+
             // Store stats for analytics export
             window.currentStats = {
                 teams: data.length,
@@ -1339,11 +1460,11 @@
             document.getElementById('vSize').innerText = t.members.length;
             document.getElementById('vCollege').innerText = leader?.college || 'Unknown Institution';
             document.getElementById('vAddress').innerText = leader?.address || 'Unknown Location';
-            
+
             const pill = document.getElementById('vStatusPill');
             pill.innerText = t.status.toUpperCase();
             pill.className = `status-pill pill-${t.status === 'Complete' ? 'complete' : 'in-progress'}`;
-            
+
             // Just quickly patch vStatusPill area with a Verified badge if needed:
             if (t.isVerified) {
                 pill.innerText += " • VERIFIED";
@@ -1380,6 +1501,45 @@
                 saveBoard(); renderBoard();
             }
         }
+
+        function whatsappTeam(id) {
+            const t = teams.find(x => x.id === id);
+            if (!t) return;
+            const leader = t.members.find(m => m.isLeader) || t.members[0];
+            if (!leader || !leader.phone) {
+                alert("Team leader phone number not found!");
+                return;
+            }
+
+            const phone = leader.phone.replace(/\D/g, '');
+            const formattedPhone = phone.length === 10 ? '91' + phone : phone;
+
+            const message = `Hi Team,
+
+You have been shortlisted for Round 2 of AIXplore 2K26, but your registration is still pending.
+
+⚠️ To confirm your participation in the final round, please fill the form below:
+
+👉 https://forms.gle/f92qKnqaHTwZzYGV7
+
+🚨 Only teams who complete the form will be allowed to participate in the 24-hour hackathon. Limited slots available.
+
+If already done, please ignore this message.
+
+— Team AIXplore 2K26`;
+
+            const url = `https://api.whatsapp.com/send?phone=${formattedPhone}&text=${encodeURIComponent(message)}`;
+            window.open(url, '_blank');
+        }
+
+        function toggleVerify(id) {
+            const t = teams.find(x => x.id === id);
+            if (!t) return;
+            t.isVerified = !t.isVerified;
+            saveBoard();
+            renderBoard(document.getElementById('masterSearch').value, document.getElementById('statusFilter').value, document.getElementById('verifiedFilter').value);
+        }
+
         function closeModal() {
             document.getElementById('formModal').classList.remove('active');
             document.getElementById('viewModal').classList.remove('active');
@@ -1408,12 +1568,12 @@
 
         function exportAnalyticsCSV() {
             if (!window.currentStats) return;
-            
+
             const pData = teams.flatMap(t => t.members);
             const colleges = {};
             const depts = {};
             const years = {};
-            
+
             pData.forEach(m => {
                 const c = getCanonicalCollegeName(m.college);
                 colleges[c] = (colleges[c] || 0) + 1;
@@ -1430,12 +1590,12 @@
             csvContent += `Average Selection Score,${window.currentStats.avgScore}\n\n`;
 
             csvContent += "COLLEGE DISTRIBUTION (Nagpur Region)\n";
-            Object.entries(colleges).sort((a,b)=>b[1]-a[1]).forEach(([k,v]) => {
+            Object.entries(colleges).sort((a, b) => b[1] - a[1]).forEach(([k, v]) => {
                 csvContent += `${k},${v}\n`;
             });
 
             csvContent += "\nDEPARTMENT BREAKDOWN\n";
-            Object.entries(depts).sort((a,b)=>b[1]-a[1]).forEach(([k,v]) => {
+            Object.entries(depts).sort((a, b) => b[1] - a[1]).forEach(([k, v]) => {
                 csvContent += `${k},${v}\n`;
             });
 
@@ -1449,7 +1609,7 @@
         function printReport() {
             // Switch to analytics view first to ensure charts are rendered
             switchView('analytics', document.querySelector('[onclick*="analytics"]'));
-            
+
             // Small delay for view transition
             setTimeout(() => {
                 window.print();
@@ -1483,7 +1643,7 @@
             pData.forEach(m => {
                 const rawCollege = m.college || "Unknown";
                 const canonical = getCanonicalCollegeName(rawCollege);
-                
+
                 const low = rawCollege.toLowerCase();
                 // Filter for Nagpur-linked or major regional colleges
                 if (low.includes('nagpur') || low.includes('jd') || low.includes('ycce') || low.includes('pce') || low.includes('raisoni') || low.includes('rcoem') || low.includes('kdk') || low.includes('pallotti') || low.includes('gaikwad patil') || low.includes('tgpcet')) {
@@ -1574,7 +1734,7 @@
                 if (n.includes('jalgaon')) return "GCOE, Jalgaon";
                 return "Government College (GCE)";
             }
-            
+
             // Cleanup generic strings
             return name.split(',')[0].trim()
                 .replace(/ college of engineering/gi, '')
