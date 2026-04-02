@@ -836,10 +836,89 @@
         .animate-slide {
             animation: slideIn 0.4s var(--ease) forwards;
         }
+
+        /* ========== PREMIUM LOADER ========== */
+        .loader-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(13, 13, 13, 0.8);
+            backdrop-filter: blur(20px);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s var(--ease);
+        }
+
+        .loader-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .loader-content {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .spinner-outer {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid rgba(59, 130, 246, 0.1);
+            border-top: 3px solid var(--blue);
+            animation: spin 1s linear infinite;
+            position: relative;
+        }
+
+        .spinner-inner {
+            position: absolute;
+            inset: 10px;
+            border-radius: 50%;
+            border: 3px solid rgba(139, 92, 246, 0.1);
+            border-bottom: 3px solid var(--purple);
+            animation: spin 1.5s linear reverse infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            font-family: var(--display);
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: 1px;
+            background: linear-gradient(to right, #fff, var(--text3));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.98); }
+        }
     </style>
 </head>
 
 <body>
+    <!-- Premium Loader Overlay -->
+    <div id="masterLoader" class="loader-overlay">
+        <div class="loader-content">
+            <div class="spinner-outer">
+                <div class="spinner-inner"></div>
+            </div>
+            <div id="loaderStatus" class="loader-text">ESTABLISHING SECURE CONNECTION...</div>
+            <div style="font-size: 11px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; margin-top: -10px;">AX26 CORE SYNC v4.1</div>
+        </div>
+    </div>
     <div class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
@@ -1211,17 +1290,27 @@
         async function fetchInitialJSON() {
             const statusBadge = document.getElementById('syncStatus');
             const statusText = document.getElementById('syncText');
+            const loader = document.getElementById('masterLoader');
+            const loaderText = document.getElementById('loaderStatus');
             
-            // Visual feedback that sync is starting
+            // Activate Loader
+            loader.classList.add('active');
+            loaderText.innerText = "CONNECTING TO GOOGLE SHEETS...";
+            
             statusBadge.className = 'sync-badge sync-offline';
             statusText.innerText = 'Syncing...';
 
             try {
-                // Add timestamp cache-buster to prevent browser from returning old cached JSON
+                // Add timestamp cache-buster
                 const url = SHEETS_API + (SHEETS_API.includes('?') ? '&' : '?') + 't=' + Date.now();
                 const response = await fetch(url);
+                
+                loaderText.innerText = "DECRYPTING PARTICIPANT DATA...";
+                
                 if (!response.ok) throw new Error();
                 let rawTeams = await response.json();
+
+                loaderText.innerText = "OPTIMIZING GRID RENDER...";
 
                 const currentYear = 2025; // Base year for hackathon
                 const cleanPhone = p => String(p).replace(/\D/g, '').slice(-10);
@@ -1255,6 +1344,9 @@
                 statusBadge.className = 'sync-badge sync-offline';
                 statusText.innerText = 'Sync Connection Failed';
                 alert("Critical Error: Could not connect to Google Sheets DB. Please refresh or check your internet connection.");
+            } finally {
+                // Deactivate Loader
+                loader.classList.remove('active');
             }
         }
 
@@ -1282,6 +1374,10 @@
         function renderBoard(search = "", status = "all", verified = "all") {
             const tbody = document.getElementById('teamsTbody');
             tbody.innerHTML = '';
+            
+            // ALWAYS SORT A TO Z BY TEAM NAME
+            teams.sort((a, b) => a.name.localeCompare(b.name));
+
             const filtered = teams.filter(t => {
                 const s = search.toLowerCase();
                 const m = t.name.toLowerCase().includes(s) || t.id.toLowerCase().includes(s) ||
