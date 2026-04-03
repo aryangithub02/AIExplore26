@@ -351,13 +351,15 @@
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 24px;
-            overflow: hidden;
+            overflow-x: auto;
+            width: 100%;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
+            min-width: 1100px; /* Force minimum width to prevent cramping */
         }
 
         th {
@@ -886,7 +888,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .loader-text {
@@ -902,8 +906,17 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(0.98); }
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(0.98);
+            }
         }
     </style>
 </head>
@@ -916,7 +929,9 @@
                 <div class="spinner-inner"></div>
             </div>
             <div id="loaderStatus" class="loader-text">ESTABLISHING SECURE CONNECTION...</div>
-            <div style="font-size: 11px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; margin-top: -10px;">AX26 CORE SYNC v4.1</div>
+            <div
+                style="font-size: 11px; color: var(--text3); letter-spacing: 2px; text-transform: uppercase; margin-top: -10px;">
+                AX26 CORE SYNC v4.1</div>
         </div>
     </div>
     <div class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
@@ -1024,6 +1039,7 @@
                         <option value="In-progress">In-progress</option>
                         <option value="Complete">Complete</option>
                     </select>
+                    <!-- Size filter removed as user doesn't want categories -->
                     <button class="btn btn-secondary" onclick="resetEngine()">
                         <i class="fas fa-rotate"></i> Reset
                     </button>
@@ -1034,14 +1050,14 @@
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 50px;">#</th>
-                            <th>Team Name & ID</th>
-                            <th>Team Leader</th>
-                            <th>Members</th>
-                            <th>Status</th>
-                            <th>Verified</th>
-                            <th>Score</th>
-                            <th style="text-align: right;">Command</th>
+                            <th style="width: 40px;">#</th>
+                            <th style="width: 180px;">Team Name & ID</th>
+                            <th style="width: 200px;">Team Leader</th>
+                            <th style="width: 220px;">Members</th>
+                            <th style="width: 130px;">Status</th>
+                            <th style="width: 130px;">Verified</th>
+                            <th style="width: 80px;">Score</th>
+                            <th style="width: 160px; text-align: right;">Command</th>
                         </tr>
                     </thead>
                     <tbody id="teamsTbody">
@@ -1292,11 +1308,11 @@
             const statusText = document.getElementById('syncText');
             const loader = document.getElementById('masterLoader');
             const loaderText = document.getElementById('loaderStatus');
-            
+
             // Activate Loader
             loader.classList.add('active');
             loaderText.innerText = "CONNECTING TO GOOGLE SHEETS...";
-            
+
             statusBadge.className = 'sync-badge sync-offline';
             statusText.innerText = 'Syncing...';
 
@@ -1304,9 +1320,9 @@
                 // Add timestamp cache-buster
                 const url = SHEETS_API + (SHEETS_API.includes('?') ? '&' : '?') + 't=' + Date.now();
                 const response = await fetch(url);
-                
+
                 loaderText.innerText = "DECRYPTING PARTICIPANT DATA...";
-                
+
                 if (!response.ok) throw new Error();
                 let rawTeams = await response.json();
 
@@ -1374,7 +1390,7 @@
         function renderBoard(search = "", status = "all", verified = "all") {
             const tbody = document.getElementById('teamsTbody');
             tbody.innerHTML = '';
-            
+
             // ALWAYS SORT A TO Z BY TEAM NAME
             teams.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -1392,29 +1408,69 @@
 
             filtered.forEach((t, index) => {
                 const leader = t.members.find(m => m.isLeader) || t.members[0];
+                const others = t.members.filter(m => m !== leader);
+
                 const tr = document.createElement('tr');
+                tr.style.height = "90px";
                 tr.innerHTML = `
-                    <td style="color: var(--text3); font-weight: 600;">${index + 1}</td>
-                    <td>
+                    <td style="width: 40px; color: var(--text3); font-weight: 600; font-family: var(--mono); font-size: 11px;">${(index + 1).toString().padStart(2, '0')}</td>
+                    <td style="width: 180px;">
                         <div class="team-name" onclick="viewTeam('${t.id}')">
-                            <i class="fas fa-caret-right" style="font-size: 10px; color: var(--blue);"></i> ${t.name}
+                            ${t.name}
                         </div>
-                        <div class="team-id" style="font-size: 11px; color: var(--text3); margin-top: 4px;">${t.id}</div>
+                        <div style="font-family: var(--mono); font-size: 10px; color: var(--blue); margin-top: 4px; opacity: 0.8;">${t.id}</div>
                     </td>
-                    <td>
-                        <div style="font-weight: 700; color: white;">${leader ? leader.name : 'Unknown'}</div>
-                        <div style="font-size: 12px; color: var(--text3);">${leader ? leader.email : '-'}</div>
+                    <td style="width: 200px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.2); display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--blue); flex-shrink: 0; font-size: 12px;">
+                                ${leader ? leader.name[0] : '?'}
+                            </div>
+                            <div style="min-width: 0;">
+                                <div style="font-weight: 700; color: white; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px;" title="${leader?.name}">${leader ? leader.name : 'Unknown'}</div>
+                                <div style="font-size: 9px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px;">Team Lead</div>
+                            </div>
+                        </div>
                     </td>
-                    <td><i class="fas fa-users"></i> ${t.members.length}</td>
-                    <td><span class="status-pill ${t.status === 'Complete' ? 'pill-complete' : 'pill-in-progress'}">${t.status}</span></td>
-                    <td><span class="status-pill ${t.isVerified ? 'pill-complete' : ''}" onclick="toggleVerify('${t.id}')" style="cursor: pointer; ${!t.isVerified ? 'background: rgba(255,255,255,0.05); color: var(--text3); border: 1px solid var(--border);' : ''}">${t.isVerified ? '<i class="fas fa-check-circle"></i> YES' : 'NO'}</span></td>
-                    <td><strong style="color: var(--blue); font-size: 16px;">${t.score.toFixed(1)}</strong></td>
-                    <td class="actions-cell">
+                    <td style="width: 220px;">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <div style="display: flex; align-items: center;">
+                                ${others.slice(0, 3).map((m, i) => `
+                                    <div title="${m.name}" style="width: 26px; height: 26px; border-radius: 50%; background: var(--bg2); border: 2px solid var(--card); margin-left: ${i === 0 ? '0' : '-8px'}; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--text2); position: relative; z-index: ${10 - i}; transition: 0.3s;" onmouseover="this.style.transform='translateY(-4px)'; this.style.borderColor='var(--blue)'" onmouseout="this.style.transform='translateY(0)'; this.style.borderColor='var(--card)'">
+                                        ${m.name ? m.name[0] : '?'}
+                                    </div>
+                                `).join('')}
+                                ${others.length > 3 ? `
+                                    <div style="width: 26px; height: 26px; border-radius: 50%; background: var(--border); border: 2px solid var(--card); margin-left: -8px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; color: white; position: relative; z-index: 5;">
+                                        +${others.length - 3}
+                                    </div>
+                                ` : ''}
+                            </div>
+                            <span style="font-size: 11px; color: var(--text3); font-weight: 500; white-space: nowrap;">${others.length > 0 ? (others.length + (others.length === 1 ? ' member' : ' members')) : 'Solo'}</span>
+                        </div>
+                    </td>
+                    <td style="width: 130px;">
+                        <span class="status-pill ${t.status === 'Complete' ? 'pill-complete' : 'pill-in-progress'}" style="padding: 4px 10px; font-size: 9px;">
+                            ${t.status.toUpperCase()}
+                        </span>
+                    </td>
+                    <td style="width: 130px;">
+                        <div onclick="toggleVerify('${t.id}')" style="cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                            <div style="width: 14px; height: 14px; border-radius: 4px; border: 2px solid ${t.isVerified ? 'var(--green)' : 'var(--border)'}; display: flex; align-items: center; justify-content: center; transition: 0.2s;">
+                                ${t.isVerified ? '<i class="fas fa-check" style="font-size: 7px; color: var(--green);"></i>' : ''}
+                            </div>
+                            <span style="font-size: 10px; font-weight: 700; color: ${t.isVerified ? 'var(--green)' : 'var(--text3)'}; text-transform: uppercase;">
+                                ${t.isVerified ? 'Verified' : 'Pending'}
+                            </span>
+                        </div>
+                    </td>
+                    <td style="width: 80px;">
+                        <div style="font-family: var(--display); font-size: 16px; font-weight: 800; color: white; display: flex; align-items: baseline; gap: 2px;">
+                            ${t.score.toFixed(1)}<span style="font-size: 9px; color: var(--text3); font-weight: 400;">/10</span>
+                        </div>
+                    </td>
+                    <td class="actions-cell" style="width: 160px;">
                         <div class="icon-btn" style="color: #25D366;" onclick="whatsappTeam('${t.id}')" title="Send WhatsApp Message">
                             <i class="fa-brands fa-whatsapp"></i>
-                        </div>
-                        <div class="icon-btn" style="color: ${t.isVerified ? 'var(--green)' : 'var(--text3)'};" onclick="toggleVerify('${t.id}')" title="${t.isVerified ? 'Unverify Team' : 'Verify Team'}">
-                            <i class="fas fa-user-check"></i>
                         </div>
                         <div class="icon-btn" onclick="viewTeam('${t.id}')" title="View Details"><i class="fas fa-eye"></i></div>
                         <div class="icon-btn edit" onclick="editTeamForm('${t.id}')" title="Edit Team"><i class="fas fa-pen"></i></div>
@@ -1551,15 +1607,23 @@
             }
             const list = document.getElementById('vMembersList');
             list.innerHTML = '';
-            t.members.forEach(m => {
+            
+            const others = t.members.filter(m => m !== leader);
+
+            function createMemberCard(m, isL) {
                 const card = document.createElement('div');
                 card.className = 'member-detail-card';
+                card.style.borderLeft = isL ? '4px solid var(--blue)' : '1px solid var(--border)';
                 card.innerHTML = `
-                    <div class="member-avatar">${m.name ? m.name[0] : '?'}</div>
+                    <div class="member-avatar" style="background: ${isL ? 'linear-gradient(135deg, var(--blue), var(--purple))' : 'var(--card-hover)'}">
+                        ${m.name ? m.name[0] : '?'}
+                    </div>
                     <div style="flex: 1;">
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
                             <h3 style="font-family: var(--display); font-size: 20px;">${m.name}</h3>
-                            <span class="status-pill" style="font-size: 9px; opacity: 0.8;">${m.isLeader ? 'LEADER' : 'MEMBER'}</span>
+                            <span class="status-pill" style="font-size: 10px; ${isL ? 'background: rgba(59, 130, 246, 0.2); color: var(--blue); border: 1px solid var(--blue);' : 'opacity: 0.6;'}">
+                                ${isL ? '<i class="fas fa-shield-halved"></i> TEAM LEADER' : 'MEMBER'}
+                            </span>
                         </div>
                         <div class="member-info-grid">
                             <div class="m-info-item"><label>Dept</label><span>${m.dept || '-'}</span></div>
@@ -1569,8 +1633,16 @@
                         </div>
                     </div>
                 `;
-                list.appendChild(card);
-            });
+                return card;
+            }
+
+            // Always Leader First
+            list.appendChild(createMemberCard(leader, true));
+            
+            // Then others
+            if (others.length > 0) {
+                others.forEach(m => list.appendChild(createMemberCard(m, false)));
+            }
             document.getElementById('viewModal').classList.add('active');
         }
 
@@ -1588,7 +1660,7 @@
                     alert("Team not found in current view.");
                     return;
                 }
-                
+
                 const leader = t.members.find(m => m.isLeader) || t.members[0];
                 if (!leader || !leader.phone) {
                     alert(`Contact info missing for ${t.name}. Please ensure a team leader phone is present.`);
@@ -1619,7 +1691,7 @@ If already done, please ignore this message.
 — Team AIXplore 2K26`;
 
                 const url = `https://api.whatsapp.com/send?phone=${formattedPhone}&text=${encodeURIComponent(message)}`;
-                
+
                 // Open in a new tab
                 const win = window.open(url, '_blank');
                 if (!win) {
