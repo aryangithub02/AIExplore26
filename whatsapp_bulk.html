@@ -10,6 +10,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         :root {
             --primary: #00f2fe;
@@ -484,10 +486,140 @@
             background: var(--primary);
             box-shadow: 0 0 8px var(--primary);
         }
+
+        /* ========== PASSWORD PROTECT ========== */
+        #passwordOverlay {
+            position: fixed;
+            inset: 0;
+            background: #0b0e14;
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+        }
+
+        .login-logo {
+            width: 80px;
+            margin-bottom: 24px;
+        }
+
+        .login-card h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .login-card p {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .login-input-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .login-input-group i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .login-input-group i:not(.toggle-password) {
+            pointer-events: none;
+        }
+
+        .login-input-group input {
+            width: 100%;
+            padding: 14px 48px; /* Balanced padding for both icons */
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            font-size: 16px;
+            transition: 0.2s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-input-group input:focus {
+            border-color: #00f2fe;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, #00f2fe, #4facfe);
+            color: #000;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.3);
+        }
+
+        .login-error {
+            color: #ff007c;
+            font-size: 13px;
+            margin-top: 16px;
+            display: none;
+        }
+
+        .login-input-group .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .login-input-group .toggle-password:hover {
+            color: #00f2fe;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Password Protection Overlay -->
+    <div id="passwordOverlay">
+        <div class="login-card">
+            <img src="aiexplore_logo_transparent_1771861055747.png" class="login-logo" alt="Logo">
+            <h2>Command Center</h2>
+            <p>Please enter your access key to continue</p>
+            <div class="login-input-group">
+                <i class="fas fa-lock" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8; z-index: 3;"></i>
+                <input type="password" id="accessKey" placeholder="Access Key" onkeyup="if(event.key==='Enter') verifyAccess()" autofocus>
+                <i class="fas fa-eye toggle-password" id="eyeIcon" onclick="togglePasswordVisibility()" style="z-index: 3;"></i>
+            </div>
+            <button class="login-btn" onclick="verifyAccess()">Authenticate</button>
+            <div id="loginError" class="login-error">Invalid Access Key. Access Denied.</div>
+        </div>
+    </div>
     <header>
         <h1>AIExplore 2K26</h1>
         <div class="badge">WhatsApp Bulk Dispatcher v1.0</div>
@@ -714,6 +846,48 @@ AIExplore 2K26 Organizing Committee</textarea>
                 say("Buffer cleared. Ready for next data stream.");
             }
         }
+
+        function verifyAccess() {
+            const key = document.getElementById('accessKey').value;
+            const error = document.getElementById('loginError');
+            if (key === 'aixplore@2K26') {
+                sessionStorage.setItem('ax26_access', 'granted');
+                gsap.to('#passwordOverlay', {
+                    opacity: 0,
+                    duration: 0.5,
+                    pointerEvents: 'none',
+                    onComplete: () => {
+                        document.getElementById('passwordOverlay').style.display = 'none';
+                    }
+                });
+            } else {
+                error.style.display = 'block';
+                gsap.fromTo('.login-card', { x: -10 }, { x: 10, duration: 0.1, repeat: 5, yoyo: true });
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const field = document.getElementById('accessKey');
+            const icon = document.getElementById('eyeIcon');
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Check on load
+        window.addEventListener('load', () => {
+            if (sessionStorage.getItem('ax26_access') === 'granted') {
+                document.getElementById('passwordOverlay').style.display = 'none';
+            } else {
+                document.getElementById('accessKey').focus();
+            }
+        });
 
         numbersEl.addEventListener('input', () => { sentSet.clear(); updateStats(); });
         messageEl.addEventListener('input', () => { localStorage.setItem('wa_msg', messageEl.value); });

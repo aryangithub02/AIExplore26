@@ -907,22 +907,134 @@
         }
 
         @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.98); }
+        }
 
-            0%,
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
+        /* ========== PASSWORD PROTECT ========== */
+        #passwordOverlay {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(20px);
+        }
 
-            50% {
-                opacity: 0.7;
-                transform: scale(0.98);
-            }
+        .login-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .login-logo {
+            width: 80px;
+            margin-bottom: 24px;
+        }
+
+        .login-card h2 {
+            font-family: var(--display);
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .login-card p {
+            color: var(--text3);
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .login-input-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .login-input-group i:not(.toggle-password) {
+            pointer-events: none;
+        }
+
+        .login-input-group input {
+            width: 100%;
+            padding: 14px 48px; /* Balanced padding for both icons */
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            outline: none;
+            font-size: 16px;
+            transition: 0.2s;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-input-group input:focus {
+            border-color: var(--blue);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--blue);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: var(--blue-dark);
+            transform: translateY(-2px);
+        }
+
+        .login-error {
+            color: var(--red);
+            font-size: 13px;
+            margin-top: 16px;
+            display: none;
+        }
+
+        .login-input-group .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text3);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .login-input-group .toggle-password:hover {
+            color: white;
         }
     </style>
 </head>
 
 <body>
+    <!-- Password Protection Overlay -->
+    <div id="passwordOverlay">
+        <div class="login-card">
+            <img src="aiexplore_logo_transparent_1771861055747.png" class="login-logo" alt="Logo">
+            <h2>Command Center</h2>
+            <p>Please enter your access key to continue</p>
+            <div class="login-input-group">
+                <i class="fas fa-lock" style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--text3); z-index: 3;"></i>
+                <input type="password" id="accessKey" placeholder="Access Key" onkeyup="if(event.key==='Enter') verifyAccess()" autofocus>
+                <i class="fas fa-eye toggle-password" id="eyeIcon" onclick="togglePasswordVisibility()" style="z-index: 3;"></i>
+            </div>
+            <button class="login-btn" onclick="verifyAccess()">Authenticate</button>
+            <div id="loginError" class="login-error">Invalid Access Key. Access Denied.</div>
+        </div>
+    </div>
     <!-- Premium Loader Overlay -->
     <div id="masterLoader" class="loader-overlay">
         <div class="loader-content">
@@ -1988,6 +2100,48 @@ If already done, please ignore this message.
                 }
             });
         }
+
+        function verifyAccess() {
+            const key = document.getElementById('accessKey').value;
+            const error = document.getElementById('loginError');
+            if (key === 'aixplore@2K26') {
+                sessionStorage.setItem('ax26_access', 'granted');
+                gsap.to('#passwordOverlay', {
+                    opacity: 0,
+                    duration: 0.5,
+                    pointerEvents: 'none',
+                    onComplete: () => {
+                        document.getElementById('passwordOverlay').style.display = 'none';
+                    }
+                });
+            } else {
+                error.style.display = 'block';
+                gsap.fromTo('.login-card', { x: -10 }, { x: 10, duration: 0.1, repeat: 5, yoyo: true });
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const field = document.getElementById('accessKey');
+            const icon = document.getElementById('eyeIcon');
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Check on load
+        window.addEventListener('load', () => {
+            if (sessionStorage.getItem('ax26_access') === 'granted') {
+                document.getElementById('passwordOverlay').style.display = 'none';
+            } else {
+                document.getElementById('accessKey').focus();
+            }
+        });
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </body>
