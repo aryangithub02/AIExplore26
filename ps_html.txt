@@ -1,0 +1,381 @@
+<style>
+.ps-card:hover { transform: translateY(-5px); border-color: var(--blue); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+.ps-card p { display: block; }
+</style>
+<div class="ps-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; width: 100%; max-width: 1200px; margin-top: 40px;">
+
+          <!-- AX-01 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-01</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">AI-Powered Deepfake & Identity Fraud Detection System.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">With the rise of deepfake content and AI-generated identities, fraudsters exploit digital platforms for impersonation and financial scams. Current systems fail to detect multi-modal threats in real time.</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>Multi-modal AI detection (video, audio, text).</li><li style='margin-bottom: 6px;'>Facial inconsistency & voice cloning detection.</li><li style='margin-bottom: 6px;'>Behavioral identity verification models.</li><li style='margin-bottom: 6px;'>Risk scoring engine for fraud classification.</li><li style='margin-bottom: 6px;'>Real-time alert APIs for apps/platforms.</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-02 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-02</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Banner Theft Detection System</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">In this challenge, you will design and develop a digital anti-theft monitoring system for outdoor advertising banners. The system should detect unauthorized removal or tampering of banners and provide real-time insights and alerts to stakeholders. Students will: Identify key scenarios where banner theft occurs and define trigger conditions (e.g., sudden disappearance, tampering, unusual movement) Design a monitoring system using inputs such as: Camera feeds (computer vision) Sensor data (motion, tension, vibration — simulated if hardware not available) Develop algorithms or logic to detect anomalies or theft events Build a real-time dashboard to track the status of multiple billboard locations Implement alert systems (SMS, app notifications, email) for immediate action Ensure the system is scalable across multiple locations and easy to deploy Focus on cost-effective solutions, considering low-resource environments Optionally explore AI/ML models for visual detection of banner presence/absence</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>The final solution should demonstrate how a digital monitoring and alert system can:</li><li style='margin-bottom: 6px;'>Detect and prevent unauthorized removal of billboard banners</li><li style='margin-bottom: 6px;'>Provide real-time visibility across multiple advertising locations</li><li style='margin-bottom: 6px;'>Reduce financial losses and improve campaign reliability</li><li style='margin-bottom: 6px;'>Eliminate the need for destructive anti-theft practices</li><li style='margin-bottom: 6px;'>Enable smarter, data-driven management of outdoor advertising assets</li><li style='margin-bottom: 6px;'>Ultimately, the system should act as a digital security layer for outdoor advertising, ensuring that campaigns remain</li><li style='margin-bottom: 6px;'>visible, intact, and protected.</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-03 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-03</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Order Management System.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">In this challenge, you will design and develop a centralized order management system that captures and processes orders from multiple channels—calls, emails, WhatsApp, and website—ensuring zero order loss and seamless billing. Students will: Identify gaps in current order capture and processing workflows Design a multi-channel integration system for all order sources Build a real-time dashboard for tracking and managing orders Automate workflows for estimates, approvals, and invoicing (e.g., Zoho integration) Implement alerts and fail-safes to prevent missed orders Ensure the system is scalable, user-friendly, and reduces manual effort Explore AI/automation for extracting and structuring order data</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>The solution should demonstrate how a unified digital system can:</li><li style='margin-bottom: 6px;'>Ensure 100% order capture across all channels (including website)</li><li style='margin-bottom: 6px;'>Eliminate revenue leakage</li><li style='margin-bottom: 6px;'>Enable 24/7 order handling</li><li style='margin-bottom: 6px;'>Improve efficiency and coordination</li><li style='margin-bottom: 6px;'>Provide real-time visibility of operations</li><li style='margin-bottom: 6px;'>Ultimately, the system should act as a single source of truth for all orders, transforming fragmented inputs into</li><li style='margin-bottom: 6px;'>a streamlined, reliable workflow..</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-04 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-04</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Workflow Optimisation for Shopfloor.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">In this challenge, you will design and develop a digital workflow system tailored for shop-floor operations in manufacturing units like Ashta Tech Automation. The system should enable real-time tracking, efficient job allocation, and improved coordination between machines and personnel—ultimately increasing operational efficiency beyond current levels. Students will: Identify key inefficiencies in current shop-floor workflows, including idle time, bottlenecks, and communication gaps Design a digital job management system that allows easy assignment, tracking, and prioritization of tasks Develop a real-time monitoring dashboard to track machine status (running, idle, breakdown) and job progress Create mechanisms for downtime tracking and root-cause analysis (e.g., material shortage, operator delay, maintenance issues) Integrate user-friendly interfaces (mobile/tablet-based) for operators to update job status with minimal friction Explore the use of IoT sensors or manual inputs for capturing machine-level data Consider scalability across different factory sizes and adaptability to varying levels of digital maturity Evaluate cost-effectiveness, ease of deployment, and training requirements for workers</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>The final solution should demonstrate how a well-designed digital workflow system can:</li><li style='margin-bottom: 6px;'>Reduce machine idle time</li><li style='margin-bottom: 6px;'>Improve coordination between operators and supervisors</li><li style='margin-bottom: 6px;'>Increase overall equipment effectiveness (OEE)</li><li style='margin-bottom: 6px;'>Enhance productivity and throughput</li><li style='margin-bottom: 6px;'>Enable data-driven decision-making</li><li style='margin-bottom: 6px;'>Ultimately, the system should act as a digital backbone for shop-floor operations, helping manufacturing units transition</li><li style='margin-bottom: 6px;'>toward smarter, more efficient, and scalable production systems.</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-05 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-05</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Smart Civic Issue Reporting & Resolution System.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">Urban areas face numerous daily issues such as potholes, garbage overflow, water leakage, broken streetlights, and public infrastructure damage. Citizens often struggle to report these problems effectively, and even after reporting, there is no transparency or tracking of resolution. This leads to delayed action, repeated complaints, and poor trust in civic authorities. There is a need for a centralized, transparent, and real-time system that enables citizens to report issues easily and ensures faster resolution with accountability.</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>Allow users to report issues with image, location, and description.</li><li style='margin-bottom: 6px;'>Automatically categorize issues (road, water, electricity, waste, etc.).</li><li style='margin-bottom: 6px;'>Provide real-time tracking of complaint status (pending, in-progress, resolved).</li><li style='margin-bottom: 6px;'>Assign complaints to relevant authorities/departments.</li><li style='margin-bottom: 6px;'>Send notifications to users on status updates.</li><li style='margin-bottom: 6px;'>Implement priority system based on severity and number of reports.</li><li style='margin-bottom: 6px;'>Public dashboard to show nearby issues and resolution progress.</li><li style='margin-bottom: 6px;'>Feedback system after issue resolution.</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-06 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-06</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Smart Internship & Skill Gap Analyzer.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">Students frequently apply for internships without a clear understanding of industry- required skills, leading to high rejection rates. There is a lack of intelligent systems that can analyze a student’s profile, compare it with current market requirements, and guide them on how to improve. This results in poor preparation, mismatched applications, and missed opportunities.</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>Extract structured data (skills, education, experience) from resumes using AI/NLP.</li><li style='margin-bottom: 6px;'>Compare student profiles with real-time internship/job requirements.</li><li style='margin-bottom: 6px;'>Identify missing skills, gaps, and areas of improvement.</li><li style='margin-bottom: 6px;'>Generate a personalized skill development roadmap for users.</li><li style='margin-bottom: 6px;'>Provide readiness scoring and detailed improvement insights.</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-07 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-07</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Digital Platform for Custom Furniture</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">In this challenge, you will design and develop a digital customization and sourcing platform that enables customers to create dimension-based metal furniture tailored to their specific spatial and functional needs. The platform should integrate intelligent design tools, automated sheet-metal nesting optimization, and a recycling-aware sourcing system to minimize material waste. Students will: Identify key customer requirements for customizable metal furniture across homes, offices, retail, and industrial settings Develop a dimension-based digital configuration system that translates user inputs into fabrication-ready designs Design an intelligent sheet-metal nesting and optimization engine to reduce scrap generation Propose a recycling loop that tracks, categorizes, and reuses sheet-metal offcuts effectively Consider cost optimization, manufacturability, sustainability metrics, and supply chain integration Prototype or simulate a platform that connects customers, designers, and fabricators in a closed-loop manufacturing ecosystem</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"></div>
+            </div>
+          </div>
+
+          <!-- AX-08 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-08</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Smart Tourist Safety Monitoring.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">Tourists often face safety risks such as entering unsafe zones, theft, or lack of immediate assistance in unfamiliar locations. Existing systems do not provide real-time monitoring or quick emergency response support, leading to increased vulnerability. There is a need for a smart system that ensures tourist safety through real-time alerts, secure identity verification, and rapid response mechanisms.</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>Implement AI-based real-time risk detection for unsafe situations.</li><li style='margin-bottom: 6px;'>Enable geo-fencing alerts for restricted or high-risk areas.</li><li style='margin-bottom: 6px;'>Develop secure identity verification (e.g., blockchain-based or digital ID).</li><li style='margin-bottom: 6px;'>Provide instant emergency alerts with quick response support.</li><li style='margin-bottom: 6px;'>Improve overall tourist safety, awareness, and trust levels.</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-09 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-09</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Modular Air Purification Platform.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">In this challenge, you will design and develop a modular air purification platform that can be configured for different use cases such as homes, offices, industrial spaces, healthcare facilities, or outdoor environments. The platform should allow interchangeable purification modules to be added, removed, or replaced based on the specific air quality requirements. Students will: Identify common air pollutants and requirements across different environments Design modular filtration or treatment units (e.g., particulate, gas, pathogen control) Develop a scalable airflow and enclosure design adaptable to multiple settings Consider energy efficiency, ease of maintenance, and user safety Prototype or simulate a configurable air purification system The final solution should demonstrate how a flexible platform can address diverse air quality challenges by adapting its modules, making air purification more efficient, cost-effective, and easier to maintain across different environments.</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"></div>
+            </div>
+          </div>
+
+          <!-- AX-10 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-10</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">AI-Powered Supply Chain Agent.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">Modern supply chains often rely on disconnected systems, leading to issues such as stock mismanagement, delayed deliveries, and lack of real-time visibility. These inefficiencies increase operational costs and reduce customer satisfaction. There is a need for an intelligent system that can integrate and automate supply chain processes, providing real-time insights and predictive capabilities to improve overall efficiency.</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>Develop AI agents to monitor inventory levels and logistics operations.</li><li style='margin-bottom: 6px;'>Implement real-time stock tracking and automatic optimization.</li><li style='margin-bottom: 6px;'>Automate end-to-end workflows from order placement to delivery and payment.</li><li style='margin-bottom: 6px;'>Provide predictive demand forecasting using historical data and trends.</li><li style='margin-bottom: 6px;'>Enhance supply chain visibility through dashboards and analytics.</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-11 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-11</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Smart Clinic & Hospital Queue, Token & Bed Management System.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">Manual hospital systems cause overcrowding, long wait times, and poor queue handling. Patients lack real-time updates on their turn and bed availability, especially in emergencies. A smart system is needed to manage queues, tokens, and beds efficiently.</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>Digital token & queue management system</li><li style='margin-bottom: 6px;'>Live queue tracking with waiting time</li><li style='margin-bottom: 6px;'>SMS/app alerts for token updates</li><li style='margin-bottom: 6px;'>Real-time bed availability (ICU, general, emergency)</li><li style='margin-bottom: 6px;'>Appointment booking & auto-rescheduling</li><li style='margin-bottom: 6px;'>Reduce waiting time & overcrowding</li><li style='margin-bottom: 6px;'>Admin dashboard for management</li><li style='margin-bottom: 6px;'>Reports & analytics</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-12 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-12</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Open Innovation: Choose Your Own Problem & Build a Solution.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">In today’s world, numerous real-life challenges exist across domains such as healthcare, environment, education, transportation, and public services. However, many of these problems remain unsolved due to lack of innovative and scalable solutions. This problem statement encourages participants to independently identify any real- world problem of their choice and develop a creative, practical, and impactful solution. It provides complete flexibility to explore ideas, technologies, and domains based on individual interest and innovation.</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>Identify and clearly define a real-world problem of your choice.</li><li style='margin-bottom: 6px;'>Analyze the problem and its impact on users or society.</li><li style='margin-bottom: 6px;'>Design an innovative and feasible solution.</li><li style='margin-bottom: 6px;'>Develop a prototype (web/app/system) demonstrating key features.</li><li style='margin-bottom: 6px;'>Ensure the solution is scalable and applicable in real-life scenarios.</li><li style='margin-bottom: 6px;'>Use relevant technologies (AI, ML, IoT, Web, Cloud, etc.) if required.</li><li style='margin-bottom: 6px;'>Present measurable outcomes or expected impact of the solution.</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-13 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-13</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Smart Study Planner with Reminder System.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">Students often fail to manage their study schedules effectively due to lack of planning, poor time management, and absence of structured guidance. This leads to missed deadlines, incomplete syllabus coverage, and increased stress during exams.</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>Create a personalized study timetable based on user preferences and availability</li><li style='margin-bottom: 6px;'>Provide task reminders and real-time notifications for upcoming deadlines</li><li style='margin-bottom: 6px;'>Implement a progress tracking system to monitor completed and pending tasks</li><li style='margin-bottom: 6px;'>Enable priority-based task scheduling (High, Medium, Low) for better focus</li><li style='margin-bottom: 6px;'>Display daily and weekly performance reports with productivity insights</li><li style='margin-bottom: 6px;'>Allow users to add, edit, and manage study tasks and notes</li><li style='margin-bottom: 6px;'>Include a simple and user-friendly dashboard for better experience</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-14 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-14</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Farmer Direct Market Connect Platform.</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">Farmers often receive low prices for their produce due to the involvement of middlemen and lack direct access to buyers. This results in reduced profits for farmers and higher prices for consumers, along with inefficiencies in the agricultural supply chain.</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>Enable farmers to list and showcase their products directly on the platform</li><li style='margin-bottom: 6px;'>Allow buyers to connect and purchase directly from farmers without intermediaries</li><li style='margin-bottom: 6px;'>Provide a price comparison feature to ensure fair and transparent pricing</li><li style='margin-bottom: 6px;'>Implement an order management and communication system between farmers and</li><li style='margin-bottom: 6px;'>buyers</li><li style='margin-bottom: 6px;'>Include basic logistics coordination for delivery and transportation support</li><li style='margin-bottom: 6px;'>Offer a simple and user-friendly interface for easy access in rural areas</li><li style='margin-bottom: 6px;'>Support secure transactions and order tracking</li></ul></div>
+            </div>
+          </div>
+
+          <!-- AX-15 Card -->
+          <div class="ps-card" style="background: rgba(28, 28, 28, 0.6); border: 1px solid var(--border); border-radius: 16px; padding: 24px; transition: all 0.3s; position: relative; overflow: hidden; backdrop-filter: blur(10px);">
+            <div style="position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(to bottom, var(--blue), var(--pink));"></div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+              <span class="badge badge-info" style="font-family: var(--mono); background: rgba(59, 130, 246, 0.15); color: var(--blue); padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 600;">AX-15</span>
+            </div>
+            <h3 style="font-family: var(--display); font-size: 20px; font-weight: 700; margin-bottom: 16px; color: var(--text); line-height: 1.3;">Gamified Coding Learning & Challenge Platform..</h3>
+            
+            <div class="ps-section" style="margin-bottom: 16px;">
+              <div style="font-size: 12px; color: var(--blue); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                Problem Statement
+              </div>
+              <p style="font-size: 14px; color: var(--text2); line-height: 1.6; margin: 0;">Many students find coding difficult and boring due to traditional learning methods. Existing platforms focus on theory or standard problem-solving but fail to provide an engaging, gamelike environment that motivates continuous learning. There is a need for an interactive platform where users can learn coding concepts through gameplay, challenges, and real-time competition, making learning fun, addictive, and effective. .</p>
+            </div>
+
+            <div class="ps-section">
+              <div style="font-size: 12px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                Expected Solution
+              </div>
+              <div style="font-size: 14px; color: var(--text3); line-height: 1.6;"><ul style='padding-left: 20px; margin: 0;'><li style='margin-bottom: 6px;'>Create a platform where users solve coding problems as game levels.</li><li style='margin-bottom: 6px;'>Introduce points, badges, and leaderboard system for motivation.</li><li style='margin-bottom: 6px;'>Provide story-based missions (e.g., unlock levels by solving problems).</li><li style='margin-bottom: 6px;'>Include real-time coding battles between users.</li><li style='margin-bottom: 6px;'>Offer hints and learning resources within the game.</li><li style='margin-bottom: 6px;'>Track user progress and skill level.</li><li style='margin-bottom: 6px;'>Support multiple programming languages.</li><li style='margin-bottom: 6px;'>Add daily challenges and streak system for engagement</li></ul></div>
+            </div>
+          </div>
+</div>
