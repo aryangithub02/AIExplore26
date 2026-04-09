@@ -3526,13 +3526,14 @@
 
   <!-- ===================== NAVBAR ===================== -->
   <nav class="navbar" id="navbar">
-    <div class="nav-brand">
+    <div class="nav-brand" style="cursor: pointer;" onclick="window.location.href='index.html'">
       <div class="nav-brand-icon">
         <img src="imgs/AIXplore Logo.jpg" alt="AIExplore 2K26">
       </div>
       <span>AIXPLORE <span style="color: var(--pink)">2K26</span></span>
     </div>
     <div class="nav-links">
+      <span class="nav-link" onclick="window.location.href='tracks.html'">PS</span>
       <span class="nav-link" onclick="smoothScrollTo('#prizes')">Prizes</span>
       <span class="nav-link" onclick="smoothScrollTo('#schedule')">Schedule</span>
       <span class="nav-link" onclick="smoothScrollTo('#parallel-events')">Side Events</span>
@@ -3570,6 +3571,10 @@
 
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobile-menu">
+    <span class="mobile-nav-link" onclick="
+          window.location.href='tracks.html';
+          toggleMobileMenu();
+        ">🎯 Problem Statements</span>
     <span class="mobile-nav-link" onclick="
           smoothScrollTo('#prizes');
           toggleMobileMenu();
@@ -3697,6 +3702,42 @@
         </div>
       </div>
     </section>
+
+    <!-- PROBLEM STATEMENTS TEASER -->
+    <section class="section" id="problem-statements">
+      <div class="glow-blob glow-blob-purple" style="top: 10%; right: -50px;"></div>
+      <div class="container">
+        <div class="section-header">
+          <div class="section-tag">// Themes & Tracks</div>
+          <h2 class="section-title">Problem Statements</h2>
+          <p class="section-desc">
+            Explore 15 distinct real-world challenges waiting to be solved. View the full list or download the official
+            PDF.
+          </p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 30px;">
+          <!-- Action Buttons -->
+          <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
+            <a href="tracks.html" class="btn btn-primary"
+              style="padding: 14px 28px; font-size: 16px; text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                style="margin-right: 8px;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              View All 15 Tracks Detailed
+            </a>
+            <a href="AI Explore.pdf" target="_blank" class="btn btn-secondary"
+              style="padding: 14px 28px; font-size: 16px; text-decoration: none;">
+              Download Problem Statements PDF
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
 
     <!-- PRIZES -->
     <section class="section" id="prizes">
@@ -4586,7 +4627,8 @@
           </div>
           <div class="dash-subtitle" id="dash-subtitle">Here's your hackathon dashboard.</div>
         </div>
-        <div id="closed-banner-dash" class="closed-banner hidden" style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.3);">
+        <div id="closed-banner-dash" class="closed-banner hidden"
+          style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.3);">
           <div class="closed-banner-title" style="color:var(--green)">⚡ Hackathon is Live!</div>
           <div class="closed-banner-msg">
             The coding phase has officially begun. Good luck to your team!
@@ -4765,7 +4807,8 @@
               Complete all steps to register your team's project.
             </div>
           </div>
-          <div id="reg-deadline-closed" class="closed-banner hidden" style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.3);">
+          <div id="reg-deadline-closed" class="closed-banner hidden"
+            style="background:rgba(16,185,129,0.1); border-color:rgba(16,185,129,0.3);">
             <div class="closed-banner-title" style="color:var(--green)">⚡ Hackathon is Live!</div>
             <div class="closed-banner-msg">
               The deadline has passed. Your submission is locked.
